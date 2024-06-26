@@ -1,0 +1,5 @@
+#all pycache files
+*__pycache__
+
+#API examples for testing
+Model/test_examples

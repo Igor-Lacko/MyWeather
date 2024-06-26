@@ -1,0 +1,1 @@
+"""Module containing the View for MyWeather"""

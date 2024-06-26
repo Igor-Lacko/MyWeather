@@ -1,0 +1,205 @@
+aakar
+Abyssinica SIL
+Ani
+AnjaliOldLipi
+Bitstream Charter
+C059 [UKWN]
+C059 [urw]
+Chandas
+Chilanka
+cmex10
+cmmi10
+cmr10
+cmsy10
+Courier 10 Pitch
+D050000L [urw]
+D050000L [URW ]
+DejaVu Math TeX Gyre
+DejaVu Sans
+DejaVu Sans Condensed
+DejaVu Sans Mono
+DejaVu Serif
+DejaVu Serif Condensed
+Dhurjati
+Droid Sans Fallback
+dsrom10
+Dyuthi
+esint10
+eufm10
+FontAwesome
+FreeMono
+FreeSans
+FreeSerif
+Gargi
+Garuda
+Gayathri
+Gayathri Thin
+Gidugu
+Gubbi
+Gurajada
+Jamrul
+KacstArt
+KacstBook
+KacstDecorative
+KacstDigital
+KacstFarsi
+KacstLetter
+KacstNaskh
+KacstOffice
+KacstOne
+KacstPen
+KacstPoster
+KacstQurn
+KacstScreen
+KacstTitle
+KacstTitleL
+Kalapi
+Kalimati
+Karumbi
+Keraleeyam
+Khmer OS
+Khmer OS System
+Kinnari
+LakkiReddy
+Laksaman
+Lato
+Lato Black
+Lato Hairline
+Lato Heavy
+Lato Light
+Lato Medium
+Lato Semibold
+Lato Thin
+Liberation Mono
+Liberation Sans
+Liberation Sans Narrow
+Liberation Serif
+Likhan
+LKLUG
+Lohit Assamese
+Lohit Bengali
+Lohit Devanagari
+Lohit Gujarati
+Lohit Gurmukhi
+Lohit Kannada
+Lohit Malayalam
+Lohit Odia
+Lohit Tamil
+Lohit Tamil Classical
+Lohit Telugu
+Loma
+Mallanna
+Mandali
+Manjari
+Manjari Thin
+Meera
+Mitra
+Monospace
+mry_KacstQurn
+msam10
+msbm10
+Mukti
+Nakula
+NATS
+Navilu
+Nimbus Mono PS [urw]
+Nimbus Mono PS [UKWN]
+Nimbus Roman [urw]
+Nimbus Roman [UKWN]
+Nimbus Sans [urw]
+Nimbus Sans [URW ]
+Nimbus Sans [UKWN]
+Nimbus Sans Narrow [urw]
+Nimbus Sans Narrow [UKWN]
+Norasi
+Noto Color Emoji
+Noto Mono
+Noto Sans CJK HK
+Noto Sans CJK JP
+Noto Sans CJK KR
+Noto Sans CJK SC
+Noto Sans CJK TC
+Noto Sans Mono
+Noto Sans Mono CJK HK
+Noto Sans Mono CJK JP
+Noto Sans Mono CJK KR
+Noto Sans Mono CJK SC
+Noto Sans Mono CJK TC
+Noto Serif CJK HK
+Noto Serif CJK JP
+Noto Serif CJK KR
+Noto Serif CJK SC
+Noto Serif CJK TC
+NTR
+OpenSymbol
+ori1Uni
+P052 [UKWN]
+P052 [urw]
+Padauk
+Padauk Book
+padmaa
+padmaa-Bold.1.1
+Pagul
+Peddana
+Phetsarath OT
+Ponnala
+Pothana2000
+Potti Sreeramulu
+Purisa
+Rachana
+RaghuMalayalamSans
+Ramabhadra
+Ramaraja
+Rasa
+Rasa Light
+Rasa Medium
+Rasa SemiBold
+RaviPrakash
+Rekha
+rsfs10
+Saab
+Sahadeva
+Samanata
+Samyak Devanagari
+Samyak Gujarati
+Samyak Malayalam
+Samyak Tamil
+Sans Serif
+Sarai
+Sawasdee
+Serif
+Sree Krushnadevaraya
+Standard Symbols PS [URW ]
+Standard Symbols PS [urw]
+stmary10
+Suranna
+Suravaram
+Suruma
+Syamala Ramana
+TenaliRamakrishna
+Tibetan Machine Uni
+Timmana
+Tlwg Mono
+Tlwg Typewriter
+Tlwg Typist
+Tlwg Typo
+Ubuntu
+Ubuntu Condensed
+Ubuntu Light
+Ubuntu Mono
+Ubuntu Thin
+Umpush
+Uroob
+URW Bookman [urw]
+URW Bookman [UKWN]
+URW Gothic [UKWN]
+URW Gothic [urw]
+Vemana2000
+Waree
+wasy10
+Yrsa
+Yrsa Light
+Yrsa Medium
+Yrsa SemiBold
+Z003 [urw]
+Z003 [UKWN]
