@@ -98,7 +98,6 @@ class Header(QWidget):
         Args:
             mode (enums.ColorModes): the current color mode, switching to the other
         """
-        print('caughht')
         self.SetLightMode() if mode.value == "light"\
         else self.SetDarkMode()
 

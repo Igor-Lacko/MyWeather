@@ -8,6 +8,7 @@ from MyWeather.View.utils.enumerations import ColorModes
 
 
 
+
 class Sidebar(QWidget):
     """Main Window sidebar type, contains about 3-4 sidebar buttons
 
@@ -53,13 +54,14 @@ class Sidebar(QWidget):
         
 
     
-    def InitButtons(self, buttons : dict, tabs : QLayout, mode : ColorModes) -> None:
+    def InitButtons(self, buttons : dict, tabs : QLayout, mode : ColorModes, slots : dict[str, callable]) -> None:
         """Initializes the menu's buttons and adds them to it's layout
 
         Args:
             buttons (dict): the dictionary containing data to be passed to the button constructors
             tabs (QLayout): the window layout which the buttons will connect to
             mode (ColorModes): the current color mode
+            slots (dict[str, callable]): dictionary with the functions to be passed to button constructors
 
         Returns:
             None: initialized sidebar vertical layout is a instance attribute
@@ -77,7 +79,7 @@ class Sidebar(QWidget):
                 new_button = SidebarButton(
                 button['icon'],                                     #button icon
                 button['text'],                                     #text under the icon
-                partial(button['on_click'],tabs, index),            #partial function so it doesn't get called immediately
+                partial(slots['default'], tabs, index),             #partial function so it doesn't get called immediately
                 mode,                                               #current color mode
                 position)                                           #button's position in the toolbar
 
@@ -85,7 +87,7 @@ class Sidebar(QWidget):
                 new_button = SidebarButton(
                     button['icon'], 
                     button['text'], 
-                    partial(button['on_click'], self),
+                    partial(slots['trigger'], self),
                     mode,
                     position)
 

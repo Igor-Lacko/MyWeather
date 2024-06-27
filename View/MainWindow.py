@@ -1,9 +1,9 @@
 #includes the MyWeather MainWindow class
 import PyQt6.QtWidgets as widgets
 from PyQt6.QtCore import Qt
-from MyWeather.View.utils import enumerations
-from ..Model.constdata.buttons import buttons
-from MyWeather.Model.constdata.mode import MODE
+from MyWeather.View.utils import enumerations                           #absolute imports to avoid enum issues
+from MyWeather.View.constdata.mode import MODE
+from .constdata import buttons, slots
 from .components.Sidebar import Sidebar
 from .tabs import Settings, Home, Weather
 
@@ -39,7 +39,7 @@ class MainWindow(widgets.QMainWindow):
         tabs.addWidget(weather)
         tabs.addWidget(settings)
 
-        sidebar._layout_= sidebar.InitButtons(buttons, tabs, MODE)
+        sidebar._layout_= sidebar.InitButtons(buttons.buttons, tabs, MODE, slots.slots)
         sidebar.mode_trigger.color_switch_signal.connect(home_tab.header.SwitchColorMode)
         main_layout.setContentsMargins(0,0,0,0)
         main_layout.setSpacing(0)

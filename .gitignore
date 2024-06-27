@@ -1,5 +1,11 @@
 #all pycache files
-*__pycache__
+*.pyc
 
-#API examples for testing
-Model/test_examples
+
+#test stuff
+
+*.json
+
+#fonts
+*fonts.txt
+

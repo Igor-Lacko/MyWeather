@@ -3,8 +3,8 @@ import PyQt6.QtWidgets as widgets
 from PyQt6.QtGui import QIcon, QPalette 
 from PyQt6.QtCore import QSize
 from MyWeather.View.utils.enumerations import Colors, ColorModes
-from MyWeather.Model.constdata.mode import MODE
-from ...Model.constdata import buttons
+from MyWeather.View.constdata.mode import MODE
+from ..constdata import buttons
 from ..components import Sidebar
 
 
@@ -46,16 +46,8 @@ def switch_sidebar_color(sidebar : Sidebar.Sidebar):
 
     sidebar.setPalette(sidebar._palette_)
 
-    print(sidebar.mode_trigger.color_switch_signal.__repr__())
 
     sidebar.mode_trigger.color_switch_signal.emit(MODE)
     
 
     
-
-
-
-
-
-
-
