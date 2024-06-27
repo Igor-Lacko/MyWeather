@@ -27,6 +27,8 @@ class HeaderDataText(QVBoxLayout):
         
         super().__init__()
 
+        self.setAlignment(Alignments.Right)
+
         self.addWidget(temperature_widget := QLabel(text=
                         f"{data.temperature.actual_temperature}°C, feels like {data.temperature.feelslike}°C"),  
                         alignment=Alignments.Left,

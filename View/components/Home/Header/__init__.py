@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QPixmap, QPalette
 from PyQt6.QtCore import Qt, pyqtSlot
 from MyWeather.Model.obj import Realtime
-from ....utils.enumerations import *
+from MyWeather.View.utils import enumerations as enums
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
 
@@ -44,7 +44,8 @@ class Header(QWidget):
 
         self.setAutoFillBackground(True)
         (palette := self.palette()).setColor(QPalette.ColorRole.Window,         #set a background color
-                                                Colors.CoolGrey)              
+        enums.Colors.CoolGrey)
+
         self.setPalette(palette)
         self._palette_ = palette
         
@@ -54,6 +55,7 @@ class Header(QWidget):
 
         self.header_layout.addLayout(lead_widget := HeaderLeadText(data))       #lead text
         self.subcomponents.append(lead_widget)
+
 
         self.header_layout.addLayout(data_widget := HeaderDataText(data))       #main data text
         self.subcomponents.append(data_widget)
@@ -76,7 +78,7 @@ class Header(QWidget):
             Qt.TransformationMode.SmoothTransformation
             ))
         
-        icon.setAlignment(Alignments.Center)
+        icon.setAlignment(enums.Alignments.Center)
         
         self.header_layout.addWidget(icon)
         self.subcomponents.append(icon)
@@ -89,14 +91,14 @@ class Header(QWidget):
             self.header_layout.setStretch(index, stretch)
 
     
-    @pyqtSlot(ColorMode)
-    def SwitchColorMode(self, mode : ColorMode):
+    @pyqtSlot(enums.ColorModes)
+    def SwitchColorMode(self, mode : enums.ColorModes):
         """Switches the Home tab's header color mode
 
         Args:
-            mode (ColorMode): the current color mode, switching to the other
+            mode (enums.ColorModes): the current color mode, switching to the other
         """
-        
+        print('caughht')
         self.SetLightMode() if mode.value == "light"\
         else self.SetDarkMode()
 
@@ -105,7 +107,7 @@ class Header(QWidget):
 
     def SetLightMode(self):
         """Switches the current color mode to light"""
-        self._palette_.setColor(QPalette.ColorRole.Window, Colors.OffWhite)
+        self._palette_.setColor(QPalette.ColorRole.Window, enums.Colors.OffWhite)
         self.setPalette(self._palette_)
 
         
@@ -116,7 +118,7 @@ class Header(QWidget):
 
     def SetDarkMode(self):
         """Switches the current color mode to dark"""
-        self._palette_.setColor(QPalette.ColorRole.Window, Colors.CoolGrey)
+        self._palette_.setColor(QPalette.ColorRole.Window, enums.Colors.CoolGrey)
         self.setPalette(self._palette_)
         
         for div in self.subcomponents[1:]:

@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt
 import PyQt6.QtGui as gui
 from functools import partial
 from .SidebarButton import SidebarButton
-from ..utils.enumerations import ColorMode
+from MyWeather.View.utils.enumerations import ColorModes
 
 
 
@@ -53,13 +53,13 @@ class Sidebar(QWidget):
         
 
     
-    def InitButtons(self, buttons : dict, tabs : QLayout, mode : ColorMode) -> None:
+    def InitButtons(self, buttons : dict, tabs : QLayout, mode : ColorModes) -> None:
         """Initializes the menu's buttons and adds them to it's layout
 
         Args:
             buttons (dict): the dictionary containing data to be passed to the button constructors
             tabs (QLayout): the window layout which the buttons will connect to
-            mode (ColorMode): the current color mode
+            mode (ColorModes): the current color mode
 
         Returns:
             None: initialized sidebar vertical layout is a instance attribute

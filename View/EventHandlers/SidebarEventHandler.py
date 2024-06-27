@@ -2,10 +2,11 @@
 import PyQt6.QtWidgets as widgets
 from PyQt6.QtGui import QIcon, QPalette 
 from PyQt6.QtCore import QSize
-from ..utils.enumerations import Colors, ColorMode
-from ..constdata import buttons as buttons
+from MyWeather.View.utils.enumerations import Colors, ColorModes
+from MyWeather.Model.constdata.mode import MODE
+from ...Model.constdata import buttons
 from ..components import Sidebar
-from ..constdata.mode import MODE
+
 
 
 
@@ -28,7 +29,7 @@ def switch_sidebar_color(sidebar : Sidebar.Sidebar):
 
 
 
-    MODE = ColorMode.DARK if MODE == ColorMode.LIGHT else ColorMode.LIGHT
+    MODE = ColorModes.DARK if MODE == ColorModes.LIGHT else ColorModes.LIGHT
     buttons.UpdateButtons(MODE)
 
     for index, button in enumerate(buttons.buttons):
@@ -40,10 +41,12 @@ def switch_sidebar_color(sidebar : Sidebar.Sidebar):
 
     sidebar._palette_.setColor(QPalette.ColorRole.Window,
                                 Colors.CoolGrey
-                                if MODE == ColorMode.DARK
+                                if MODE == ColorModes.DARK
                                 else Colors.OffWhite)
 
     sidebar.setPalette(sidebar._palette_)
+
+    print(sidebar.mode_trigger.color_switch_signal.__repr__())
 
     sidebar.mode_trigger.color_switch_signal.emit(MODE)
     

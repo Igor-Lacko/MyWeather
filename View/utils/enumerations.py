@@ -110,7 +110,8 @@ class StyleSheets:
     light = LightStyleSheets
 
 
-class ColorMode(Enum):
+class ColorModes(Enum):
+    """Either dark or light"""
     DARK = "dark"
     LIGHT = "light"
 

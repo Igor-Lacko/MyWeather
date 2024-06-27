@@ -2,7 +2,7 @@
 import PyQt6.QtWidgets as widgets
 from .MainWindow import MainWindow
 from os import system as terminal
-from .constdata.mode import *
+
 
 
 

@@ -1,9 +1,8 @@
 import PyQt6.QtGui as gui
 from PyQt6.QtWidgets import *
-from PyQt6.QtCore import Qt, QSize, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import Qt, QSize, pyqtSignal
 from typing import Callable
-from ..utils.enumerations import ColorMode, StyleSheets
-from ..constdata.mode import MODE
+from MyWeather.View.utils.enumerations import ColorModes, StyleSheets
 
 
 
@@ -14,10 +13,11 @@ class SidebarButton(QToolButton):
         QPushButton (QPushButton): Inherits from the standard Qt ToolButton class
     """
 
-    color_switch_signal = pyqtSignal(ColorMode)
+
+    color_switch_signal = pyqtSignal(ColorModes)
 
 
-    def __init__(self, icon_path : str, description : str, on_click : Callable, mode : ColorMode,  position : str = "default"):
+    def __init__(self, icon_path : str, description : str, on_click : Callable, mode : ColorModes,  position : str = "default"):
         """Sidebar button constructor
 
         Args:
@@ -48,18 +48,21 @@ class SidebarButton(QToolButton):
 
 
 
-    def SetStyle(self, position : str, mode : ColorMode):
+    def SetStyle(self, position : str, mode : ColorModes):
         """sets a stylesheet for the button with transparency and some other stuff"""
 
+
         sheet = StyleSheets.dark\
-        if mode == ColorMode.DARK\
-        else StyleSheets.light                             #get the sheet to be set                               
+        if mode.value == "dark"\
+        else StyleSheets.light                             #get the sheet to be set        
+
 
         #get the default style sheet according to the button's position in the toolbar
         default = sheet.SidebarButtonDefault if position not in ["top", "bottom"]\
         else (sheet.SidebarButtonTop 
                 if position == "top" else sheet.SidebarButtonBottom)
 
+        
         #join the default and hover style sheets together
         style_sheet = f"{default.value}\n\n{sheet.SidebarButtonHover.value}"
 

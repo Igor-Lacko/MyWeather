@@ -1,4 +1,4 @@
-from ..EventHandlers import SidebarEventHandler
+from MyWeather.View.EventHandlers import SidebarEventHandler
 from .mode import DEFAULT
 
 buttons = [
