@@ -2,7 +2,7 @@
 import PyQt6.QtWidgets as widgets
 from PyQt6.QtCore import Qt
 from MyWeather.View.utils import enumerations
-from MyWeather.Model.constdata.buttons import buttons
+from ..Model.constdata.buttons import buttons
 from MyWeather.Model.constdata.mode import MODE
 from .components.Sidebar import Sidebar
 from .tabs import Settings, Home, Weather
