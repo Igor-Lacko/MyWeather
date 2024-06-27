@@ -7,10 +7,9 @@
 """
 
 from PyQt6.QtWidgets import *
-from PyQt6.QtGui import QFont, QPalette
+from PyQt6.QtGui import QFont
 from MyWeather.Model.obj import Realtime
-from ....utils.enumerations import Alignments, Colors
-
+from ....utils.enumerations import Alignments
 
 class HeaderDataText(QVBoxLayout):
     """Inherits from the VBox layout since the items are stacked vertically"""

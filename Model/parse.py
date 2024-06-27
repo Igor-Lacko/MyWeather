@@ -80,7 +80,7 @@ def ParseRealtimeWeather(response):
     
     #parsing individual arguments
     params = {
-        "location" : local_data["name"],
+        "location" : f"{local_data['name']}, {local_data['country']}",
         "date" : datetime.strptime(local_data["localtime"], DATE_FORMAT),
         "temperature" : ParseTemperatureData(weather_data),
         "wind" : ParseWindData(weather_data),
@@ -101,7 +101,7 @@ def ParseForecastWeather(response):
     weather_data = response["forecast"]
 
     params = {
-        "location" : local_data["name"],
+        "location" : f"{local_data['name']}, {local_data['country']}",
         "days" : [ParseDailyWeather(day) for day in weather_data["forecastday"]]
     }
 

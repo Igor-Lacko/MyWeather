@@ -45,7 +45,7 @@ def switch_sidebar_color(sidebar : Sidebar.Sidebar):
 
     sidebar.setPalette(sidebar._palette_)
 
-    sidebar.buttons[3].color_switch_signal.emit(MODE)
+    sidebar.mode_trigger.color_switch_signal.emit(MODE)
     
 
     

@@ -5,7 +5,6 @@ from termcolor import colored
 from datetime import datetime as date
 from . import parse
 from . import obj
-import typing
 
 
 #realtime weather request

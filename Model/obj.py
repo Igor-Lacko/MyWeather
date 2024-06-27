@@ -70,10 +70,12 @@ class Hour:
     temperature_data : TemperatureData
     rain_data : RainData
     is_day : bool = field(init=False)
+    time_str : str = field(init=False)
 
     #initialize the is_day variable, (night from 22 to 6)
     def __post_init__(self): 
         self.is_day = self.time.hour >= 22 or self.time.hour <= 6
+        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}, {self.date.hour}:{self.date.minute}"
 
 
 
@@ -96,6 +98,10 @@ class Day:
     rain_data : RainData        #daily rain chance and total precipitation height in mm
     condition : str             #condition as text (such as for example "sunny", "raining", etc.)
     hours : list[Hour]          #individual hours
+    date_str : str = field(init=False)
+
+    def __post_init__(self):
+        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}, {self.date.hour}:{self.date.minute}"
 
 
 
@@ -110,10 +116,12 @@ class Realtime:
     humidity : int
     condition : str
     is_day : bool = field(init=False)
+    date_str : str = field(init=False)
     
     #initialize the is_day variable
     def __post_init__(self):
         self.is_day = 6 <= self.date.hour < 22 
+        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}, {self.date.hour}:{self.date.minute}"
 
 
 

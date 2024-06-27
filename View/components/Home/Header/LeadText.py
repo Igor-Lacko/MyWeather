@@ -4,9 +4,9 @@
                 2. TEMPERATURE/FEELSLIKE TEMPERATURE
 """
 from PyQt6.QtWidgets import *
-from PyQt6.QtGui import QFont, QPalette
+from PyQt6.QtGui import QFont
 from MyWeather.Model.obj import Realtime
-from ....utils.enumerations import Alignments, Colors
+from ....utils.enumerations import Alignments
 
 class HeaderLeadText(QVBoxLayout):
     """Inherits from QVBoxLayout since it's divided into 2 vertical halves"""
@@ -24,7 +24,7 @@ class HeaderLeadText(QVBoxLayout):
                         alignment=Alignments.Left,
                         stretch=1)
         
-        self.addWidget(time_widget := QLabel(text=str(data.date)),  
+        self.addWidget(time_widget := QLabel(text=data.date_str),  
                         alignment=Alignments.Left,
                         stretch=1)
 

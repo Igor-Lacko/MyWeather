@@ -69,11 +69,11 @@ class Sidebar(QWidget):
 
         #main for loop through the buttons dictionary provided
         for index, button in enumerate(buttons):
-            position = "default" if index not in [0, 3] else\
+            position = "default" if index not in [0, len(buttons) - 1] else\
             ("top" if index == 0 else "bottom")
 
             #the first 3 callables take the same argument
-            if index < 3:
+            if button['text'] != "Light mode":
                 new_button = SidebarButton(
                 button['icon'],                                     #button icon
                 button['text'],                                     #text under the icon
@@ -87,7 +87,9 @@ class Sidebar(QWidget):
                     button['text'], 
                     partial(button['on_click'], self),
                     mode,
-                    position)                             
+                    position)
+
+                self.mode_trigger = new_button                      #create a trigger variable to be accessed from outside the class
                 
 
             self._layout_.addWidget(new_button)                     #add the button to the sidebar's layout
