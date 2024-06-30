@@ -4,11 +4,11 @@ from urllib3.exceptions import NewConnectionError, MaxRetryError
 from termcolor import colored
 from datetime import datetime as date
 from . import parse
-from . import obj
+
 
 
 #realtime weather request
-def RealtimeWeather(city : str) -> obj.Realtime:
+def RealtimeWeather(city : str) -> parse.obj.Realtime:
     try:
         response = api.realtime_weather(q=city)
     
@@ -25,7 +25,7 @@ def RealtimeWeather(city : str) -> obj.Realtime:
 
 
 #forecast for city "city" for the next "days" days
-def Forecast(city : str, days : int = 7 - date.today().weekday(), dt : date = None) -> obj.Forecast:
+def Forecast(city : str, days : int = 7 - date.today().weekday(), dt : date = None) -> parse.obj.Forecast:
     try:
         response = api.forecast_weather(q=city, days=days, dt=dt)
     
@@ -44,7 +44,7 @@ def Forecast(city : str, days : int = 7 - date.today().weekday(), dt : date = No
 
 
 
-def CompleteData(city : str, days : int = 7 - date.today().weekday(), dt : date = None):
+def CompleteData(city : str, days : int = 7 - date.today().weekday(), dt : date = None) -> parse.obj.WeatherData:
     try:
         response = api.forecast_weather(q=city, days=days, dt=dt)
     

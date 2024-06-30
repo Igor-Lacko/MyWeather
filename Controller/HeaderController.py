@@ -1,20 +1,6 @@
 """Contains the controller for the header of the home tab"""
 from ..View.components.Home.Header import Header
 from ..Model.constdata.icons import Icons
-from . import InitWeatherData
-
-
-
-def GetHeader() -> Header:
-    """initializes the header
-
-    Returns:
-        Header: The initialized Header object
-    """ 
-
-    return Header(current := InitWeatherData.current, 
-                    GetHeaderIcon(current.condition, current.is_day))
-    
 
 
 def GetHeaderIcon(condition : str, is_day : bool) -> str:
@@ -37,7 +23,7 @@ def GetHeaderIcon(condition : str, is_day : bool) -> str:
 
 
     #default icon, because mostly it actually is sunny in the summer :)
-    return 'View/Assets/ConditionIcons/day/sunny.png'
+    return 'Assets/ConditionIcons/day/sunny.png'
 
 
 

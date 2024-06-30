@@ -27,6 +27,7 @@ class SidebarButton(QToolButton):
             position (str): Button's position in the toolbar
         """ 
         super().__init__()
+        
 
 
         self.position = position           

@@ -1,7 +1,7 @@
 """Contains the main frame for showing the weather graphs on the home screen"""
 from PyQt6.QtWidgets import *
 from MyWeather.View.utils.enumerations import *
-from MyWeather.Controller.GraphController import GraphHeaderController 
+from MyWeather.Init.MainWindowInits import GraphInit
 from .GraphBody import WeatherGraph
 
 
@@ -18,7 +18,7 @@ class GraphFrame(QFrame):
         self.setFrameStyle(QFrame.Shape.StyledPanel | QFrame.Shadow.Sunken)
         
         
-        (layout := QVBoxLayout()).addLayout(GraphHeaderController.GetGraphHeader())
+        (layout := QVBoxLayout()).addLayout(GraphInit.GetGraphHeader())
         layout.addLayout(WeatherGraph())
         
         layout.setStretch(0,10)

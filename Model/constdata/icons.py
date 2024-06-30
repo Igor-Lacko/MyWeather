@@ -14,8 +14,8 @@ Icons = [
             "Clear"
         ],
 
-        "day"   :   "View/Assets/ConditionIcons/day/sunny.png",
-        "night" :   "View/Assets/ConditionIcons/night/clear.png"
+        "day"   :   "Assets/ConditionIcons/day/sunny.png",
+        "night" :   "Assets/ConditionIcons/night/clear.png"
     },
 
     {
@@ -25,8 +25,8 @@ Icons = [
             "Overcast"
         ],
 
-        "day" : "View/Assets/ConditionIcons/day/cloudy.png",
-        "night" : "View/Assets/ConditionIcons/night/cloudy.png"
+        "day" : "Assets/ConditionIcons/day/cloudy.png",
+        "night" : "Assets/ConditionIcons/night/cloudy.png"
     },
 
     {
@@ -35,8 +35,8 @@ Icons = [
             "Fog"
         ],
 
-        "day"   :   "View/Assets/ConditionIcons/day/fog.png",
-        "night" :   "View/Assets/ConditionIcons/night/fog.png"      
+        "day"   :   "Assets/ConditionIcons/day/fog.png",
+        "night" :   "Assets/ConditionIcons/night/fog.png"      
     },
 
     {
@@ -48,8 +48,8 @@ Icons = [
             "Light rain shower",
         ],
 
-        "day"   :   "View/Assets/ConditionIcons/day/light-rain.png",
-        "night" :   "View/Assets/ConditionIcons/night/light-rain.png"
+        "day"   :   "Assets/ConditionIcons/day/light-rain.png",
+        "night" :   "Assets/ConditionIcons/night/light-rain.png"
     },
 
     {
@@ -58,8 +58,8 @@ Icons = [
             "Moderate rain"
         ],
 
-        "day"   :   "View/Assets/ConditionIcons/day/moderate-rain.png",
-        "night" :   "View/Assets/ConditionIcons/night/moderate-rain.png"
+        "day"   :   "Assets/ConditionIcons/day/moderate-rain.png",
+        "night" :   "Assets/ConditionIcons/night/moderate-rain.png"
     },
 
     {
@@ -70,8 +70,8 @@ Icons = [
             "Torrential rain shower"
         ],
 
-        "day"   :   "View/Assets/ConditionIcons/day/heavy-rain.png",
-        "night" :   "View/Assets/ConditionIcons/night/heavy-rain.png"
+        "day"   :   "Assets/ConditionIcons/day/heavy-rain.png",
+        "night" :   "Assets/ConditionIcons/night/heavy-rain.png"
     },
 
     {
@@ -81,8 +81,8 @@ Icons = [
             "Moderate or heavy rain with thunder"
         ],
 
-        "day"   :   "View/Assets/ConditionIcons/day/storm.png",
-        "night" :   "View/Assets/ConditionIcons/night/storm.png"
+        "day"   :   "Assets/ConditionIcons/day/storm.png",
+        "night" :   "Assets/ConditionIcons/night/storm.png"
     }
 
 

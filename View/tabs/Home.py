@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import *
-from MyWeather.Controller import HeaderController
+from MyWeather.Init.MainWindowInits import HeaderInit, GraphInit
 from ..components.Home.Header import Header
 from ..components.Home.HomeWindow import HomeWindow
 
@@ -14,7 +14,7 @@ class HomeTab(QVBoxLayout):
         """home tab constructor"""
         super().__init__()
 
-        self.addWidget(header := HeaderController.GetHeader())
+        self.addWidget(header := HeaderInit.GetHeader())
         self.header : Header = header
 
         self.addWidget(main := HomeWindow())

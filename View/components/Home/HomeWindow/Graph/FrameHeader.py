@@ -53,8 +53,8 @@ class FrameHeader(QHBoxLayout):
         """Initializes the text and button icons (so far only the icons), TODO: color modes"""
         self.InitTextStyle(self.widgets[1])
 
-        (right_button := self.widgets[0]).setIcon(QIcon("View/Assets/GraphFrameIcons/dark/left-arrow.png"))
-        (left_button := self.widgets[2]).setIcon(QIcon("View/Assets/GraphFrameIcons/dark/right-arrow.png"))
+        (right_button := self.widgets[0]).setIcon(QIcon("Assets/GraphFrameIcons/dark/left-arrow.png"))
+        (left_button := self.widgets[2]).setIcon(QIcon("Assets/GraphFrameIcons/dark/right-arrow.png"))
 
 
 

@@ -2,7 +2,7 @@
 from PyQt6.QtGui import QPaintEvent, QPainter, QImage
 from PyQt6.QtWidgets import *
 from MyWeather.View.utils.enumerations import *
-from .GraphFrame import GraphFrame
+from .Graph import GraphFrame
 from MyWeather.View.constdata.mode import DEFAULT
 
 
@@ -23,7 +23,7 @@ class HomeWindow(QWidget):
 
     def paintEvent(self, event: QPaintEvent | None) -> None:
         (painter := QPainter()).begin(self)
-        painter.drawImage(event.rect(), QImage('View/Assets/Backgrounds/home-background.jpg'))
+        painter.drawImage(event.rect(), QImage('Assets/Backgrounds/home-background.jpg'))
 
     def InitLayout(self):
         """Initializes the combination of vertical/horizontal layouts due to more complicated logic"""
