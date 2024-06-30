@@ -1,9 +1,6 @@
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import Qt
-import PyQt6.QtGui as gui
+from . import *
 from functools import partial
 from .SidebarButton import SidebarButton
-from MyWeather.View.utils.enumerations import ColorModes
 
 
 

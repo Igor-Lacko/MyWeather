@@ -1,5 +1,5 @@
 """Contains the header text and buttons to switch days which are shown in the graph"""
-from PyQt6.QtWidgets import *
+from . import *
 from PyQt6.QtGui import QIcon, QFont
 from MyWeather.View.utils.enumerations import *
 

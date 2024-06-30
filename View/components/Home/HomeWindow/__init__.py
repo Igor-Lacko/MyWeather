@@ -2,7 +2,7 @@
 from PyQt6.QtGui import QPaintEvent, QPainter, QImage
 from PyQt6.QtWidgets import *
 from MyWeather.View.utils.enumerations import *
-from .Graph import GraphFrame
+from .Graph.GraphFrame import GraphFrame
 from MyWeather.View.constdata.mode import DEFAULT
 
 

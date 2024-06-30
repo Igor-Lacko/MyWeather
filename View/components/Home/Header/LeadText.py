@@ -3,10 +3,10 @@
                 1. WEATHER CONDITION
                 2. TEMPERATURE/FEELSLIKE TEMPERATURE
 """
-from PyQt6.QtWidgets import *
+
+from . import *
 from PyQt6.QtGui import QFont
-from MyWeather.Model.obj import Realtime
-from MyWeather.View.utils.enumerations import *
+
 
 class HeaderLeadText(QVBoxLayout):
     """Inherits from QVBoxLayout since it's divided into 2 vertical halves"""

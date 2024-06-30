@@ -1,5 +1,5 @@
 #starts the app's main window
-import PyQt6.QtWidgets as widgets
+from . import *
 from .MainWindow import MainWindow
 from os import system as terminal
 

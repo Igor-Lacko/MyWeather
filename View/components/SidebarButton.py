@@ -1,8 +1,5 @@
-import PyQt6.QtGui as gui
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import Qt, QSize, pyqtSignal
+from . import *
 from typing import Callable
-from MyWeather.View.utils.enumerations import ColorModes, StyleSheets
 
 
 

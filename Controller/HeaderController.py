@@ -1,5 +1,5 @@
 """Contains the controller for the header of the home tab"""
-from ..View.components.Home.Header import Header
+from ..View.components.Home.Header.Header import Header
 from ..Model.constdata.icons import Icons
 
 

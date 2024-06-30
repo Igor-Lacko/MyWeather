@@ -1,8 +1,8 @@
 #includes the MyWeather MainWindow class
-import PyQt6.QtWidgets as widgets
+from . import *
 from PyQt6.QtCore import Qt
 from MyWeather.View.utils import enumerations                           #absolute imports to avoid enum issues
-from MyWeather.View.constdata.mode import MODE
+from .constdata.mode import MODE
 from .constdata import buttons, slots
 from .components.Sidebar import Sidebar
 from .tabs import Settings, Home, Weather

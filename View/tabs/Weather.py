@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import *
 from ..components.test import ColoredBar
-from ..utils import enumerations
+from . import enumerations
 
 
 class WeatherTab(QVBoxLayout):

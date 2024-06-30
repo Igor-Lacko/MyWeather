@@ -1,5 +1,5 @@
 """Includes the main graph widget"""
-from PyQt6.QtWidgets import *
+from . import *
 
 class WeatherGraph(QVBoxLayout):
     """Includes the weather graph"""

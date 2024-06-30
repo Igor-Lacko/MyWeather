@@ -1,5 +1,5 @@
 """Initializes the Home tab header"""
-from MyWeather.View.components.Home.Header import Header
+from View.components.Home.Header.Header import Header
 from MyWeather.Controller.HeaderController import GetHeaderIcon
 from . import InitWeatherData
 

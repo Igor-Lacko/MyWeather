@@ -1,7 +1,4 @@
-from ..utils.enumerations import Colors
-from PyQt6.QtWidgets import *
-from PyQt6 import QtGui as gui
-from PyQt6.QtCore import Qt
+from . import *
 
 class ColoredBar(QWidget):
     """Basic colored widget, primarily used for testing
