@@ -3,14 +3,15 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QPixmap, QPalette
 from PyQt6.QtCore import Qt, pyqtSlot
 from MyWeather.Model.obj import Realtime
-from MyWeather.View.utils import enumerations as enums
+from MyWeather.View.utils.enumerations import *
+from MyWeather.View.constdata.mode import DEFAULT
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
 
 
 
 class Header(QWidget):
-    """Contains the header for the home tab, should roughly lok like this
+    """Contains the header for the home tab, should roughly look like this
 
     ------------------------------------------------
     ||ICON|TMP/FEELSLIKE|    CITY, COUNTRY, DATE  ||        ICON: 10% of the layout
@@ -20,7 +21,7 @@ class Header(QWidget):
     ------------------------------------------------
 
     Args:
-        QWidget (QWidget): Inherits from QWidget, doesn't fit any predefined widget
+        QWidget (QWidget): Inherits from QWidget, easier border control
     """
     #constant variable
     stretch_dict = {
@@ -39,28 +40,57 @@ class Header(QWidget):
         super().__init__()
 
         self.setLayout(header_layout := QHBoxLayout())
-        header_layout.setContentsMargins(0,0,0,0)                               #initialize the main horizontalk layout   
+        header_layout.setContentsMargins(0,0,0,0)                               #initialize the main horizontal layout   
         self.header_layout = header_layout
 
-        self.setAutoFillBackground(True)
-        (palette := self.palette()).setColor(QPalette.ColorRole.Window,         #set a background color
-        enums.Colors.CoolGrey)
 
-        self.setPalette(palette)
-        self._palette_ = palette
-        
         self.subcomponents = []                                                 #appended to with every method call
 
-        self.AddIcon(icon_path)                                                 #entry icon
 
-        self.header_layout.addLayout(lead_widget := HeaderLeadText(data))       #lead text
+    #------------------------------ADDING WIDGETS-------------------------------------------#
+
+        self.AddIcon(icon_path)                                                         #entry icon
+
+        self.header_layout.addLayout(lead_widget := HeaderLeadText(data, DEFAULT))      #lead text
         self.subcomponents.append(lead_widget)
 
 
-        self.header_layout.addLayout(data_widget := HeaderDataText(data))       #main data text
+        self.header_layout.addLayout(data_widget := HeaderDataText(data, DEFAULT))      #main data text
         self.subcomponents.append(data_widget)
 
-        self.setStretch()                                                       #stretch every item according to the data stretch variable
+
+
+    #-----------------------------SET STYLING-----------------------------------------------#
+        self.SetStyle(DEFAULT)
+
+
+
+    
+    
+    def SetStyle(self, color_mode : ColorModes):
+        """Sets the visual appearance of the header on initialization
+
+        Args:
+            color_mode (ColorModes): The color mode on initialization
+        """
+        self.setAutoFillBackground(True)                                        #turn on the autofill property
+
+        (palette := self.palette()).setColor(QPalette.ColorRole.Window,
+        Colors.CoolGrey if color_mode == ColorModes.DARK                        #set a background color
+        else Colors.OffWhite)
+
+        self.setPalette(palette)
+        self._palette_ = palette
+
+
+        
+
+        self.setStretch()
+
+
+
+
+
 
 
 
@@ -78,7 +108,7 @@ class Header(QWidget):
             Qt.TransformationMode.SmoothTransformation
             ))
         
-        icon.setAlignment(enums.Alignments.Center)
+        icon.setAlignment(Alignments.Center)
         
         self.header_layout.addWidget(icon)
         self.subcomponents.append(icon)
@@ -91,12 +121,12 @@ class Header(QWidget):
             self.header_layout.setStretch(index, stretch)
 
     
-    @pyqtSlot(enums.ColorModes)
-    def SwitchColorMode(self, mode : enums.ColorModes):
+    @pyqtSlot(ColorModes)
+    def SwitchColorMode(self, mode : ColorModes):
         """Switches the Home tab's header color mode
 
         Args:
-            mode (enums.ColorModes): the current color mode, switching to the other
+            mode (ColorModes): the current color mode, switching to the other
         """
         self.SetLightMode() if mode.value == "light"\
         else self.SetDarkMode()
@@ -106,22 +136,18 @@ class Header(QWidget):
 
     def SetLightMode(self):
         """Switches the current color mode to light"""
-        self._palette_.setColor(QPalette.ColorRole.Window, enums.Colors.OffWhite)
+        self._palette_.setColor(QPalette.ColorRole.Window, Colors.OffWhite)
         self.setPalette(self._palette_)
 
         
         for div in self.subcomponents[1:]:
-            div.SetColor("""QLabel{
-                            color: black;
-                        }""")
+            div.SetColor(ColorModes.LIGHT)
 
     def SetDarkMode(self):
         """Switches the current color mode to dark"""
-        self._palette_.setColor(QPalette.ColorRole.Window, enums.Colors.CoolGrey)
+        self._palette_.setColor(QPalette.ColorRole.Window, Colors.CoolGrey)
         self.setPalette(self._palette_)
         
         for div in self.subcomponents[1:]:
-            div.SetColor("""QLabel{
-                            color: silver;
-                        }""")
+            div.SetColor(ColorModes.DARK)
 

@@ -106,3 +106,8 @@ def ParseForecastWeather(response):
     }
 
     return obj.Forecast(**params)
+
+
+#contains both
+def ParseWeatherData(response):
+    return obj.WeatherData(ParseRealtimeWeather(response), ParseForecastWeather(response))

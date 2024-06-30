@@ -1,22 +1,19 @@
 """Contains the controller for the header of the home tab"""
 from ..View.components.Home.Header import Header
 from ..Model.constdata.icons import Icons
-from ..Model.request import RealtimeWeather
+from . import InitWeatherData
 
 
 
 def GetHeader() -> Header:
-    """Gets an API response and initializes the header
+    """initializes the header
 
     Returns:
         Header: The initialized Header object
     """ 
 
-    if (data := RealtimeWeather("Presov")) is not None:
-        return Header(data, GetHeaderIcon(data.condition, data.is_day))
-    
-    else:
-        return None
+    return Header(current := InitWeatherData.current, 
+                    GetHeaderIcon(current.condition, current.is_day))
     
 
 
@@ -33,9 +30,10 @@ def GetHeaderIcon(condition : str, is_day : bool) -> str:
 
     daynight = "day" if is_day else "night"
 
-    for dict in Icons:
-        if condition in dict['conditions']:
-            return dict[daynight]
+
+    for map in Icons:
+        if condition in map['conditions']:
+            return map[daynight]
 
 
     #default icon, because mostly it actually is sunny in the summer :)

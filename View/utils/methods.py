@@ -1,6 +1,7 @@
 import PyQt6.QtWidgets as widgets
 from PyQt6.QtCore import QObject
 from PIL import Image
+from sys import argv
 
 
 def GetSiblings(widget : widgets.QWidget, type = widgets.QWidget) -> list[QObject] | None:
@@ -25,12 +26,12 @@ def GetSiblings(widget : widgets.QWidget, type = widgets.QWidget) -> list[QObjec
 
 
 
-def PNGColorSwap(src : str, rain : str, dst : str = None):
+def PNGColorSwap(src : str, mode : str, dst : str = None):
     """Swaps a black/white PNG's color to the other
 
     Args:
         src (str): the image source file
-        rain (str): either dark or light 
+        mode (str): either dark or light 
         dst (str): the image destination file, by default the same as src
     """
 
@@ -40,7 +41,7 @@ def PNGColorSwap(src : str, rain : str, dst : str = None):
     BLACK = (0,0,0)
     WHITE = (255,255,255)                                           #constants
 
-    new_color = BLACK if rain == "light" else WHITE                 #get current color to be converted to
+    new_color = BLACK if mode == "light" else WHITE                 #get current color to be converted to
     old_color = WHITE if new_color == BLACK else BLACK              #get old color to  be converted from
 
     (image := Image.open(src)).convert("RGBA")                      #convert the image into rgb tuples
@@ -64,4 +65,15 @@ def PNGColorSwap(src : str, rain : str, dst : str = None):
     image.putdata(modified)
     image.save(dst)
 
-        
+
+def main():
+    if len(argv) != 3:
+        print("kamo no tak")
+        return
+    
+    PNGColorSwap(argv[1], "dark", argv[2])
+
+
+if __name__ == "__main__":
+    main()
+

@@ -37,6 +37,7 @@ class Sidebar(QWidget):
 
         (icon := QLabel()).setPixmap(
             gui.QPixmap('View/Assets/MainIcon.png'))                #set an centrally-aligned icon
+        
         icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._layout_.addWidget(icon)
 
@@ -103,6 +104,7 @@ class Sidebar(QWidget):
         self.SetLayoutSpacing()                                     #align the layout correctly
         
         self.setLayout(self._layout_)                               #set the layout variable as the current layout
+
         
         
 

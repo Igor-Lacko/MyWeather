@@ -7,3 +7,4 @@
 <a href="https://www.flaticon.com/free-icons/night-mode" title="night mode icons">Night mode icons created by Roman Danylyk - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/rainy" title="rainy icons">Rainy icons created by Konkapp - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/partly-cloudy-day" title="partly cloudy day icons">Partly cloudy day icons created by Vectorslab - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/arrows" title="arrows icons">Arrows icons created by rukanicon - Flaticon</a>

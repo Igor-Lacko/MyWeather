@@ -11,6 +11,7 @@ from os import system as terminal
 
 
 def Main():
+
     MyWeather = widgets.QApplication([])
     
     main_window = MainWindow()

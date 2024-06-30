@@ -9,20 +9,17 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QFont
 from MyWeather.Model.obj import Realtime
-from ....utils.enumerations import Alignments
+from MyWeather.View.utils.enumerations import *
 
 class HeaderDataText(QVBoxLayout):
     """Inherits from the VBox layout since the items are stacked vertically"""
 
-    def __init__(self, data : Realtime):
+    def __init__(self, data : Realtime, mode : ColorModes):
         """Data text constructor
 
         Args:
-            location (str, optional): Default location. Defaults to "Presov, Slovakia".
-            temperature (str, optional): temperatire at location. Defaults to "20.1°C, feels like 20.1".
-            wind (str, optional): wind speed and direction. Defaults to "Wind: 40°Northeast at 16.9km/h".
-            precip (str, optional): precipitation height. Defaults to "Precipitation height: 0.0mm".
-            humidity (str, optional): humidity percentage. Defaults to "Humidity: 73%".
+            data (Realtime): contains the weather data
+            mode (ColorModes): on initialization, for setting a color
         """ 
         
         super().__init__()
@@ -57,12 +54,17 @@ class HeaderDataText(QVBoxLayout):
 
             widget.setAlignment(Alignments.Left)
             widget.setFont(QFont('Noto Sans Mono', pointSize=15))
-            widget.setStyleSheet("""QLabel{margin-left: 50px;}""")
-
+            
+        
+        self.SetColor(mode)
     
-    def SetColor(self, color : str):
+        self.setContentsMargins(0,0,20,0)
+    
+    
+    
+    def SetColor(self, color_mode : ColorModes):
         """Sets the text color"""
         
         for widget in self.widgets:
-            widget.setStyleSheet(color)
+            widget.setStyleSheet((StyleSheets.dark.HeaderLead if color_mode == ColorModes.DARK else StyleSheets.light.HeaderLead).value)
 

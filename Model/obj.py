@@ -146,3 +146,11 @@ class Forecast:
         self.length = len(self.days)
 
 
+
+#contains both Forecast and Realtime objects, derived from the Forecast response
+@dataclass
+class WeatherData:
+    current : Realtime
+    forecast : Forecast
+
+

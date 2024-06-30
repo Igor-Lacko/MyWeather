@@ -6,16 +6,18 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QFont
 from MyWeather.Model.obj import Realtime
-from ....utils.enumerations import Alignments
+from MyWeather.View.utils.enumerations import *
 
 class HeaderLeadText(QVBoxLayout):
     """Inherits from QVBoxLayout since it's divided into 2 vertical halves"""
 
-    def __init__(self, data : Realtime, font : str = "Ubuntu"):
+    def __init__(self, data : Realtime, mode : ColorModes, font : str = "Ubuntu"):
         """Lead text constructor
 
         Args:
             data (Realtime): contains the weather data API response to be used
+            font (str): font to be used, default is ubuntu
+            mode (ColorModes): color mode on initialization
         """
 
         super().__init__()
@@ -39,11 +41,13 @@ class HeaderLeadText(QVBoxLayout):
 
         self.widgets = [location_widget, time_widget, condition_widget]                             #to allow access to individual sections
 
+        self.SetColor(mode)
+
         
 
 
-    def SetColor(self, color : str):
+    def SetColor(self, color_mode : ColorModes):
         """Sets the text background color"""
 
         for widget in self.widgets:
-            widget.setStyleSheet(color)
+            widget.setStyleSheet((StyleSheets.dark.HeaderLead if color_mode == ColorModes.DARK else StyleSheets.light.HeaderLead).value)

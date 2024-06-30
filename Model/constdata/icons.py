@@ -79,7 +79,10 @@ Icons = [
             "Thundery outbreaks possible",
             "Patchy light rain with thunderer",
             "Moderate or heavy rain with thunder"
-        ]
+        ],
+
+        "day"   :   "View/Assets/ConditionIcons/day/storm.png",
+        "night" :   "View/Assets/ConditionIcons/night/storm.png"
     }
 
 

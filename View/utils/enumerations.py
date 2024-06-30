@@ -61,6 +61,48 @@ class DarkStyleSheets(Enum):
         background-color: #11c0c0c0;
     }"""
 
+
+    HeaderData = """QLabel{
+        color: silver;
+        border: none;
+    }"""
+
+    HeaderLead = """QLabel{
+        color: silver;
+        border: none;
+    }"""
+
+    GraphFrame = """
+
+    
+        QFrame#GraphFrame{
+            border: 5px solid silver;
+            border-radius: 15px;
+            background-color: rgb(33,33,33)
+        }
+    
+        QPushButton{
+            background: transparent;
+            border: none;
+        }
+
+        QPushButton:hover:!pressed{
+            background-color: #11c0c0c0;
+        }
+
+        QWidget#header_widget{
+            border-bottom: 2px solid silver;
+        }
+
+        
+
+        
+
+
+    """
+
+    
+
     
 
 
@@ -95,6 +137,41 @@ class LightStyleSheets(Enum):
     SidebarButtonHover = """QToolButton:hover:!pressed{
         background-color: #11000000;
     }"""
+
+
+    HeaderLead = """QLabel{
+        color: black;
+        border: none;
+    }"""
+
+    HeaderData = """QLabel{
+        border: none;
+        color: black;
+    }"""
+
+    GraphFrame = """
+
+    QFrame#GraphFrame{
+            border: 4px solid black;
+            border-radius: 15px;
+            background-color: rgb(250,249,246)
+    }
+        
+    QPushButton{
+        background: transparent;
+        border-left: 2px solid silver;
+    }
+
+    QPushButton:hover:!pressed{
+        background-color: #11000000;
+    }
+
+    QWidget#header_widget{
+        border-bottom: 2px solid;
+    }
+    """
+
+    
 
     
 
