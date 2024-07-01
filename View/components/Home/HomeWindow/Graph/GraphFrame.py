@@ -19,7 +19,7 @@ class GraphFrame(QFrame):
         
         
         (layout := QVBoxLayout()).addLayout(GraphInit.GetGraphHeader())
-        layout.addLayout(WeatherGraph())
+        layout.addWidget(WeatherGraph())
         
         layout.setStretch(0,10)
         layout.setStretch(1,90)

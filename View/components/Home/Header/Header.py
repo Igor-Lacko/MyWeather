@@ -1,7 +1,6 @@
 from . import *
 from PyQt6.QtGui import QPixmap, QPalette
 from PyQt6.QtCore import Qt, pyqtSlot
-from MyWeather.View.constdata.mode import DEFAULT
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
 
@@ -48,17 +47,17 @@ class Header(QWidget):
 
         self.AddIcon(icon_path)                                                         #entry icon
 
-        self.header_layout.addLayout(lead_widget := HeaderLeadText(data, DEFAULT))      #lead text
+        self.header_layout.addLayout(lead_widget := HeaderLeadText(data, MODE))         #lead text
         self.subcomponents.append(lead_widget)
 
 
-        self.header_layout.addLayout(data_widget := HeaderDataText(data, DEFAULT))      #main data text
+        self.header_layout.addLayout(data_widget := HeaderDataText(data, MODE))         #main data text
         self.subcomponents.append(data_widget)
 
 
 
     #-----------------------------SET STYLING-----------------------------------------------#
-        self.SetStyle(DEFAULT)
+        self.SetStyle(MODE)
 
 
 

@@ -70,5 +70,10 @@ class SidebarButton(QToolButton):
         #text under icon for a more modern look
         self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
+        #default font
+        self.setFont(gui.QFont(FONTS.sidebar))
+
         #size policy
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+
+        

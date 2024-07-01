@@ -3,7 +3,7 @@ from PyQt6.QtGui import QPaintEvent, QPainter, QImage
 from PyQt6.QtWidgets import *
 from MyWeather.View.utils.enumerations import *
 from .Graph.GraphFrame import GraphFrame
-from MyWeather.View.constdata.mode import DEFAULT
+from MyWeather.Init import DEFAULT_MODE
 
 
 
@@ -15,7 +15,7 @@ class HomeWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.color = Colors.CoolGrey if DEFAULT == ColorModes.DARK else Colors.OffWhite
+        self.color = Colors.CoolGrey if DEFAULT_MODE == ColorModes.DARK else Colors.OffWhite
 
         self.InitLayout()
                 
@@ -32,7 +32,7 @@ class HomeWindow(QWidget):
         horizontal = QHBoxLayout() #contains the graph frame
 
         horizontal.addSpacerItem(QSpacerItem(10,10))
-        horizontal.addWidget(GraphFrame(StyleSheets.dark.GraphFrame if DEFAULT == ColorModes.DARK else StyleSheets.light.GraphFrame))
+        horizontal.addWidget(GraphFrame(StyleSheets.dark.GraphFrame if DEFAULT_MODE == ColorModes.DARK else StyleSheets.light.GraphFrame))
         horizontal.addSpacerItem(QSpacerItem(10,10))
 
         horizontal.setStretch(0,1)
@@ -43,7 +43,7 @@ class HomeWindow(QWidget):
         vertical.addLayout(horizontal)
 
         vertical.setStretch(0,1)
-        vertical.setStretch(1,1)
+        vertical.setStretch(1,2)
 
         self.setLayout(vertical)
 

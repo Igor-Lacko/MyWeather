@@ -24,10 +24,13 @@ class MainWindow(widgets.QMainWindow):
         super().__init__()
         self.setWindowTitle("MyWeather")
 
+        DEFAULT_COLOR = enumerations.Colors.CoolGrey if MODE == enumerations.ColorModes.DARK\
+        else enumerations.Colors.OffWhite
+
         #dummy widget to set layout
         self.setCentralWidget(empty := widgets.QWidget())
 
-        (main_layout := widgets.QHBoxLayout()).addWidget(sidebar := Sidebar(enumerations.Colors.CoolGrey))
+        (main_layout := widgets.QHBoxLayout()).addWidget(sidebar := Sidebar(DEFAULT_COLOR))
         main_layout.addLayout(tabs := widgets.QStackedLayout())
 
         (home := widgets.QWidget()).setLayout(home_tab := Home.HomeTab())

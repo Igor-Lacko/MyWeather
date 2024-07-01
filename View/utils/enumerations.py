@@ -39,19 +39,16 @@ class DarkStyleSheets(Enum):
         Enum (Enum): Inherits from the Enum class
     """ 
     SidebarButtonDefault = """QToolButton{
-        font-family: times;
         background: transparent;
         border: none;
     }"""
 
     SidebarButtonTop = """QToolButton{
-        font-family: times;
         background: transparent;
         border-top: 3px solid gray;
     }"""
 
     SidebarButtonBottom = """QToolButton{
-        font-family: times;
         background: transparent;
         border-bottom: 3px solid gray;
         border-style: solid;
@@ -94,7 +91,25 @@ class DarkStyleSheets(Enum):
             border-bottom: 2px solid silver;
         }
 
-        
+    
+
+
+        QComboBox{
+            border-top: none;
+            border-bottom: none;
+            border-left: none;
+            border-right: 2px solid silver;
+            background: transparent;
+        }
+
+        QComboBox:hover:!pressed{
+            border-top: none;
+            border-bottom: none;
+            border-left: none;
+            border-right: 2px solid silver;
+            background-color: #11c0c0c0;
+        }
+
 
         
 
@@ -113,21 +128,18 @@ class LightStyleSheets(Enum):
         Enum (Enum): Inherits from the Enum class
     """ 
     SidebarButtonDefault = """QToolButton{
-        font-family: times;
         color: black;
         background: transparent;
         border: none;
     }"""
 
     SidebarButtonTop = """QToolButton{
-        font-family: times;
         color: black;
         background: transparent;
         border-top: 3px solid black;
     }"""
 
     SidebarButtonBottom = """QToolButton{
-        font-family: times;
         color: black;
         background: transparent;
         border-bottom: 3px solid black;
@@ -152,23 +164,53 @@ class LightStyleSheets(Enum):
     GraphFrame = """
 
     QFrame#GraphFrame{
-            border: 4px solid black;
+            border: 5px solid black;
             border-radius: 15px;
             background-color: rgb(250,249,246)
-    }
-        
-    QPushButton{
-        background: transparent;
-        border-left: 2px solid silver;
-    }
+        }
+    
+        QPushButton{
+            background: transparent;
+            border: none;
+        }
 
-    QPushButton:hover:!pressed{
-        background-color: #11000000;
-    }
+        QPushButton:hover:!pressed{
+            background-color: #11000000;
+        }
 
-    QWidget#header_widget{
-        border-bottom: 2px solid;
-    }
+        QWidget#header_widget{
+            border-bottom: 2px solid black;
+        }
+
+        QLabel{
+            color: black;
+        }
+
+    
+
+
+        QComboBox{
+            border-top: none;
+            border-bottom: none;
+            border-left: none;
+            border-right: 2px solid black;
+            background: transparent;
+            color: black; 
+        }
+
+        QComboBox:hover:!pressed{
+            border-top: none;
+            border-bottom: none;
+            border-left: none;
+            border-right: 2px solid black;
+            background-color: #11000000;
+            color: black;
+        }
+
+        QComboBox:dropdown{
+            background-color: rgb(250,249,246);
+            color: black;
+        }
     """
 
     

@@ -1,4 +1,4 @@
 from MyWeather.View.utils.enumerations import ColorModes
+from MyWeather.Init import DEFAULT_MODE
 
-DEFAULT  = ColorModes.DARK
-MODE = DEFAULT
+MODE = DEFAULT_MODE
