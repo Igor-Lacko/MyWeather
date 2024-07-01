@@ -74,10 +74,10 @@ class TitleMenu(QHBoxLayout):
         self.setContentsMargins(0,0,0,0)
         self.setSpacing(0)
 
-
         self.text_widget = text
         self.menu = menu
 
+        self.text_widget.setObjectName("title_widget")
         self.menu.addItems(["Temp", "Rain", "Wind"])
 
         for widget in [self.text_widget, self.menu]:
@@ -92,9 +92,4 @@ class TitleMenu(QHBoxLayout):
         """Sets the text style, font and font size"""
         text.setAlignment(Alignments.Center)
         text.setFont(QFont("Ubuntu", pointSize=15))
-        text.setStyleSheet("""QLabel{
-                            border-right: 2px solid silver;
-                            border-left: 2px solid silver;
-                            border-bottom: none;
-                            border-top: none;
-                            }""")
+        

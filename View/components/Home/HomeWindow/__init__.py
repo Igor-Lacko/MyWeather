@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import *
 from MyWeather.View.utils.enumerations import *
 from .Graph.GraphFrame import GraphFrame
 from MyWeather.Init import DEFAULT_MODE
+from PyQt6.QtCore import pyqtSlot
 
 
 
@@ -15,7 +16,8 @@ class HomeWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.color = Colors.CoolGrey if DEFAULT_MODE == ColorModes.DARK else Colors.OffWhite
+
+        self.background = f"Assets/Backgrounds/{DEFAULT_MODE.value}/home-background.jpg"
 
         self.InitLayout()
                 
@@ -23,7 +25,8 @@ class HomeWindow(QWidget):
 
     def paintEvent(self, event: QPaintEvent | None) -> None:
         (painter := QPainter()).begin(self)
-        painter.drawImage(event.rect(), QImage('Assets/Backgrounds/home-background.jpg'))
+        print(self.background)
+        painter.drawImage(event.rect(), QImage(self.background))
 
     def InitLayout(self):
         """Initializes the combination of vertical/horizontal layouts due to more complicated logic"""
@@ -32,7 +35,7 @@ class HomeWindow(QWidget):
         horizontal = QHBoxLayout() #contains the graph frame
 
         horizontal.addSpacerItem(QSpacerItem(10,10))
-        horizontal.addWidget(GraphFrame(StyleSheets.dark.GraphFrame if DEFAULT_MODE == ColorModes.DARK else StyleSheets.light.GraphFrame))
+        horizontal.addWidget(graph := GraphFrame(StyleSheets.dark.GraphFrame if DEFAULT_MODE == ColorModes.DARK else StyleSheets.light.GraphFrame))
         horizontal.addSpacerItem(QSpacerItem(10,10))
 
         horizontal.setStretch(0,1)
@@ -46,6 +49,13 @@ class HomeWindow(QWidget):
         vertical.setStretch(1,2)
 
         self.setLayout(vertical)
+        self.graph = graph
 
+    
+    @pyqtSlot(ColorModes)
+    def switch_color_mode(self, mode : ColorModes):
+        """Swaps the background image according to the mode"""
+        self.background = f"Assets/Backgrounds/{mode.value}/home-background.jpg"
+        self.update()
 
         

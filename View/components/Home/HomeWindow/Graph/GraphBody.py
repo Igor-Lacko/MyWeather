@@ -18,14 +18,22 @@ class WeatherGraph(FigureCanvasQTAgg):
         pyplot.style.use(GRAPH_MODE)
         figure, axes = pyplot.subplots()
         super().__init__(figure)
-        figure.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.15)
-        axes.set_xlabel('Time', fontsize=14)
+        figure.subplots_adjust(left=0.1, right=0.95, top=0.9, bottom=0.15)
+        axes.set_xlabel('Time', fontsize=14, loc='right')
+        axes.set_ylabel('°C', fontsize=14, loc='top', rotation=0)
         axes.set_title('Temperature', fontsize=20)
 
         axes.plot(range(24), temperatures)
 
         pyplot.xticks(range(24))
         pyplot.locator_params('y',10)
+        self.figure = figure
+        self.axes = axes
+
+        
+
+
+    
 
         
 

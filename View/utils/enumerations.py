@@ -91,6 +91,15 @@ class DarkStyleSheets(Enum):
             border-bottom: 2px solid silver;
         }
 
+        QLabel#title_widget{
+            color: silver;
+            border-left: 2px solid silver;
+            border-right: 2px solid silver;
+            border-bottom: none;
+            border-top: none;
+            background: transparent;
+        }
+
     
 
 
@@ -100,6 +109,8 @@ class DarkStyleSheets(Enum):
             border-left: none;
             border-right: 2px solid silver;
             background: transparent;
+            color: silver;
+            selection-background-color: #11c0c0c0;
         }
 
         QComboBox:hover:!pressed{
@@ -107,9 +118,14 @@ class DarkStyleSheets(Enum):
             border-bottom: none;
             border-left: none;
             border-right: 2px solid silver;
+            color: silver;
             background-color: #11c0c0c0;
         }
-
+        
+        QComboBox QAbstractItemView{
+            background-color: rgb(33,33,33);
+            color: silver;
+        }
 
         
 
@@ -161,10 +177,15 @@ class LightStyleSheets(Enum):
         color: black;
     }"""
 
+
+    HomeWindow = """QWidget{
+        border-image: url('Assets/Backgrounds/light/home-background.jpg') 0 0 0 0 stretch stretch;
+    }"""
+
     GraphFrame = """
 
     QFrame#GraphFrame{
-            border: 5px solid black;
+            border: 7px solid black;
             border-radius: 15px;
             background-color: rgb(250,249,246)
         }
@@ -182,8 +203,13 @@ class LightStyleSheets(Enum):
             border-bottom: 2px solid black;
         }
 
-        QLabel{
+        QLabel#title_widget{
             color: black;
+            border-left: 2px solid black;
+            border-right: 2px solid black;
+            border-bottom: none;
+            border-top: none;
+            background: transparent;
         }
 
     
@@ -192,10 +218,11 @@ class LightStyleSheets(Enum):
         QComboBox{
             border-top: none;
             border-bottom: none;
-            border-left: none;
             border-right: 2px solid black;
             background: transparent;
             color: black; 
+            selection-background-color: #11000000;
+            padding: 1px 0px 1px 3px;
         }
 
         QComboBox:hover:!pressed{
@@ -203,14 +230,20 @@ class LightStyleSheets(Enum):
             border-bottom: none;
             border-left: none;
             border-right: 2px solid black;
-            background-color: #11000000;
             color: black;
+            background-color: #11000000;
         }
 
-        QComboBox:dropdown{
+        QComboBox QAbstractItemView{
             background-color: rgb(250,249,246);
             color: black;
         }
+
+        FigureCanvasQTAgg{
+            border-bottom: 2px black solid;
+        }
+
+
     """
 
     

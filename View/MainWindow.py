@@ -44,6 +44,7 @@ class MainWindow(widgets.QMainWindow):
 
         sidebar._layout_= sidebar.InitButtons(buttons.buttons, tabs, MODE, slots.slots)
         sidebar.mode_trigger.color_switch_signal.connect(home_tab.header.SwitchColorMode)
+        sidebar.mode_trigger.color_switch_signal.connect(home_tab.window.switch_color_mode)
         main_layout.setContentsMargins(0,0,0,0)
         main_layout.setSpacing(0)
         
