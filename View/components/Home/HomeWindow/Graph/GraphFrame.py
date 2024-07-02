@@ -2,7 +2,7 @@
 from . import *
 from MyWeather.View.utils.enumerations import *
 from MyWeather.Init.MainWindowInits import GraphInit
-from .GraphBody import WeatherGraph
+from .GraphLayout import GraphLayout
 from PyQt6.QtCore import pyqtSlot
 
 
@@ -20,8 +20,7 @@ class GraphFrame(QFrame):
         
         
         (layout := QVBoxLayout()).addLayout(header := GraphInit.GetGraphHeader())
-        (graph_layout := QHBoxLayout()).addWidget(graph := WeatherGraph())
-        layout.addLayout(graph_layout)
+        layout.addLayout(graph := GraphLayout())
 
         self.graph = graph
         self.header = header
@@ -29,14 +28,14 @@ class GraphFrame(QFrame):
         layout.setStretch(0,10)
         layout.setStretch(1,90)
 
-        graph_layout.setContentsMargins(0,0,0,0)
-        graph_layout.setSpacing(0)
+        
 
         layout.setContentsMargins(0,0,0,0)
         layout.setSpacing(0)
         self.setLayout(layout)
 
-        self.setStyleSheet(sheet.value)
+        self.setStyleSheet(StyleSheets.light.GraphFrame.value)
+        self.header.widgets[1].menu.currentIndexChanged.connect(self.graph.SwitchGraph)
 
     
 

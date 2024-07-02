@@ -1,17 +1,15 @@
-"""Includes the main graph widget"""
+"""Includes the main graph widget's class"""
 from . import *
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 from matplotlib import pyplot
+
 
 class WeatherGraph(FigureCanvasQTAgg):
     """Includes the weather graph"""
     def __init__(self):
         
 
-        temperatures = []
-        for hour in InitWeatherData.forecast.days[0].hours:
-            temperatures.append(hour.temperature_data.actual_temperature)
 
         
 
@@ -20,15 +18,89 @@ class WeatherGraph(FigureCanvasQTAgg):
         super().__init__(figure)
         figure.subplots_adjust(left=0.1, right=0.95, top=0.9, bottom=0.15)
         axes.set_xlabel('Time', fontsize=14, loc='right')
-        axes.set_ylabel('°C', fontsize=14, loc='top', rotation=0)
-        axes.set_title('Temperature', fontsize=20)
+        axes.spines['top'].set_visible(False)
 
-        axes.plot(range(24), temperatures)
 
         pyplot.xticks(range(24))
-        pyplot.locator_params('y',10)
         self.figure = figure
         self.axes = axes
+
+    def switch_color_mode(self, mode : ColorModes):
+
+        self.figure.set_facecolor('black')
+        self.axes.set_facecolor('black')
+        self.axes.xaxis.label.set_color('white')
+        self.axes.yaxis.label.set_color('white')
+        [label.set_color('white') for label in self.axes.xaxis.get_ticklabels()]
+        [label.set_color('white') for label in self.axes.yaxis.get_ticklabels()]
+
+
+
+
+
+class TemperatureGraph(WeatherGraph):
+    """Contains the graph for actual and feelslike temperature"""
+    
+    def __init__(self, actual : list[float], feelslike : list[float]):
+        """Temperature graph constructor
+
+        Args:
+            actual (list[float]): List of the actual temperatures for every hour    
+            feelslike (list[float]): List of the temperatures that it feels like at every hour
+        """
+
+        super().__init__()
+
+        self.axes.set_title('Temperature')
+        self.axes.set_ylabel('°C', rotation=0, loc='top')
+
+        self.axes.plot(actual, label="Actual temperature")
+        self.axes.plot(feelslike, label="Feels like")
+
+        self.axes.legend(loc='best', framealpha=1)
+
+
+class WindGraph(WeatherGraph):
+    """Contains the graph with wind speed"""
+
+    def __init__(self, speed : list[float]):
+        """Wind graph constructor
+
+        Args:
+            speed (list[float]): List of wind speed for a given hour
+        """
+
+        super().__init__()
+
+        self.axes.set_title('Wind speed')
+        self.axes.set_ylabel('km/h')
+
+        self.axes.plot(speed, label="Wind speed in km/h")
+
+        self.axes.legend(loc='best', framealpha=1)
+
+
+class RainGraph(WeatherGraph):
+    """Contains the graph with precipitation height, humidity, and chance of rain"""
+
+    def __init__(self, humidity : list[int], chance_of_rain : list[int]):
+        """Rain graph constructor
+
+        Args:
+            humidity (list[int]): List of humidity percentages for each hour
+            chance_of_rain (list[int]): List of chance of rain as a percentage at a given hour
+        """
+        super().__init__()
+
+        self.axes.set_title('Rain/humidity')
+        self.axes.set_ylabel('%', rotation=0, loc='top')
+
+        self.axes.plot(humidity, label="Humidity percentage")
+        self.axes.plot(chance_of_rain, label="Chance of rain in %")
+
+        self.axes.legend(loc='best', framealpha=1)
+
+
 
         
 

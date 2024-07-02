@@ -87,9 +87,13 @@ class TitleMenu(QHBoxLayout):
 
         
 
+        
+
 
     def InitTextStyle(self, text : QLabel):
         """Sets the text style, font and font size"""
         text.setAlignment(Alignments.Center)
         text.setFont(QFont("Ubuntu", pointSize=15))
+
+    
         
