@@ -132,9 +132,22 @@ class DarkStyleSheets(Enum):
 
     """
 
+    UpdateButton = """QPushButton{
+        border: 1px solid white;
+        background: transparent;
+    }
     
+    QPushButton:hover{
+        background-color: #11c0c0c0;
+    }
+    """
 
-    
+
+
+
+
+
+
 
 
 class LightStyleSheets(Enum):
@@ -176,6 +189,16 @@ class LightStyleSheets(Enum):
         border: none;
         color: black;
     }"""
+
+    UpdateButton = """QPushButton{
+        border: 1px solid black;
+        background: transparent;
+    }
+    
+    QPushButton:hover{
+        background-color: #11000000;
+    }
+    """
 
 
     HomeWindow = """QWidget{

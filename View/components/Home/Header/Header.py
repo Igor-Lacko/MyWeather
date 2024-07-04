@@ -1,5 +1,5 @@
 from . import *
-from PyQt6.QtGui import QPixmap, QPalette
+from PyQt6.QtGui import QPixmap, QPalette, QIcon
 from PyQt6.QtCore import Qt, pyqtSlot
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
@@ -21,9 +21,10 @@ class Header(QWidget):
     """
     #constant variable
     stretch_dict = {
-        0 : 10,
-        1 : 10,
-        2 : 80
+        0 : 20,
+        1 : 20,
+        2 : 158,
+        3 : 2
     }
 
     def __init__(self, data : Realtime, icon_path : str):
@@ -36,23 +37,25 @@ class Header(QWidget):
         super().__init__()
 
         self.setLayout(header_layout := QHBoxLayout())
-        header_layout.setContentsMargins(0,0,0,0)                               #initialize the main horizontal layout   
+        header_layout.setContentsMargins(0,0,0,0)                                           #initialize the main horizontal layout   
         self.header_layout = header_layout
 
 
-        self.subcomponents = []                                                 #appended to with every method call
+        self.subcomponents = []                                                             #appended to with every method call
 
 
     #------------------------------ADDING WIDGETS-------------------------------------------#
 
-        self.AddIcon(icon_path)                                                         #entry icon
+        self.AddIcon(icon_path)                                                             #entry icon
 
-        self.header_layout.addLayout(lead_widget := HeaderLeadText(data, MODE))         #lead text
+        self.header_layout.addLayout(lead_widget := HeaderLeadText(data, MODE))             #lead text
         self.subcomponents.append(lead_widget)
 
 
-        self.header_layout.addLayout(data_widget := HeaderDataText(data, MODE))         #main data text
+        self.header_layout.addLayout(data_widget := HeaderDataText(data, MODE))             #main data text
         self.subcomponents.append(data_widget)
+
+        self.header_layout.addWidget(self.GetUpdateButton(), alignment=Alignments.TopRight) #data update button
 
 
 
@@ -117,6 +120,22 @@ class Header(QWidget):
             self.header_layout.setStretch(index, stretch)
 
     
+    def GetUpdateButton(self) -> QPushButton:
+        """Initializes the update button in the upper right corner (so far does nothing, TODO: actually update the Header content)
+
+        Returns:
+            QPushButton: The initialized update button
+        """
+
+        (update_button := QPushButton()).setIcon(QIcon(f"Assets/UpdateIcon{MODE.value.title()}.png"))
+        update_button.setStyleSheet(StyleSheets.dark.UpdateButton.value if MODE == ColorModes.DARK\
+                                    else StyleSheets.light.UpdateButton.value)
+        
+        self.subcomponents.append(update_button)
+        
+        return update_button
+
+    
     @pyqtSlot(ColorModes)
     def SwitchColorMode(self, mode : ColorModes):
         """Switches the Home tab's header color mode
@@ -136,14 +155,19 @@ class Header(QWidget):
         self.setPalette(self._palette_)
 
         
-        for div in self.subcomponents[1:]:
+        for div in self.subcomponents[1:-1]:
             div.SetColor(ColorModes.LIGHT)
+
+        self.subcomponents[-1].setStyleSheet(StyleSheets.light.UpdateButton.value)
+        self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconLight.png'))
 
     def SetDarkMode(self):
         """Switches the current color mode to dark"""
         self._palette_.setColor(QPalette.ColorRole.Window, Colors.CoolGrey)
         self.setPalette(self._palette_)
         
-        for div in self.subcomponents[1:]:
+        for div in self.subcomponents[1:-1]:
             div.SetColor(ColorModes.DARK)
 
+        self.subcomponents[-1].setStyleSheet(StyleSheets.dark.UpdateButton.value)
+        self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconDark.png'))

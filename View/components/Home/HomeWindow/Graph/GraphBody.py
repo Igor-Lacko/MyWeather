@@ -47,8 +47,10 @@ class WeatherGraph(FigureCanvasQTAgg):
 
         self.figure.set_facecolor('black')
         self.axes.set_facecolor('black')
+        
         self.axes.xaxis.label.set_color('white')
         self.axes.yaxis.label.set_color('white')
+        
         [label.set_color('white') for label in self.axes.xaxis.get_ticklabels()]
         [label.set_color('white') for label in self.axes.yaxis.get_ticklabels()]
     

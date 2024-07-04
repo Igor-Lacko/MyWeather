@@ -5,3 +5,5 @@ from . import InitWeatherData
 def GetGraphHeader() -> FrameHeader:
     """Initializes the frame header with the on-init weather data"""
     return FrameHeader(f"Forecast for {InitWeatherData.forecast.days[0].date_str}")
+
+
