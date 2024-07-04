@@ -33,7 +33,7 @@ class FrameHeader(QHBoxLayout):
         self.widgets = [left_button, title, right_button]
 
         self.SetStretch(header_layout)
-        self.InitItems()
+        self.SetColor(MODE)
 
         self.addWidget(header_widget)
 
@@ -51,10 +51,14 @@ class FrameHeader(QHBoxLayout):
 
 
 
-    def InitItems(self):
-        """Initializes the button icons (so far only the icons), TODO: color modes"""
-        (right_button := self.widgets[0]).setIcon(QIcon(f"Assets/GraphFrameIcons/{MODE.value}/left-arrow.png"))
-        (left_button := self.widgets[2]).setIcon(QIcon(f"Assets/GraphFrameIcons/{MODE.value}/right-arrow.png"))
+    def SetColor(self, mode : ColorModes):
+        """Initializes the button icons (so far only the icons). Called on __init__()
+
+        Args:
+            mode (ColorModes): The provided color mode
+        """
+        self.widgets[0].setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/left-arrow.png"))
+        self.widgets[2].setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/right-arrow.png"))
 
 
 
@@ -85,7 +89,6 @@ class TitleMenu(QHBoxLayout):
 
         self.InitTextStyle(self.text_widget)
 
-        
 
         
 
@@ -93,7 +96,12 @@ class TitleMenu(QHBoxLayout):
     def InitTextStyle(self, text : QLabel):
         """Sets the text style, font and font size"""
         text.setAlignment(Alignments.Center)
-        text.setFont(QFont("Ubuntu", pointSize=15))
+        text.setFont(QFont(FONTS.graph_header, pointSize=15))
+
+    
+    
+    def ChangeTitle(self, date_str : str): 
+        self.text_widget.setText(f"Forecast for {date_str}")
 
     
         

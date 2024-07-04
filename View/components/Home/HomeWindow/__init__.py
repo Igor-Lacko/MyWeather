@@ -25,7 +25,6 @@ class HomeWindow(QWidget):
 
     def paintEvent(self, event: QPaintEvent | None) -> None:
         (painter := QPainter()).begin(self)
-        print(self.background)
         painter.drawImage(event.rect(), QImage(self.background))
 
     def InitLayout(self):
@@ -35,7 +34,7 @@ class HomeWindow(QWidget):
         horizontal = QHBoxLayout() #contains the graph frame
 
         horizontal.addSpacerItem(QSpacerItem(10,10))
-        horizontal.addWidget(graph := GraphFrame(StyleSheets.dark.GraphFrame if DEFAULT_MODE == ColorModes.DARK else StyleSheets.light.GraphFrame))
+        horizontal.addWidget(graph := GraphFrame())
         horizontal.addSpacerItem(QSpacerItem(10,10))
 
         horizontal.setStretch(0,1)
@@ -57,5 +56,7 @@ class HomeWindow(QWidget):
         """Swaps the background image according to the mode"""
         self.background = f"Assets/Backgrounds/{mode.value}/home-background.jpg"
         self.update()
+
+        self.graph.switch_color_mode(mode)
 
         

@@ -75,7 +75,8 @@ class Hour:
     #initialize the is_day variable, (night from 22 to 6)
     def __post_init__(self): 
         self.is_day = self.time.hour >= 22 or self.time.hour <= 6
-        self.time_str = f"{self.time.day}.{self.time.month}.{self.time.year}, {self.time.hour}:{self.time.minute:02d}"
+        self.date_str = f"{self.time.day}.{self.time.month}.{self.time.year}"
+        self.time_str = f"{self.date_str}, {self.time.hour}:{self.time.minute:02d}"
 
 
 
@@ -101,7 +102,7 @@ class Day:
     date_str : str = field(init=False)
 
     def __post_init__(self):
-        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}, {self.date.hour}:{self.date.minute:02d}"
+        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}"
 
 
 
@@ -121,7 +122,7 @@ class Realtime:
     #initialize the is_day variable
     def __post_init__(self):
         self.is_day = 6 <= self.date.hour < 22 
-        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}, {self.date.hour}:{self.date.minute:02d}"
+        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}"
 
 
 

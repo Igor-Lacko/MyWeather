@@ -25,7 +25,7 @@ def RealtimeWeather(city : str) -> parse.obj.Realtime:
 
 
 #forecast for city "city" for the next "days" days
-def Forecast(city : str, days : int = 7 - date.today().weekday(), dt : date = None) -> parse.obj.Forecast:
+def Forecast(city : str, days : int = 3, dt : date = None) -> parse.obj.Forecast:
     try:
         response = api.forecast_weather(q=city, days=days, dt=dt)
     
@@ -44,7 +44,7 @@ def Forecast(city : str, days : int = 7 - date.today().weekday(), dt : date = No
 
 
 
-def CompleteData(city : str, days : int = 7 - date.today().weekday(), dt : date = None) -> parse.obj.WeatherData:
+def CompleteData(city : str, days : int = 3, dt : date = None) -> parse.obj.WeatherData:
     try:
         response = api.forecast_weather(q=city, days=days, dt=dt)
     
