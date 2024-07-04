@@ -3,6 +3,7 @@
 """
 from MyWeather.Model.request import CompleteData
 from MyWeather.View.utils.enumerations import ColorModes
+from .location import CITY
 import json
 from dataclasses import dataclass
 
@@ -28,7 +29,7 @@ with open("Config/settings.json", "r") as file:
 #----------DEFAULT SETTINGS----------#
 DEFAULT_MODE = ColorModes(settings["theme"])
 GRAPH_MODE = settings["graph"]
-LOCATION = settings["location"]
+LOCATION = CITY if settings["location"] == "current" else settings["location"]
 FONTS = Fonts(**settings["fonts"])
 
 
