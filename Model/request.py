@@ -45,7 +45,6 @@ def Forecast(city : str, days : int = 3, dt : date = None) -> parse.obj.Forecast
 
 
 def CompleteData(city : str, days : int = 3, dt : date = None) -> parse.obj.WeatherData:
-    print(city)
     try:
         response = api.forecast_weather(q=city, days=days, dt=dt)
     

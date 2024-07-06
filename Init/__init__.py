@@ -3,9 +3,9 @@
 """
 from MyWeather.Model.request import CompleteData
 from MyWeather.View.utils.enumerations import ColorModes
-from .location import CITY
 import json
 from dataclasses import dataclass
+import geocoder
 
 
 #helper class for dot access to fonts later on
@@ -25,11 +25,12 @@ with open("Config/settings.json", "r") as file:
 
 
 
-
 #----------DEFAULT SETTINGS----------#
 DEFAULT_MODE = ColorModes(settings["theme"])
 GRAPH_MODE = settings["graph"]
-LOCATION = CITY if settings["location"] == "current" else settings["location"]
+LOCATION = settings["location"]
+CITY = LOCATION if LOCATION != "current" else\
+f"{(user_location := geocoder.ip('me').latlng)[0]},{user_location[1]}"
 FONTS = Fonts(**settings["fonts"])
 
 
@@ -37,4 +38,4 @@ FONTS = Fonts(**settings["fonts"])
 
 
 #----------INITIAL WEATHER DATA----------#
-InitWeatherData = CompleteData(LOCATION)
+InitWeatherData = CompleteData(CITY)

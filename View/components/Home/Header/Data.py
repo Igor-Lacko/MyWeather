@@ -67,3 +67,20 @@ class HeaderDataText(QVBoxLayout):
         for widget in self.widgets:
             widget.setStyleSheet((StyleSheets.dark.HeaderLead if color_mode == ColorModes.DARK else StyleSheets.light.HeaderLead).value)
 
+
+
+
+    def UpdateData(self, data : Realtime):
+        """Updates the header with a loaded new dataset
+
+        Args:
+            data (Realtime): The new weather dataset
+        """
+
+        self.widgets[0].setText(f"{data.temperature.actual_temperature}°C, feels like {data.temperature.feelslike}°C")
+        self.widgets[1].setText(f"Wind: {data.wind.degrees}° {data.wind.direction} at {data.wind.speed} km/h")
+        self.widgets[2].setText(f"Precipitation height: {data.precip_height} mm")
+        self.widgets[3].setText(f"Humidity: {data.humidity}%")
+
+        
+

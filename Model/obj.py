@@ -117,12 +117,12 @@ class Realtime:
     humidity : int
     condition : str
     is_day : bool = field(init=False)
-    date_str : str = field(init=False)
+    time_str : str = field(init=False)
     
     #initialize the is_day variable
     def __post_init__(self):
         self.is_day = 6 <= self.date.hour < 22 
-        self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}"
+        self.time_str = f"{self.date.day}.{self.date.month}.{self.date.year}, {self.date.hour}:{self.date.minute:02d}"
 
 
 

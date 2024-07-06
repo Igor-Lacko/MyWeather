@@ -1,8 +1,10 @@
 from . import *
 from PyQt6.QtGui import QPixmap, QPalette, QIcon
 from PyQt6.QtCore import Qt, pyqtSlot
+from MyWeather.Controller import HeaderController
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
+from functools import partial
 
 
 
@@ -131,6 +133,7 @@ class Header(QWidget):
         update_button.setStyleSheet(StyleSheets.dark.UpdateButton.value if MODE == ColorModes.DARK\
                                     else StyleSheets.light.UpdateButton.value)
         
+        update_button.clicked.connect(self.update)
         self.subcomponents.append(update_button)
         
         return update_button
@@ -150,7 +153,7 @@ class Header(QWidget):
 
 
     def SetLightMode(self):
-        """Switches the current color mode to light"""
+        """Header light mode setter"""
         self._palette_.setColor(QPalette.ColorRole.Window, Colors.OffWhite)
         self.setPalette(self._palette_)
 
@@ -161,8 +164,10 @@ class Header(QWidget):
         self.subcomponents[-1].setStyleSheet(StyleSheets.light.UpdateButton.value)
         self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconLight.png'))
 
+    
+    
     def SetDarkMode(self):
-        """Switches the current color mode to dark"""
+        """Header dark mode setter"""
         self._palette_.setColor(QPalette.ColorRole.Window, Colors.CoolGrey)
         self.setPalette(self._palette_)
         
@@ -171,3 +176,9 @@ class Header(QWidget):
 
         self.subcomponents[-1].setStyleSheet(StyleSheets.dark.UpdateButton.value)
         self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconDark.png'))
+
+
+    def update(self):
+        """Calls the header controller"""
+        if not HeaderController.UpdateHeader(self):
+            print("Failed")

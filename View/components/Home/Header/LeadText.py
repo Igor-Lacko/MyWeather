@@ -26,7 +26,7 @@ class HeaderLeadText(QVBoxLayout):
                         alignment=Alignments.Left,
                         stretch=1)
         
-        self.addWidget(time_widget := QLabel(text=data.date_str),  
+        self.addWidget(time_widget := QLabel(text=data.time_str),  
                         alignment=Alignments.Left,
                         stretch=1)
 
@@ -51,3 +51,19 @@ class HeaderLeadText(QVBoxLayout):
 
         for widget in self.widgets:
             widget.setStyleSheet((StyleSheets.dark.HeaderLead if color_mode == ColorModes.DARK else StyleSheets.light.HeaderLead).value)
+
+
+
+    def UpdateData(self, data : Realtime):
+        """Updates the weather data with a new set, triggered by the controller
+
+        Args:
+            data (Realtime): Realtime weather data
+        """
+
+        self.widgets[0].setText(data.location)
+        self.widgets[1].setText(data.time_str)
+        self.widgets[2].setText(data.condition)
+
+        print(data.time_str)
+
