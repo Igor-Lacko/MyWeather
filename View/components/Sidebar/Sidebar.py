@@ -1,6 +1,7 @@
 from . import *
 from functools import partial
 from .SidebarButton import SidebarButton
+import re
 
 
 
@@ -33,7 +34,7 @@ class Sidebar(QWidget):
 
 
         (icon := QLabel()).setPixmap(
-            gui.QPixmap('Assets/MainIcon.png'))                #set an centrally-aligned icon
+            gui.QPixmap('Assets/MainIcon.png'))                     #set an centrally-aligned icon
         
         icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._layout_.addWidget(icon)
@@ -73,7 +74,7 @@ class Sidebar(QWidget):
             ("top" if index == 0 else "bottom")
 
             #the first 3 callables take the same argument
-            if button['text'] != "Light mode":
+            if not re.match(r".* mode", button["text"]):
                 new_button = SidebarButton(
                 button['icon'],                                     #button icon
                 button['text'],                                     #text under the icon

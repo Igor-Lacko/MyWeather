@@ -4,9 +4,10 @@ from PyQt6.QtCore import Qt
 from MyWeather.View.utils import enumerations                           #absolute imports to avoid enum issues
 from .constdata.mode import MODE
 from .constdata import buttons, slots
-from .components.Sidebar import Sidebar
-from .tabs import Settings, Home, Weather
-
+from .components.Sidebar.Sidebar import Sidebar
+from .components.Home import HomeTab
+from .components.Settings.SettingsWindow import SettingsTab
+from .components.Weather import WeatherTab
 
 
 
@@ -33,10 +34,10 @@ class MainWindow(widgets.QMainWindow):
         (main_layout := widgets.QHBoxLayout()).addWidget(sidebar := Sidebar(DEFAULT_COLOR))
         main_layout.addLayout(tabs := widgets.QStackedLayout())
 
-        (home := widgets.QWidget()).setLayout(home_tab := Home.HomeTab())
+        (home := widgets.QWidget()).setLayout(home_tab := HomeTab())
         
-        (settings := widgets.QWidget()).setLayout(Settings.SettingsTab())
-        (weather := widgets.QWidget()).setLayout(Weather.WeatherTab())
+        (settings := widgets.QWidget()).setLayout(SettingsTab())
+        (weather := widgets.QWidget()).setLayout(WeatherTab())
 
         tabs.addWidget(home)
         tabs.addWidget(weather)

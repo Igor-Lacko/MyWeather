@@ -29,9 +29,19 @@ with open("Config/settings.json", "r") as file:
 DEFAULT_MODE = ColorModes(settings["theme"])
 GRAPH_MODE = settings["graph"]
 LOCATION = settings["location"]
-CITY = LOCATION if LOCATION != "current" else\
-f"{(user_location := geocoder.ip('me').latlng)[0]},{user_location[1]}"
 FONTS = Fonts(**settings["fonts"])
+
+
+if LOCATION == "current":
+    
+    try:
+        CITY = f"{(user_location := geocoder.ip('me').latlng)[0]},{user_location[1]}"
+    
+    except TypeError:
+        CITY = "Presov"
+
+else:
+    CITY = LOCATION
 
 
 

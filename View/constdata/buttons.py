@@ -19,7 +19,7 @@ buttons = [
 
     {
         "icon" : f"Assets/SidebarIcons/{MODE.value}/mode.png",
-        "text" : "Light mode"
+        "text" : f"{'Light' if MODE.value == 'dark' else 'Dark'} mode"
     }
 ]
 
@@ -44,6 +44,6 @@ def UpdateButtons(MODE):
 
     {
         "icon" : f"Assets/SidebarIcons/{MODE.value}/mode.png",
-        "text" : "Light mode"
+        "text" : f"{'Light' if MODE.value == 'dark' else 'Dark'} mode"
     }
 ]
