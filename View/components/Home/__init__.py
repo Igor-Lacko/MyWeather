@@ -1,6 +1,6 @@
 """Contains the entire Home Tab"""
 from PyQt6.QtWidgets import *
-from MyWeather.Init.MainWindowInits import HeaderInit
+from MyWeather.Init.HomeTabInits import HeaderInit
 from .Header.Header import Header
 from .HomeWindow import HomeWindow
 

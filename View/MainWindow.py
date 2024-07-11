@@ -35,17 +35,17 @@ class MainWindow(widgets.QMainWindow):
         main_layout.addLayout(tabs := widgets.QStackedLayout())
 
         (home := widgets.QWidget()).setLayout(home_tab := HomeTab())
-        
-        (settings := widgets.QWidget()).setLayout(SettingsTab())
         (weather := widgets.QWidget()).setLayout(WeatherTab())
 
         tabs.addWidget(home)
         tabs.addWidget(weather)
-        tabs.addWidget(settings)
+        tabs.addWidget(settings := SettingsTab())
+
 
         sidebar._layout_= sidebar.InitButtons(buttons.buttons, tabs, MODE, slots.slots)
         sidebar.mode_trigger.color_switch_signal.connect(home_tab.header.SwitchColorMode)
-        sidebar.mode_trigger.color_switch_signal.connect(home_tab.window.switch_color_mode)
+        sidebar.mode_trigger.color_switch_signal.connect(home_tab.window.SwitchColorMode)
+        sidebar.mode_trigger.color_switch_signal.connect(settings.SetColorMode)
         main_layout.setContentsMargins(0,0,0,0)
         main_layout.setSpacing(0)
         

@@ -53,7 +53,7 @@ class GraphLayout(QStackedLayout):
         self.setCurrentIndex(new)
 
     
-    def switch_color_mode(self, mode : ColorModes):
+    def SwitchColorMode(self, mode : ColorModes):
         """Passes the color mode switch to all of it's graphs
 
         Args:
@@ -61,4 +61,4 @@ class GraphLayout(QStackedLayout):
         """
 
         for graph in self.graphs:
-            graph.switch_color_mode(mode)
+            graph.SwitchColorMode(mode)

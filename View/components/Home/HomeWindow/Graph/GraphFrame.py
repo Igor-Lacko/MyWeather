@@ -1,7 +1,7 @@
 """Contains the main frame for showing the weather graph on the home screen"""
 from . import *
-from MyWeather.View.utils.enumerations import *
-from MyWeather.Init.MainWindowInits import GraphInit
+from MyWeather.View.Styles.Sheets import StyleSheets
+from MyWeather.Init.HomeTabInits import GraphInit
 from .GraphLayout import GraphLayout
 from PyQt6.QtCore import pyqtSlot
 from functools import partial
@@ -38,7 +38,7 @@ class GraphFrame(QFrame):
         layout.setSpacing(0)
         self.setLayout(layout)
 
-        self.setStyleSheet(self.get_sheet(MODE))
+        self.setStyleSheet(self.GetSheet(MODE))
 
         #connect slots
         self.header.widgets[0].clicked.connect(self.SwitchDayBackward)
@@ -83,7 +83,7 @@ class GraphFrame(QFrame):
         self.header.widgets[1].ChangeTitle(self.daylist[self.index].date)
 
     
-    def get_sheet(self, mode : ColorModes):
+    def GetSheet(self, mode : ColorModes):
         """Helper function because i hated doing the mode if-else block for 1000 times
 
         Args:
@@ -94,19 +94,19 @@ class GraphFrame(QFrame):
                     else StyleSheets.light.GraphFrame).value
 
     
-    def switch_color_mode(self, mode : ColorModes):
+    def SwitchColorMode(self, mode : ColorModes):
         """On click of the sidebar change mode button
 
         Args:
             mode (ColorModes): The Color Mode Provided.
         """ 
 
-        self.setStyleSheet(self.get_sheet(mode))
+        self.setStyleSheet(self.GetSheet(mode))
 
         self.header.SetColor(mode)
 
         for graph_layout in self.daylist:
-            graph_layout.switch_color_mode(mode)
+            graph_layout.SwitchColorMode(mode)
 
     
 

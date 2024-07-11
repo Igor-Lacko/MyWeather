@@ -52,11 +52,11 @@ class HomeWindow(QWidget):
 
     
     @pyqtSlot(ColorModes)
-    def switch_color_mode(self, mode : ColorModes):
+    def SwitchColorMode(self, mode : ColorModes):
         """Swaps the background image according to the mode"""
         self.background = f"Assets/Backgrounds/{mode.value}/home-background.jpg"
         self.update()
 
-        self.graph.switch_color_mode(mode)
+        self.graph.SwitchColorMode(mode)
 
         

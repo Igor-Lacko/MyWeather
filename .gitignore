@@ -3,9 +3,9 @@
 
 
 #test stuff
-
+test*
 *.json
 
-#fonts
-*fonts.txt
+#text files
+*.txt
 

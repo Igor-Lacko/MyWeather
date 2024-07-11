@@ -15,6 +15,7 @@ class Fonts:
     header_lead : str
     header_data : str
     graph_header : str
+    other : str
 
 
 

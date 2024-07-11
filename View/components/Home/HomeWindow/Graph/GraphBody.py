@@ -1,8 +1,7 @@
 """Includes the main graph widget's class"""
-from View.components.Home.HomeWindow.Graph import ColorModes
 from . import *
+from View.components.Home.HomeWindow.Graph import ColorModes
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
-from matplotlib.figure import Figure
 from matplotlib import pyplot
 
 
@@ -28,7 +27,7 @@ class WeatherGraph(FigureCanvasQTAgg):
 
         self.axes.set_xticks(range(24))
 
-    def switch_color_mode(self, mode : ColorModes):
+    def SwitchColorMode(self, mode : ColorModes):
         self.SetDarkMode() if mode == ColorModes.DARK else self.SetLightMode()
 
         #winf graph doesn't have an legend, it only has one line so far
@@ -92,12 +91,14 @@ class TemperatureGraph(WeatherGraph):
         self.axes.plot(actual, label="Actual temperature")
         self.axes.plot(feelslike, label="Feels like")
 
-        self.axes.legend(loc='best', framealpha=1, facecolor='black' if MODE == ColorModes.DARK else 'white')
+        self.axes.legend(loc='best', framealpha=1)
+
+        self.SwitchColorMode(MODE)
 
     
-    def switch_color_mode(self, mode: ColorModes):
+    def SwitchColorMode(self, mode: ColorModes):
         """Color mode switcher for graph"""
-        super().switch_color_mode(mode)
+        super().SwitchColorMode(mode)
         self.axes.set_title('Temperature', color='white' if mode == ColorModes.DARK else 'black')
         
 
@@ -118,10 +119,12 @@ class WindGraph(WeatherGraph):
 
         self.axes.plot(speed, label="Wind speed in km/h")
 
+        self.SwitchColorMode(MODE)
 
-    def switch_color_mode(self, mode: ColorModes):
+
+    def SwitchColorMode(self, mode: ColorModes):
         """Color mode switcher for graph"""
-        super().switch_color_mode(mode)
+        super().SwitchColorMode(mode)
         self.axes.set_title('Wind speed', color='white' if mode == ColorModes.DARK else 'black')
         
 
@@ -144,12 +147,14 @@ class RainGraph(WeatherGraph):
         self.axes.plot(humidity, label="Humidity percentage")
         self.axes.plot(chance_of_rain, label="Chance of rain in %")
 
-        self.axes.legend(loc='best', framealpha=1, facecolor='black' if MODE == ColorModes.DARK else 'white')
+        self.axes.legend(loc='best', framealpha=1)
+
+        self.SwitchColorMode(MODE)
 
     
-    def switch_color_mode(self, mode: ColorModes):
+    def SwitchColorMode(self, mode: ColorModes):
         """Color mode switcher for graph"""
-        super().switch_color_mode(mode)
+        super().SwitchColorMode(mode)
         self.axes.set_title('Rain/humidity', color='white' if mode == ColorModes.DARK else 'black')
 
 
