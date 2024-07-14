@@ -118,3 +118,8 @@ class Sidebar(QWidget):
             self._layout_.setStretch(index, 1)
 
 
+
+    def UpdateFonts(self, font):
+        """Called inside the settings"""
+        for button in self.buttons:
+            button.setFont(gui.QFont(font))

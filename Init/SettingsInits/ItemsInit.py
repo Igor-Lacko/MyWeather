@@ -33,14 +33,17 @@ def ParseSettingsItems(settings : SettingsTab):
     for index, item in enumerate(Items):
         
         match item["type"]:
+            
             case "label":
                 label = GetHeaderLabel(item["text"], item["objname"])
                 
                 AddItemStretch(settings, label, item["stretch"], index)
                 initialized.append(label)
 
+            
             case "stretch":
                 settings._layout_.addStretch(item["stretch"])
+            
             
             case "SettingsMenuItem":
                 menu_item = SettingsMenuItem(item["text"], item["items"], item["slot"])
@@ -51,6 +54,7 @@ def ParseSettingsItems(settings : SettingsTab):
                 AddItemStretch(settings, menu_item, item["stretch"], index)
                 initialized.append(menu_item)
 
+            
             case "SettingsFontMenuItem":
                 menu_font_item = SettingsFontMenuItem(item["text"], item["slot"])
                 menu_font_item.menu.setCurrentFont(QFont(item["current"]))

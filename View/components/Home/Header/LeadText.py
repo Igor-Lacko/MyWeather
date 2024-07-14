@@ -5,7 +5,7 @@
 """
 
 from . import *
-from PyQt6.QtGui import QFont
+
 
 
 class HeaderLeadText(QVBoxLayout):

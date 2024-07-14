@@ -182,3 +182,18 @@ class Header(QWidget):
         """Calls the header controller"""
         if not HeaderController.UpdateHeader(self):
             print("Failed")
+
+
+    
+    def UpdateLeadFont(self, font : str):
+        """Called inside the settings"""
+
+        for widget in self.subcomponents[0].widgets:
+            widget.setFont(QFont(font))
+
+    
+    def UpdateDataFont(self, font : str):
+        """Called inside the settings"""
+
+        for widget in self.subcomponents[1].widgets:
+            widget.setFont(QFont(font))

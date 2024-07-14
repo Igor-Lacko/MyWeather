@@ -73,6 +73,7 @@ class SettingsMenuItem(SettingsItem):
 
 
 
+
     def InitMenu(self, items : list[str], slot : Callable) -> QComboBox:
         """Initializes the item's menu
 
@@ -128,6 +129,6 @@ class SettingsFontMenuItem(SettingsItem):
         menu.setFont(QFont(FONTS.other, pointSize=14))
         menu.setFixedHeight(70)
 
-        menu.currentFontChanged.connect(slot)
+        menu.currentTextChanged.connect(slot)
 
         return menu

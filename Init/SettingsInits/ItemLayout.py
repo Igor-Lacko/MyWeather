@@ -2,7 +2,7 @@
 -the items are in order as in the dictionary\n
 -the dictionary contains the item type, stretch, slot (if type == SettingsMenuItem) and name (if unique)"""
 from . import *
-from MyWeather.Controller.SettingsController.Functions import ColorModeUpdate
+from MyWeather.Controller.SettingsController.Functions import *
 
 
 
@@ -41,8 +41,8 @@ Items = [
         "text"      :   "Default location",
         "unique"    :   True,
         "objname"   :   "location",
-        "items"     :   ["Current", "Presov"],  #update with city database later
-        "slot"      :   placeholder             #update later
+        "items"     :   ["Current", "Presov", "New York"],  #update with city database later
+        "slot"      :   LocationUpdate          
     },
 
     {
@@ -67,7 +67,7 @@ Items = [
         "stretch"   :   20,
         "text"      :   "Sidebar",
         "unique"    :   False,
-        "slot"      :   placeholder,
+        "slot"      :   SidebarFontUpdate,
         "current"   :   FONTS.sidebar
     },
 
@@ -76,7 +76,7 @@ Items = [
         "stretch"   :   20,
         "text"      :   "Header lead",
         "unique"    :   False,
-        "slot"      :   placeholder,
+        "slot"      :   HeaderLeadFontUpdate,
         "current"   :   FONTS.header_lead
     },
 
@@ -85,7 +85,7 @@ Items = [
         "stretch"   :   20,
         "text"      :   "Header data",
         "unique"    :   False,
-        "slot"      :   placeholder,
+        "slot"      :   HeaderDataFontUpdate,
         "current"   :   FONTS.header_data
     },
 
@@ -94,7 +94,7 @@ Items = [
         "stretch"   :   20,
         "text"      :   "Graph header",
         "unique"    :   False,
-        "slot"      :   placeholder,
+        "slot"      :   GraphHeaderFontUpdate,
         "current"   :   FONTS.graph_header
     },
 
@@ -104,7 +104,7 @@ Items = [
         "text"      :   "Other",
         "unique"    :   True,
         "objname"   :   "bottom",
-        "slot"      :   placeholder,
+        "slot"      :   OtherFontUpdate,
         "current"   :   FONTS.other
     }
 

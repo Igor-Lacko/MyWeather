@@ -88,6 +88,7 @@ class TitleMenu(QHBoxLayout):
             widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.InitTextStyle(self.text_widget)
+        self.menu.setFont(QFont(FONTS.graph_header))
 
 
         
@@ -105,3 +106,8 @@ class TitleMenu(QHBoxLayout):
 
     
         
+    def UpdateFonts(self, font : str):
+        """Called inside the settings"""
+
+        for widget in [self.text_widget, self.menu]:
+            widget.setFont(QFont(font))

@@ -8,6 +8,7 @@ from .components.Sidebar.Sidebar import Sidebar
 from .components.Home import HomeTab
 from .components.Settings.SettingsWindow import SettingsTab
 from .components.Weather import WeatherTab
+from MyWeather.Init.SettingsInits.Connects import ConnectFontSlots
 
 
 
@@ -56,6 +57,10 @@ class MainWindow(widgets.QMainWindow):
 
 
         self.main_layout = main_layout
+        self.sidebar = sidebar
+        self.settings = settings
+        self.home = home_tab
+        self.weather = weather
 
     
         
@@ -63,6 +68,7 @@ class MainWindow(widgets.QMainWindow):
     def Run(self):
         """maximizes and shows the window"""
 
+        ConnectFontSlots(self.settings, self.sidebar, self.home.header, self.home.window.graph.header)
         self.setWindowState(Qt.WindowState.WindowMaximized)
         self.show()
 
