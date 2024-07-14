@@ -28,25 +28,25 @@ def ConnectFontSlots(Settings : SettingsTab, Sidebar : Sidebar, Header : Header,
 
         if type(item) != QLabel:
 
-            match item.description:
+            match item.description.text():
 
                 case "Default location":
-                    item.currentTextChanged.connect(Header.update())
+                    item.menu.currentTextChanged.connect(lambda location: Header.update(location))
             
                 case "Sidebar":
-                    item.currentTextChanged.connect(lambda font: Sidebar.UpdateFonts(font))
+                    item.menu.currentTextChanged.connect(lambda font: Sidebar.UpdateFonts(font))
 
                 case "Header lead":
-                    item.currentTextChanged.connect(lambda font: Header.UpdateLeadFont(font))
+                    item.menu.currentTextChanged.connect(lambda font: Header.UpdateLeadFont(font))
 
                 case "Header data":
-                    item.currentTextChanged.connect(lambda font: Header.UpdateDataFont(font))
+                    item.menu.currentTextChanged.connect(lambda font: Header.UpdateDataFont(font))
 
                 case "Graph header":
-                    item.currentTextChanged.connect(lambda font: Graph.widgets[1].UpdateFonts(font))
+                    item.menu.currentTextChanged.connect(lambda font: Graph.widgets[1].UpdateFonts(font))
                 
                 case "Other":
-                    item.currentTextChanged.connect(lambda font: UpdateSettingsFonts(font))
+                    item.menu.currentTextChanged.connect(lambda font: UpdateSettingsFonts(Settings, font))
 
 
 

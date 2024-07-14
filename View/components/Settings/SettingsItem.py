@@ -1,6 +1,9 @@
 from . import *
 from typing import Callable
 from PyQt6.QtGui import QFont, QFontDatabase
+from PyQt6.QtWidgets import QCompleter
+from PyQt6.QtCore import Qt
+from MyWeather.Init.CityDatabase import database
 
 class SettingsItem(QFrame):
     """Base class contains one QLabel as a header"""
@@ -70,6 +73,14 @@ class SettingsMenuItem(SettingsItem):
         super().__init__(description)
         self._layout_.addStretch(80)                            #spacer between menu and description
         self.menu = self.InitMenu(items,slot)
+        
+
+        if self.description.text() == "Default location":       #the specific location case
+            self.menu.setEditable(True)
+            (completer := QCompleter(database, self.menu)).setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+            self.menu.setCompleter(completer)
+            self.menu.setCurrentText(CITY)
+
 
 
 
@@ -98,6 +109,7 @@ class SettingsMenuItem(SettingsItem):
 
         menu.setFont(QFont(FONTS.other, pointSize=14))
         menu.setFixedHeight(70)
+        menu.setFixedWidth(200)
 
         return menu
     

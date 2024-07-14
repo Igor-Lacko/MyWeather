@@ -110,4 +110,4 @@ class TitleMenu(QHBoxLayout):
         """Called inside the settings"""
 
         for widget in [self.text_widget, self.menu]:
-            widget.setFont(QFont(font))
+            widget.setFont(QFont(font, pointSize=15))

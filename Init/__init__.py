@@ -33,7 +33,7 @@ LOCATION = settings["location"]
 FONTS = Fonts(**settings["fonts"])
 
 
-if LOCATION == "current":
+if LOCATION.lower() == "current":
     
     try:
         CITY = f"{(user_location := geocoder.ip('me').latlng)[0]},{user_location[1]}"

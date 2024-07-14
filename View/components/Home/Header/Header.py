@@ -133,7 +133,7 @@ class Header(QWidget):
         update_button.setStyleSheet(StyleSheets.dark.UpdateButton.value if MODE == ColorModes.DARK\
                                     else StyleSheets.light.UpdateButton.value)
         
-        update_button.clicked.connect(self.update)
+        update_button.clicked.connect(partial(self.update, None))
         self.subcomponents.append(update_button)
         
         return update_button
@@ -178,9 +178,10 @@ class Header(QWidget):
         self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconDark.png'))
 
 
-    def update(self):
+    def update(self, location = None):
         """Calls the header controller"""
-        if not HeaderController.UpdateHeader(self):
+        
+        if not HeaderController.UpdateHeader(self, location):
             print("Failed")
 
 
@@ -188,12 +189,13 @@ class Header(QWidget):
     def UpdateLeadFont(self, font : str):
         """Called inside the settings"""
 
-        for widget in self.subcomponents[0].widgets:
-            widget.setFont(QFont(font))
+
+        for widget in self.subcomponents[1].widgets:
+            widget.setFont(QFont(font, pointSize=20))
 
     
     def UpdateDataFont(self, font : str):
         """Called inside the settings"""
 
-        for widget in self.subcomponents[1].widgets:
-            widget.setFont(QFont(font))
+        for widget in self.subcomponents[2].widgets:
+            widget.setFont(QFont(font, pointSize=15))

@@ -31,15 +31,21 @@ def GetHeaderIcon(condition : str, is_day : bool) -> str:
     return 'Assets/ConditionIcons/day/sunny.png'
 
 
-def UpdateHeader(Header : Header) -> bool:
+def UpdateHeader(Header : Header, new_location : str = None) -> bool:
     """Updates the header on click of it's update button
 
     Args:
         Header (Header): The header instance to be updated
+        Location (str): If passed, also changes the header location displayed
 
     Returns:
         bool: Success/Failure variable. TODO: On fail, implement some sort of visual message on the GUI
     """
+
+    global LOCATION
+
+    if new_location is not None and new_location != "Current":
+        LOCATION = new_location
 
     #get the location to query
     if LOCATION != "current":

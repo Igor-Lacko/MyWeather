@@ -7,7 +7,6 @@ from MyWeather.View.components.Settings.SettingsWindow import SettingsTab
 
 
 
-
 def GetHeaderLabel(text : str, name : str):
     """Returns a left-aligned QLabel"""
 

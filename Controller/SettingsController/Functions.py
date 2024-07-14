@@ -51,7 +51,7 @@ def UpdateSettingsFonts(settings : SettingsTab, font : str):
     """Called when settings fonts are to be changed (The "Other" Section In Fonts)"""
     for item in settings.items:
         if type(item) == QLabel:
-            item.setFont(QFont(font))
+            item.setFont(QFont(font, pointSize=14))
         
         else:
-            item.description.setFont(QFont(font))
+            item.description.setFont(QFont(font, pointSize=14))

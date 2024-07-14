@@ -41,7 +41,7 @@ Items = [
         "text"      :   "Default location",
         "unique"    :   True,
         "objname"   :   "location",
-        "items"     :   ["Current", "Presov", "New York"],  #update with city database later
+        "items"     :   [],                 #database with cities added later as autocompleter
         "slot"      :   LocationUpdate          
     },
 
