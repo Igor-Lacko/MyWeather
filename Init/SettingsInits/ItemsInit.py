@@ -64,6 +64,17 @@ def ParseSettingsItems(settings : SettingsTab):
                 AddItemStretch(settings, menu_font_item, item["stretch"], index)
                 initialized.append(menu_font_item)
 
+            
+            case "SettingsSubmitItem":
+                form_item = SettingsSubmitItem(item["text"], item["items"], item["slot"])
+                form_item.form.setPlaceholderText(item["current"])
+
+                if item["unique"]:
+                    form_item.setObjectName(item["objname"])
+                
+                AddItemStretch(settings, form_item, item["stretch"], index)
+                initialized.append(form_item)
+
     return initialized
 
 

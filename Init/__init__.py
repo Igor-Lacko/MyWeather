@@ -33,6 +33,8 @@ LOCATION = settings["location"]
 FONTS = Fonts(**settings["fonts"])
 
 
+
+
 if LOCATION.lower() == "current":
     
     try:

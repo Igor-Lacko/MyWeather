@@ -5,7 +5,6 @@ from MyWeather.View.components.Settings.SettingsWindow import SettingsTab
 from MyWeather.View.components.Sidebar.Sidebar import Sidebar
 from MyWeather.View.components.Home.Header.Header import Header
 from MyWeather.View.components.Home.HomeWindow.Graph.FrameHeader import FrameHeader
-from functools import partial
 from MyWeather.Controller.SettingsController.Functions import UpdateSettingsFonts
 
 
@@ -31,7 +30,7 @@ def ConnectFontSlots(Settings : SettingsTab, Sidebar : Sidebar, Header : Header,
             match item.description.text():
 
                 case "Default location":
-                    item.menu.currentTextChanged.connect(lambda location: Header.update(location))
+                    item.submitted.connect(lambda location: Header.update(location))
             
                 case "Sidebar":
                     item.menu.currentTextChanged.connect(lambda font: Sidebar.UpdateFonts(font))

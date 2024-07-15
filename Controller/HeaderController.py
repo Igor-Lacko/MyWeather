@@ -2,10 +2,13 @@
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
 from MyWeather.View.components.Home.Header.Header import Header
-from MyWeather.Init import LOCATION, FONTS
+from MyWeather.Init import LOCATION
 from ..Model.constdata.icons import Icons
-from ..Model import request as API, obj
+from ..Model import request as API
 import geocoder
+
+
+
 
 
 def GetHeaderIcon(condition : str, is_day : bool) -> str:
@@ -41,26 +44,36 @@ def UpdateHeader(Header : Header, new_location : str = None) -> bool:
     Returns:
         bool: Success/Failure variable. TODO: On fail, implement some sort of visual message on the GUI
     """
-
+    
     global LOCATION
 
-    if new_location is not None and new_location != "Current":
+    if new_location is None:
+        
+        if LOCATION.title() != "Current":
+            new_location = LOCATION
+        
+        else:
+            new_location = GetUserLocation()
+
+            if new_location is None:
+                return False
+
+    elif new_location.title() == "Current" or LOCATION.title() == "Current":
+        new_location = GetUserLocation()
+
+        if new_location is None:
+            return False
+
+        LOCATION = "Current"
+
+    else:
         LOCATION = new_location
 
-    #get the location to query
-    if LOCATION != "current":
-        location = LOCATION
-    
-    else:
-        
-        try:
-            location = f"{(user_location := geocoder.ip('me').latlng)[0]},{user_location[1]}"
-        
-        except TypeError:
-            location = "Presov"
+
+
 
     #if the API query or the current location query (if current location set as default fails)
-    if location is None or (data := API.RealtimeWeather(location)) is None:
+    if new_location is None or (data := API.RealtimeWeather(new_location)) is None:
         return False
     
     
@@ -81,14 +94,25 @@ def UpdateHeader(Header : Header, new_location : str = None) -> bool:
     #return success value
     return True
     
-
-
     
 
 
-    
 
-    
+def GetUserLocation() -> str | None:
+    """returns the user ip location
+
+    Returns:
+        str: returns a string of the format latitude,longitude
+        None: if the geocoder.ip query fails or any other error occurs
+    """
+
+    try:
+        LOCATION = "Current"
+        new_location = f"{(user_location := geocoder.ip('me').latlng)[0]},{user_location[1]}"
+        
+    except TypeError:
+        print("Couldn't get yoour location :((")
+        return None
 
 
 

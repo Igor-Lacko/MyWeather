@@ -2,8 +2,10 @@ from . import *
 from typing import Callable
 from PyQt6.QtGui import QFont, QFontDatabase
 from PyQt6.QtWidgets import QCompleter
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot
 from MyWeather.Init.CityDatabase import database
+from MyWeather.View.utils.enumerations import ColorModes
+
 
 class SettingsItem(QFrame):
     """Base class contains one QLabel as a header"""
@@ -75,12 +77,6 @@ class SettingsMenuItem(SettingsItem):
         self.menu = self.InitMenu(items,slot)
         
 
-        if self.description.text() == "Default location":       #the specific location case
-            self.menu.setEditable(True)
-            (completer := QCompleter(database, self.menu)).setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-            self.menu.setCompleter(completer)
-            self.menu.setCurrentText(CITY)
-
 
 
 
@@ -116,6 +112,7 @@ class SettingsMenuItem(SettingsItem):
 
 class SettingsFontMenuItem(SettingsItem):
     """Item with a QFontComboBox for font selection"""
+
     
     def __init__(self, description: str, slot : Callable):
         """Font selector constructor
@@ -144,3 +141,61 @@ class SettingsFontMenuItem(SettingsItem):
         menu.currentTextChanged.connect(slot)
 
         return menu
+    
+
+
+
+class SettingsSubmitItem(SettingsItem):
+
+    submitted = pyqtSignal(str)
+
+    def __init__(self, description: str, completeritems : list, slot : Callable):
+        """Settings item with a LineEdit instead of a QComboBox with a submit button
+
+        Args:
+            description (str): Description form superclass
+            completeritems (list): List of the items to initialize the LineEdit's autocompleter with
+            slot (Callable): Item functionality
+        """
+        
+        super().__init__(description)
+        self._layout_.addStretch(80)
+
+        self.completer, self.form = self.InitSubmitForm(completeritems)
+        self.submitted.connect(slot)
+
+
+
+    def InitSubmitForm(self, completeritems : list):
+        (completer := QCompleter(completeritems, self)).setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+
+        (form := QLineEdit()).setCompleter(completer)
+        form.returnPressed.connect(self.OnSubmit)
+        form.setFixedHeight(70)
+        form.setFixedWidth(200)
+        form.setAlignment(Alignments.Justify)
+        form.setFont(QFont(FONTS.other, pointSize=14))
+
+        self._layout_.addWidget(form)
+
+
+        return completer, form
+    
+
+    def SetPopupStyle(self, mode : ColorModes):
+
+        sheet = (StyleSheets.dark.ListViewPopup if mode == ColorModes.DARK
+        
+                else StyleSheets.light.ListViewPopup).value
+        
+        
+        self.completer.popup().setStyleSheet(sheet)
+        
+
+
+    @pyqtSlot()
+    def OnSubmit(self):
+        """Emits the submitted signal with submit_text as argument"""
+        self.submitted.emit(current := self.form.text())
+        self.form.setPlaceholderText(current)
+

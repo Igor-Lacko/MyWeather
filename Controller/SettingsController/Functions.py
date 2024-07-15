@@ -1,8 +1,8 @@
 """Contains functions that are called on update in the settings tab"""
 from . import *
 from PyQt6.QtWidgets import QLabel
-from MyWeather.Init import LOCATION
-from MyWeather.Controller.HeaderController import UpdateHeader
+
+
 
 def UpdateSettings():
     """Function that updates the settings on exit"""
@@ -18,12 +18,10 @@ def ColorModeUpdate(mode : str):
 
 
 def LocationUpdate(location : str):
-    LOCATION = location
     settings['location'] = location.title()
     UpdateSettings()
 
 def SidebarFontUpdate(font : str):
-    print(font)
     settings['fonts']['sidebar'] = font
     UpdateSettings()
 
@@ -47,11 +45,18 @@ def OtherFontUpdate(font : str):
     UpdateSettings()
 
 
+
+
 def UpdateSettingsFonts(settings : SettingsTab, font : str):
     """Called when settings fonts are to be changed (The "Other" Section In Fonts)"""
     for item in settings.items:
+        
         if type(item) == QLabel:
             item.setFont(QFont(font, pointSize=14))
-        
+
+        elif type(item) == SettingsSubmitItem:
+            item.form.setFont(QFont(font, pointSize=14))
+            item.description.setFont(QFont(font, pointSize=14))
+
         else:
             item.description.setFont(QFont(font, pointSize=14))

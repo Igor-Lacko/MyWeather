@@ -36,13 +36,14 @@ Items = [
     },
 
     {
-        "type"      :   "SettingsMenuItem",
+        "type"      :   "SettingsSubmitItem",
         "stretch"   :   20,
         "text"      :   "Default location",
         "unique"    :   True,
         "objname"   :   "location",
-        "items"     :   [],                 #database with cities added later as autocompleter
-        "slot"      :   LocationUpdate          
+        "items"     :   database,
+        "slot"      :   LocationUpdate,
+        "current"   :   LOCATION          
     },
 
     {

@@ -67,7 +67,6 @@ class MainWindow(widgets.QMainWindow):
     
     def Run(self):
         """maximizes and shows the window"""
-
         ConnectFontSlots(self.settings, self.sidebar, self.home.header, self.home.window.graph.header)
         self.setWindowState(Qt.WindowState.WindowMaximized)
         self.show()

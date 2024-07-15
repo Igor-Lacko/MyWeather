@@ -4,6 +4,7 @@ from urllib3.exceptions import NewConnectionError, MaxRetryError
 from termcolor import colored
 from datetime import datetime as date
 from . import parse
+from time import sleep
 
 
 
@@ -21,7 +22,12 @@ def RealtimeWeather(city : str) -> parse.obj.Realtime:
         return None
     
     else:
+        if response is None:
+            return None
+        
         return parse.ParseRealtimeWeather(response)
+    
+    
 
 
 #forecast for city "city" for the next "days" days

@@ -175,6 +175,62 @@ class DarkStyleSheets(Enum):
         selection-color: silver;
     }
 
+    QLineEdit{
+        selection-background-color: #11c0c0c0;
+        selection-color: silver;
+        border-left: 2px solid silver;
+        border-right: none;
+        border-top: none;
+        border-bottom: none;
+        color: silver;
+        background-color: transparent;
+        placeholder-text-color: darkgray;
+    }
+
+    """
+
+    ListViewPopup = """QListView{
+        background-color: rgb(33, 33, 33);
+        color: silver;
+        border: 2px solid silver;
+    }
+    
+    QListView::item{
+        color: silver;
+        border: none;
+    }
+    
+    QListView::item:hover{
+        background-color: #11c0c0c0;
+    }
+
+    QScrollBar:vertical{
+        background-color: rgb(33, 33, 33);
+        border-left: 1px solid silver;
+        border-right: none;
+        border-bottom: none;
+        border-top: none;
+    }
+
+    QScrollBar::handle:vertical{
+        border-bottom: 1px solid silver;
+        border-top: 1px solid silver;
+        border-right: none;
+        border-left: none;
+    }
+
+    QScrollBar::add-line:vertical {
+        height: 0px;
+    }
+
+    QScrollBar::sub-line:vertical {
+        height: 0px;
+    }
+
+    QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+        height: 0px;
+    }
+
     """
 
 
@@ -370,11 +426,62 @@ class LightStyleSheets(Enum):
         selection-color: black;
     }
 
-
-
-    
+    QLineEdit{
+        selection-background-color: #11000000;
+        selection-color: black;
+        border-left: 2px solid black;
+        border-right: none;
+        border-top: none;
+        border-bottom: none;
+        color: black;
+        background-color: transparent;
+        placeholder-text-color: darkgray;
+    }
     """
 
+    ListViewPopup = """QListView{
+        background-color: rgb(250, 249, 246);
+        color: black;
+        border: 2px solid black;
+    }
+    
+    QListView::item{
+        color: black;
+        border: none;
+    }
+    
+    QListView::item:hover{
+        background-color: #11000000;
+    }
+
+    QScrollBar:vertical{
+        background-color: rgb(250, 249, 246);
+        border-left: 1px solid black;
+        border-right: none;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    QScrollBar::handle:vertical{
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        border-right: none;
+        border-left: none;
+    }
+
+    QScrollBar::add-line:vertical {
+        height: 0px;
+    }
+
+    QScrollBar::sub-line:vertical {
+        height: 0px;
+    }
+
+    QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+        height: 0px;
+    }
+
+    """
 
 
 class StyleSheets: 

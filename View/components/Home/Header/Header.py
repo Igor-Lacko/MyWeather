@@ -5,6 +5,7 @@ from MyWeather.Controller import HeaderController
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
 from functools import partial
+from MyWeather.Init import LOCATION
 
 
 
@@ -179,7 +180,7 @@ class Header(QWidget):
 
 
     def update(self, location = None):
-        """Calls the header controller"""
+        """Calls the header controller"""       
         
         if not HeaderController.UpdateHeader(self, location):
             print("Failed")

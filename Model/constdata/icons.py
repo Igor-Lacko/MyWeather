@@ -77,7 +77,7 @@ Icons = [
     {
         "conditions"    :   [
             "Thundery outbreaks possible",
-            "Patchy light rain with thunderer",
+            "Patchy light rain with thunder",
             "Moderate or heavy rain with thunder"
         ],
 
