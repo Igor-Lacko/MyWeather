@@ -10,6 +10,5 @@ def GetHeader() -> Header:
     Returns:
         Header: The initialized Header object
     """ 
-
     return Header(current := InitWeatherData.current, 
                     GetHeaderIcon(current.condition, current.is_day))

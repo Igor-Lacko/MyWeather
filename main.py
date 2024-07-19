@@ -1,7 +1,8 @@
 #starts the app's main window
 from View.MainWindow import MainWindow
 from os import system as terminal
-from Model.App import Application
+from Controller.App import Application
+from Init import AppConnects
 
 
 
@@ -9,11 +10,15 @@ from Model.App import Application
 def Main():
 
     MyWeather = Application([])
-    
     main_window = MainWindow()
+
+    AppConnects.ConnectControllers(MyWeather, main_window)
+    AppConnects.ConnectThread(MyWeather, main_window)
+    MyWeather.ConnectThreadController()
+
     main_window.Run()
-    
     MyWeather.exec()
+    
     
     terminal("clear")
 

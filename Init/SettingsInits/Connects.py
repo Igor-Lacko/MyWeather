@@ -30,7 +30,7 @@ def ConnectFontSlots(Settings : SettingsTab, Sidebar : Sidebar, Header : Header,
             match item.description.text():
 
                 case "Default location":
-                    item.submitted.connect(lambda location: Header.update(location))
+                    item.submitted.connect(lambda location: Header.FetchNewData(location))
             
                 case "Sidebar":
                     item.menu.currentTextChanged.connect(lambda font: Sidebar.UpdateFonts(font))

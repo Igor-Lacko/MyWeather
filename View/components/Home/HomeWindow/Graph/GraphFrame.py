@@ -27,7 +27,8 @@ class GraphFrame(QFrame):
         self.graph = graph
         self.header = header
         self.index = 0                              #initial index
-        self.daylist = []                           #for day checking
+        self.daylist : list[GraphLayout] = []       #for day checking
+        self.dummy_widgets : list[QWidget] = []     #dummy widgets which store the graph layouts
         
         layout.setStretch(0,10)
         layout.setStretch(1,90)
@@ -51,14 +52,29 @@ class GraphFrame(QFrame):
     def InitGraphs(self):
         """Initializes the 'graph' layout with all days from the forecast"""
         for day in InitWeatherData.forecast.days:
-            self.graph.addWidget(tmp := QWidget())
-            tmp.setLayout(daylayout := GraphLayout(day))                                #NEVERIM ZE TOTO FUNGOVALO WTFFFFFFFFFF
-            self.daylist.append(daylayout)
+            self.graph.addWidget(dummy := QWidget())
             
-            self.header.widgets[1].menu.currentIndexChanged.connect(daylayout.SwitchGraph)
+            dummy.setLayout(daylist_item := GraphLayout(day, InitWeatherData.forecast.location))                         #NEVERIM ZE TOTO FUNGOVALO WTFFFFFFFFFF
+            self.daylist.append(daylist_item)
+            self.dummy_widgets.append(dummy)
+            
+            self.header.widgets[1].menu.currentIndexChanged.connect(daylist_item.SwitchGraph)
             
 
 
+    def DeleteLayout(self, layout : QLayout):
+        """Deletes the layout passed in as an argument"""
+
+        while layout.count():
+            if (item := layout.takeAt(0)).widget() is not None:
+                item.widget().deleteLater()
+
+            elif item.layout() is not None:     #recursive call if the item at zero is an layout
+                self.DeleteLayout(item.layout())
+
+        layout.deleteLater()
+
+        
 
     
     @pyqtSlot()
@@ -68,7 +84,7 @@ class GraphFrame(QFrame):
         
         self.index = self.index + 1 if self.index < (len(self.daylist) - 1) else 0
         self.graph.setCurrentIndex(self.index)
-        self.header.widgets[1].ChangeTitle(self.daylist[self.index].date)
+        self.header.widgets[1].ChangeTitle(self.daylist[self.index].date, self.daylist[self.index].location)
 
 
 
@@ -80,7 +96,7 @@ class GraphFrame(QFrame):
         
         self.index = self.index - 1 if self.index > 0 else (len(self.daylist) - 1)
         self.graph.setCurrentIndex(self.index)
-        self.header.widgets[1].ChangeTitle(self.daylist[self.index].date)
+        self.header.widgets[1].ChangeTitle(self.daylist[self.index].date, self.daylist[self.index].location)
 
     
     def GetSheet(self, mode : ColorModes):

@@ -3,16 +3,14 @@ from . import *
 from View.components.Home.HomeWindow.Graph import ColorModes
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib import pyplot
+from MyWeather.Model import obj
 
 
 class WeatherGraph(FigureCanvasQTAgg):
     """Includes the weather graph"""
     def __init__(self):
-        
 
-
-        
-
+        self.color_mode = MODE                          #tecka vybaveno
         pyplot.style.use(GRAPH_MODE)
         
         self.figure, self.axes = pyplot.subplots()
@@ -27,7 +25,7 @@ class WeatherGraph(FigureCanvasQTAgg):
 
         self.axes.set_xticks(range(24))
 
-    def SwitchColorMode(self, mode : ColorModes):
+    def SwitchColorMode(self, mode : ColorModes, change : bool = True):
         self.SetDarkMode() if mode == ColorModes.DARK else self.SetLightMode()
 
         #winf graph doesn't have an legend, it only has one line so far
@@ -36,14 +34,28 @@ class WeatherGraph(FigureCanvasQTAgg):
                             framealpha=1, facecolor='black' if mode == ColorModes.DARK else 'white',
                             labelcolor='white' if mode == ColorModes.DARK else 'black'
                             )
+        
+        if change:
+            self.color_mode = ColorModes.DARK if self.color_mode != ColorModes.DARK else ColorModes.LIGHT
+
+    def Update(self):
+        """Implemented by the subclasses, updates the graph based on the data provided and it's type (e.g Temperature/Wind or Rain)"""
+        self.figure.clear()
+        self.axes = self.figure.add_subplot()
+        self.axes.set_xlabel('Time', fontsize=14, loc='right')
+        
+        self.axes.spines['top'].set_visible(False)
 
 
-    
-    
+        self.axes.set_xticks(range(24))
+
+
+
     def SetDarkMode(self):
         """Dark mode setter"""
 
-
+        print('dark')
+        print('light')
         self.figure.set_facecolor('black')
         self.axes.set_facecolor('black')
         
@@ -93,14 +105,38 @@ class TemperatureGraph(WeatherGraph):
 
         self.axes.legend(loc='best', framealpha=1)
 
-        self.SwitchColorMode(MODE)
+        self.SwitchColorMode(MODE, change=False)
 
     
-    def SwitchColorMode(self, mode: ColorModes):
+    def SwitchColorMode(self, mode: ColorModes, change : bool = True):
         """Color mode switcher for graph"""
-        super().SwitchColorMode(mode)
+        super().SwitchColorMode(mode, change)
         self.axes.set_title('Temperature', color='white' if mode == ColorModes.DARK else 'black')
-        
+
+
+    def Update(self, day : obj.Day):
+        """Temperature version override of the Weather Graph's data"""
+        super().Update()
+        self.axes.set_title('Temperature')
+        self.axes.set_ylabel('°C', rotation=0, loc='top')
+
+        self.axes.plot([hour.temperature_data.actual_temperature for hour in day.hours], label="Actual temperature")
+        self.axes.plot([hour.temperature_data.feelslike for hour in day.hours], label="Feels like")
+
+        self.SwitchColorMode(self.color_mode, change=False)
+
+        self.draw()
+
+
+
+
+
+
+
+
+
+
+
 
 class WindGraph(WeatherGraph):
     """Contains the graph with wind speed"""
@@ -119,14 +155,28 @@ class WindGraph(WeatherGraph):
 
         self.axes.plot(speed, label="Wind speed in km/h")
 
-        self.SwitchColorMode(MODE)
+        self.SwitchColorMode(MODE, change=False)
 
 
-    def SwitchColorMode(self, mode: ColorModes):
+    def SwitchColorMode(self, mode: ColorModes, change : bool = True):
         """Color mode switcher for graph"""
-        super().SwitchColorMode(mode)
+        super().SwitchColorMode(mode, change)
         self.axes.set_title('Wind speed', color='white' if mode == ColorModes.DARK else 'black')
-        
+
+
+    def Update(self, day : obj.Day):
+        """Wind data version of override of Weather Graph's Update()"""
+        super().Update()
+        self.axes.set_title('Wind speed')
+        self.axes.set_ylabel('km/h', rotation=0, loc='top')
+
+        self.axes.plot([hour.wind_data.speed for hour in day.hours], label="Wind speed in km/h")
+        self.SwitchColorMode(self.color_mode, change=False)
+
+        self.draw()
+
+
+
 
 
 class RainGraph(WeatherGraph):
@@ -149,25 +199,30 @@ class RainGraph(WeatherGraph):
 
         self.axes.legend(loc='best', framealpha=1)
 
-        self.SwitchColorMode(MODE)
+        self.SwitchColorMode(MODE, change=False)
 
     
-    def SwitchColorMode(self, mode: ColorModes):
+    def SwitchColorMode(self, mode : ColorModes, change : bool = True):
         """Color mode switcher for graph"""
-        super().SwitchColorMode(mode)
+        super().SwitchColorMode(mode, change)
         self.axes.set_title('Rain/humidity', color='white' if mode == ColorModes.DARK else 'black')
 
 
+    def Update(self, day : obj.Day):
+        """Rain and humidity version of the override of WeatherGraph's Update()"""
+        super().Update()
+        self.axes.set_title('Rain/humidity')
+        self.axes.set_ylabel('%', rotation=0, loc='top')
 
-        
+        self.axes.plot([hour.humidity for hour in day.hours], label="Humidity percentage")
+        self.axes.plot([hour.rain_data.rain_chance for hour in day.hours], label = "Chance of rain in %")
+
+        self.axes.legend(loc='best', framealpha=1)
+        self.SwitchColorMode(self.color_mode, change=False)
+
+        self.draw()
 
 
-    
-
-        
 
 
-        
-
-    
 

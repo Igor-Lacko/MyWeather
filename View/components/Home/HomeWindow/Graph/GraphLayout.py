@@ -8,17 +8,18 @@ class GraphLayout(QStackedLayout):
     """Includes the three graphs for Temperature/Wind/Rain"""
     
 
-    def __init__(self, dailydata : Day):
+    def __init__(self, dailydata : Day, location : str):
         """Graph layout constructor for one of the days in the forecast
 
         Args:
             dailydata (Day): Data for the day provided
+            location (str): The location where the data actually is from
         """
         
         super().__init__()
         
-        self._layout_ = QStackedLayout()
         self.date = dailydata.date_str
+        self.location = location
         self.index = 0                                  #initial index
 
         #temperature graph data

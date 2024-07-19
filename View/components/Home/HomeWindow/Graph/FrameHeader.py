@@ -101,8 +101,8 @@ class TitleMenu(QHBoxLayout):
 
     
     
-    def ChangeTitle(self, date_str : str): 
-        self.text_widget.setText(f"Forecast for {date_str}")
+    def ChangeTitle(self, date_str : str, location : str): 
+        self.text_widget.setText(f"Forecast for {date_str}, {location}")
 
     
         

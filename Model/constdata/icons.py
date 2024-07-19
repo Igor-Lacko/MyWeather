@@ -42,6 +42,7 @@ Icons = [
     {
         "conditions"    :   [
             "Patchy rain possible",
+            "Patchy rain nearby",
             "Light drizzle",
             "Patchy light rain",
             "Light rain",

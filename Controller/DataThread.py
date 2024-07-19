@@ -1,4 +1,4 @@
-from ..Model import obj, request as API
+from MyWeather.Model import obj, request as API
 from PyQt6.QtCore import QThread, pyqtSignal, QObject
 import geocoder
 from MyWeather.Init import LOCATION
@@ -11,29 +11,58 @@ from MyWeather.Init import LOCATION
 class WeatherFetcher(QObject):
         
     failed = pyqtSignal()
-    ready = pyqtSignal(obj.Realtime)
+    ready = pyqtSignal(obj.WeatherData)
 
     def __init__(self):
         super().__init__()
-        self.location_param = None
+        self.current_location = LOCATION
 
 
-    def FetchLocationData(self, location : str):
-        
+    def FetchNewData(self, location : str):
+
+
+        self.current_location = location
+
         if location.lower() == "current":
-            self.location_param = geocoder.ip('me').latlng
+            location = geocoder.ip('me').latlng
 
-            if self.location_param is not None:
-                self.location_param = f"{self.location_param[0]},{self.location_param[1]}"
+            if location is not None:
+                location = f"{location[0]},{location[1]}"
 
             else:
-                return None
-            
-        if (data := API.RealtimeWeather(location)) is None:
-            return None
+                self.failed.emit()
+                return
         
+
+        if (data := API.CompleteData(location)) is None:
+            self.failed.emit()
+            return
+
         else:
-            return data
+            self.ready.emit(data)
+
+
+    def UpdateData(self):
+        if self.current_location.lower() == "current":
+            location = geocoder.ip('me').latlng
+
+            if location is not None:
+                location = f"{location[0]},{location[1]}"
+
+            else:
+                self.failed.emit()
+                return
+
+        else:
+            location = self.current_location
+
+        if (data := API.CompleteData(location)) is None:
+            self.failed.emit()
+            return
+
+        else:
+            self.ready.emit(data)
+
 
 
 

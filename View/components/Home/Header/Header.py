@@ -1,6 +1,6 @@
 from . import *
 from PyQt6.QtGui import QPixmap, QPalette, QIcon
-from PyQt6.QtCore import Qt, pyqtSlot
+from PyQt6.QtCore import Qt, pyqtSlot, pyqtSignal
 from MyWeather.Controller import HeaderController
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
@@ -29,6 +29,9 @@ class Header(QWidget):
         2 : 158,
         3 : 2
     }
+
+    update_data = pyqtSignal()
+    fetch_new_data = pyqtSignal(str)
 
     def __init__(self, data : Realtime, icon_path : str):
         """Header constructor, sets up the layouts
@@ -134,7 +137,7 @@ class Header(QWidget):
         update_button.setStyleSheet(StyleSheets.dark.UpdateButton.value if MODE == ColorModes.DARK\
                                     else StyleSheets.light.UpdateButton.value)
         
-        update_button.clicked.connect(partial(self.update, None))
+        update_button.clicked.connect(self.UpdateSameLocation)
         self.subcomponents.append(update_button)
         
         return update_button
@@ -178,14 +181,6 @@ class Header(QWidget):
         self.subcomponents[-1].setStyleSheet(StyleSheets.dark.UpdateButton.value)
         self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconDark.png'))
 
-
-    def update(self, location = None):
-        """Calls the header controller"""       
-        
-        if not HeaderController.UpdateHeader(self, location):
-            print("Failed")
-
-
     
     def UpdateLeadFont(self, font : str):
         """Called inside the settings"""
@@ -194,9 +189,32 @@ class Header(QWidget):
         for widget in self.subcomponents[1].widgets:
             widget.setFont(QFont(font, pointSize=20))
 
+
     
     def UpdateDataFont(self, font : str):
         """Called inside the settings"""
 
         for widget in self.subcomponents[2].widgets:
             widget.setFont(QFont(font, pointSize=15))
+
+
+    @pyqtSlot()
+    def UpdateSameLocation(self):
+        """Emits the update_data signal which communicates with the worker thread to fetch new data for the same location"""       
+        self.update_data.emit()
+
+
+    @pyqtSlot(str)
+    def FetchNewData(self, location : str):
+        """Emits the fetch_new_data signal which communicates with the worker thread to fetch data for a new location
+
+        Args:
+            location (str): The new location. If == "current" (case insensitive) calls the user latitude and longitude using the geocoder library
+        """
+        self.fetch_new_data.emit(location)
+
+
+
+
+
+
