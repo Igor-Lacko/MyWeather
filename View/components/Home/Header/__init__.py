@@ -4,5 +4,5 @@ from MyWeather.Model.obj import Realtime
 from MyWeather.View.Styles.Sheets import StyleSheets
 from MyWeather.View.utils.enumerations import *
 from MyWeather.Init import FONTS
-from MyWeather.View.constdata.mode import MODE
+from MyWeather.Constdata.Mode import MODE
 from PyQt6.QtGui import QFont

@@ -1,4 +1,4 @@
-from .mode import MODE
+from .Mode import MODE
 
 buttons = [
 

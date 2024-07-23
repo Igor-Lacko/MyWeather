@@ -65,5 +65,3 @@ class HeaderLeadText(QVBoxLayout):
         self.widgets[1].setText(data.time_str)
         self.widgets[2].setText(data.condition)
 
-        print(data.time_str)
-

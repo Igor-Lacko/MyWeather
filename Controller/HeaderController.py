@@ -3,7 +3,7 @@ from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt, QObject, pyqtSignal, pyqtSlot
 from MyWeather.View.components.Home.Header.Header import Header
 from MyWeather.Init import LOCATION
-from MyWeather.Model.constdata.icons import Icons
+from Constdata.ConditionIcons import Icons
 from MyWeather.Model import request as API, obj
 
 class HeaderController(QObject):
@@ -43,6 +43,7 @@ class HeaderController(QObject):
         Args:
             data (obj.Realtime): The provided weather data
         """
+
 
         #update the header icon
         Header.subcomponents[0].setPixmap(QPixmap(GetHeaderIcon(data.condition, data.is_day)).scaled(
@@ -84,6 +85,6 @@ def GetHeaderIcon(condition : str, is_day : bool) -> str:
 
 
         for map in Icons:
-            if condition in map['conditions']:
+            if condition.lower() in map['conditions']:          #sometimes the API results differed in lower or upper case
                 return map[daynight]
 

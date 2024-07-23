@@ -1,9 +1,9 @@
 """Contains the main part of the Home tab (so everything other than the header."""
-from PyQt6.QtGui import QPaintEvent, QPainter, QImage
 from PyQt6.QtWidgets import *
+from PyQt6.QtGui import QPaintEvent, QPainter, QImage
 from MyWeather.View.utils.enumerations import *
 from .Graph.GraphFrame import GraphFrame
-from MyWeather.Init import DEFAULT_MODE
+from MyWeather.Constdata.Mode import MODE
 from PyQt6.QtCore import pyqtSlot
 
 
@@ -11,21 +11,18 @@ from PyQt6.QtCore import pyqtSlot
 
 class HomeWindow(QWidget):
     """The main widget for the Home tab"""
-    
-    
     def __init__(self):
         super().__init__()
-
-
-        self.background = f"Assets/Backgrounds/{DEFAULT_MODE.value}/home-background.jpg"
-
+        self.background = f"Assets/Backgrounds/{MODE.value}/home-background.jpg"
         self.InitLayout()
-                
-        
+
+
 
     def paintEvent(self, event: QPaintEvent | None) -> None:
         (painter := QPainter()).begin(self)
         painter.drawImage(event.rect(), QImage(self.background))
+
+
 
     def InitLayout(self):
         """Initializes the combination of vertical/horizontal layouts due to more complicated logic"""
@@ -53,10 +50,9 @@ class HomeWindow(QWidget):
     
     @pyqtSlot(ColorModes)
     def SwitchColorMode(self, mode : ColorModes):
-        """Swaps the background image according to the mode"""
+        """Swaps the background image according to the mode and updates the graph's and header's color scheme"""
         self.background = f"Assets/Backgrounds/{mode.value}/home-background.jpg"
         self.update()
-
         self.graph.SwitchColorMode(mode)
 
-        
+

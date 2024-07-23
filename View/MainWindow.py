@@ -1,14 +1,13 @@
 #includes the MyWeather MainWindow class
+from Constdata import SidebarButtons
 from . import *
 from PyQt6.QtCore import Qt
 from MyWeather.View.utils import enumerations                           #absolute imports to avoid enum issues
-from .constdata.mode import MODE
-from .constdata import buttons, slots
-from .components.Sidebar.Sidebar import Sidebar
+from MyWeather.Constdata.Mode import MODE
+from MyWeather.Init import SidebarInit
 from .components.Home import HomeTab
 from .components.Settings.SettingsWindow import SettingsTab
 from .components.Weather import WeatherTab
-from MyWeather.Init.SettingsInits.Connects import ConnectFontSlots
 
 
 
@@ -26,27 +25,21 @@ class MainWindow(widgets.QMainWindow):
         super().__init__()
         self.setWindowTitle("MyWeather")
 
-        DEFAULT_COLOR = enumerations.Colors.CoolGrey if MODE == enumerations.ColorModes.DARK\
-        else enumerations.Colors.OffWhite
 
         #dummy widget to set layout
         self.setCentralWidget(empty := widgets.QWidget())
 
-        (main_layout := widgets.QHBoxLayout()).addWidget(sidebar := Sidebar(DEFAULT_COLOR))
+        (main_layout := widgets.QHBoxLayout()).addWidget(sidebar := SidebarInit.GetSidebar())
         main_layout.addLayout(tabs := widgets.QStackedLayout())
 
         (home := widgets.QWidget()).setLayout(home_tab := HomeTab())
-        (weather := widgets.QWidget()).setLayout(WeatherTab())
 
         tabs.addWidget(home)
-        tabs.addWidget(weather)
+        tabs.addWidget(weather := WeatherTab())
         tabs.addWidget(settings := SettingsTab())
 
 
-        sidebar._layout_= sidebar.InitButtons(buttons.buttons, tabs, MODE, slots.slots)
-        sidebar.mode_trigger.color_switch_signal.connect(home_tab.header.SwitchColorMode)
-        sidebar.mode_trigger.color_switch_signal.connect(home_tab.window.SwitchColorMode)
-        sidebar.mode_trigger.color_switch_signal.connect(settings.SetColorMode)
+        
         main_layout.setContentsMargins(0,0,0,0)
         main_layout.setSpacing(0)
         
@@ -61,13 +54,13 @@ class MainWindow(widgets.QMainWindow):
         self.settings = settings
         self.home = home_tab
         self.weather = weather
+        self.tabs = tabs
 
     
         
     
     def Run(self):
         """maximizes and shows the window"""
-        ConnectFontSlots(self.settings, self.sidebar, self.home.header, self.home.window.graph.header)
         self.setWindowState(Qt.WindowState.WindowMaximized)
         self.show()
 

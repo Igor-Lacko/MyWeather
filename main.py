@@ -2,24 +2,17 @@
 from View.MainWindow import MainWindow
 from os import system as terminal
 from Controller.App import Application
-from Init import AppConnects
+from Init import Connect
 
+MyWeather = Application([])
+main_window = MainWindow()
 
 
 
 def Main():
-
-    MyWeather = Application([])
-    main_window = MainWindow()
-
-    AppConnects.ConnectControllers(MyWeather, main_window)
-    AppConnects.ConnectThread(MyWeather, main_window)
-    MyWeather.ConnectThreadController()
-
+    Connect.ConnectOnStartup(MyWeather, main_window)
     main_window.Run()
     MyWeather.exec()
-    
-    
     terminal("clear")
 
 

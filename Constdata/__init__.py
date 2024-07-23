@@ -1,0 +1,1 @@
+"""Package that contains some constant data or their mappings, such as weather condition to icon, etc"""

@@ -1,7 +1,7 @@
 from . import *
-from functools import partial
+from MyWeather.Constdata.SidebarButtons import buttons
+from MyWeather.Constdata.Mode import MODE
 from .SidebarButton import SidebarButton
-import re
 
 
 
@@ -18,7 +18,7 @@ class Sidebar(QWidget):
         super().__init__()
 
         #empty buttons list
-        self.buttons = []        
+        self.buttons : list[SidebarButton] = []        
 
         #set the sidebar color
         self.setAutoFillBackground(True)
@@ -41,70 +41,6 @@ class Sidebar(QWidget):
 
 
         self._layout_.addStretch()
-
-        
-        
-
-        
-        
-
-        
-        
-        
-
-    
-    def InitButtons(self, buttons : dict, tabs : QLayout, mode : ColorModes, slots : dict[str, callable]) -> None:
-        """Initializes the menu's buttons and adds them to it's layout
-
-        Args:
-            buttons (dict): the dictionary containing data to be passed to the button constructors
-            tabs (QLayout): the window layout which the buttons will connect to
-            mode (ColorModes): the current color mode
-            slots (dict[str, callable]): dictionary with the functions to be passed to button constructors
-
-        Returns:
-            None: initialized sidebar vertical layout is a instance attribute
-        """
-
-        
-
-        #main for loop through the buttons dictionary provided
-        for index, button in enumerate(buttons):
-            position = "default" if index not in [0, len(buttons) - 1] else\
-            ("top" if index == 0 else "bottom")
-
-            #the first 3 callables take the same argument
-            if not re.match(r".* mode", button["text"]):
-                new_button = SidebarButton(
-                button['icon'],                                     #button icon
-                button['text'],                                     #text under the icon
-                partial(slots['default'], tabs, index),             #partial function so it doesn't get called immediately
-                mode,                                               #current color mode
-                position)                                           #button's position in the toolbar
-
-            else:
-                new_button = SidebarButton(
-                    button['icon'], 
-                    button['text'], 
-                    partial(slots['trigger'], self),
-                    mode,
-                    position)
-
-                self.mode_trigger = new_button                      #create a trigger variable to be accessed from outside the class
-                
-
-            self._layout_.addWidget(new_button)                     #add the button to the sidebar's layout
-            self.buttons.append(new_button)                         #append to the buttons list (useful when switching color mode)
-            
-            
-
-
-        self.SetLayoutSpacing()                                     #align the layout correctly
-        
-        self.setLayout(self._layout_)                               #set the layout variable as the current layout
-
-        
-        
 
 
     def SetLayoutSpacing(self):

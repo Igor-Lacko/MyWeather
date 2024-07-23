@@ -10,8 +10,8 @@ Icons = [
     
     {
         "conditions"    :   [
-            "Sunny", 
-            "Clear"
+            "sunny", 
+            "clear"
         ],
 
         "day"   :   "Assets/ConditionIcons/day/sunny.png",
@@ -20,9 +20,9 @@ Icons = [
 
     {
         "conditions"    :   [
-            "Cloudy",
-            "Partly cloudy",
-            "Overcast"
+            "cloudy",
+            "partly cloudy",
+            "overcast"
         ],
 
         "day" : "Assets/ConditionIcons/day/cloudy.png",
@@ -31,8 +31,8 @@ Icons = [
 
     {
         "conditions"    :   [
-            "Mist", 
-            "Fog"
+            "mist", 
+            "fog"
         ],
 
         "day"   :   "Assets/ConditionIcons/day/fog.png",
@@ -41,12 +41,13 @@ Icons = [
 
     {
         "conditions"    :   [
-            "Patchy rain possible",
-            "Patchy rain nearby",
-            "Light drizzle",
-            "Patchy light rain",
-            "Light rain",
-            "Light rain shower",
+            "patchy rain possible",
+            "patchy rain nearby",
+            "light drizzle",
+            "patchy light rain",
+            "patchy light drizzle",
+            "light rain",
+            "light rain shower",
         ],
 
         "day"   :   "Assets/ConditionIcons/day/light-rain.png",
@@ -55,8 +56,8 @@ Icons = [
 
     {
         "conditions"    :   [
-            "Moderate rain at times",
-            "Moderate rain"
+            "moderate rain at times",
+            "moderate rain"
         ],
 
         "day"   :   "Assets/ConditionIcons/day/moderate-rain.png",
@@ -65,10 +66,10 @@ Icons = [
 
     {
         "conditions"    :   [
-            "Heavy rain at times",
+            "heavy rain at times",
             "Heavy rain",
-            "Moderate or heavy rain shower",
-            "Torrential rain shower"
+            "moderate or heavy rain shower",
+            "torrential rain shower"
         ],
 
         "day"   :   "Assets/ConditionIcons/day/heavy-rain.png",
@@ -77,9 +78,9 @@ Icons = [
 
     {
         "conditions"    :   [
-            "Thundery outbreaks possible",
-            "Patchy light rain with thunder",
-            "Moderate or heavy rain with thunder"
+            "thundery outbreaks possible",
+            "patchy light rain with thunder",
+            "moderate or heavy rain with thunder"
         ],
 
         "day"   :   "Assets/ConditionIcons/day/storm.png",
@@ -88,4 +89,3 @@ Icons = [
 
 
 ]
-

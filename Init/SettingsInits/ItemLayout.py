@@ -4,11 +4,6 @@
 from . import *
 from MyWeather.Controller.SettingsController.Functions import *
 
-
-
-def placeholder():
-    pass
-
 Items = [
     
     #upper spacing is set already within the layout with SetContentsMargins(), so no need to do it here

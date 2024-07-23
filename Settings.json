@@ -1,0 +1,12 @@
+{
+  "theme": "dark",
+  "location": "New York",
+  "fonts": {
+    "sidebar": "Nimbus Mono PS [UKWN]",
+    "header_lead": "URW Bookman [urw]",
+    "header_data": "Ubuntu Thin",
+    "graph_header": "URW Gothic [UKWN]",
+    "other": "Lohit Telugu"
+  },
+  "graph": "fivethirtyeight"
+}

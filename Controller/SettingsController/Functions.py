@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QLabel
 
 def UpdateSettings():
     """Function that updates the settings on exit"""
-    with open("Config/settings.json", "w") as config_obj:
+    with open("Settings.json", "w") as config_obj:
         json.dump(settings, config_obj, indent=2)
 
 

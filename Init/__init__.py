@@ -20,7 +20,7 @@ class Fonts:
 
 
 
-with open("Config/settings.json", "r") as file:
+with open("Settings.json", "r") as file:
     settings = json.load(file)
 
 

@@ -5,3 +5,4 @@ from PyQt6.QtCore import Qt, QSize, pyqtSignal
 from MyWeather.View.utils.enumerations import ColorModes, Colors
 from View.Styles.Sheets import StyleSheets
 from MyWeather.Init import FONTS
+import re

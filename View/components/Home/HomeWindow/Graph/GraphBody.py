@@ -53,9 +53,6 @@ class WeatherGraph(FigureCanvasQTAgg):
 
     def SetDarkMode(self):
         """Dark mode setter"""
-
-        print('dark')
-        print('light')
         self.figure.set_facecolor('black')
         self.axes.set_facecolor('black')
         
@@ -69,7 +66,6 @@ class WeatherGraph(FigureCanvasQTAgg):
     
     def SetLightMode(self):
         """Light mode setter"""
-
 
         self.figure.set_facecolor('white')
         self.axes.set_facecolor('white')
