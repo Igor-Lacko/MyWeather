@@ -10,5 +10,3 @@ config.api_key["key"] = environ["WEATHERAPICOMKEY"]
 api = swagger_client.APIsApi(swagger_client.ApiClient(config))
 
 
-
-

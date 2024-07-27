@@ -5,7 +5,6 @@
 #test stuff
 test.py
 test*
-*.json
 
 #text files
 *.txt

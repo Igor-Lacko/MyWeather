@@ -7,7 +7,7 @@ from MyWeather.Constdata.Mode import MODE
 from MyWeather.Init import SidebarInit
 from .components.Home import HomeTab
 from .components.Settings.SettingsWindow import SettingsTab
-from .components.Weather import WeatherTab
+from .components.Weather.WeatherWindow import WeatherTab
 
 
 

@@ -1,27 +1,22 @@
 """Contains the main part of the Home tab (so everything other than the header."""
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QPaintEvent, QPainter, QImage
+from PyQt6.QtCore import pyqtSlot
+from MyWeather.View.Styles.Sheets import StyleSheets
 from MyWeather.View.utils.enumerations import *
 from .Graph.GraphFrame import GraphFrame
 from MyWeather.Constdata.Mode import MODE
-from PyQt6.QtCore import pyqtSlot
 
 
 
 
-class HomeWindow(QWidget):
+class HomeWindow(QFrame):
     """The main widget for the Home tab"""
     def __init__(self):
         super().__init__()
-        self.background = f"Assets/Backgrounds/{MODE.value}/home-background.jpg"
+        self.setObjectName("homewindow")
+        self.setStyleSheet((StyleSheets.dark if MODE == ColorModes.DARK else StyleSheets.light).HomeWindow.value)
         self.InitLayout()
-
-
-
-    def paintEvent(self, event: QPaintEvent | None) -> None:
-        (painter := QPainter()).begin(self)
-        painter.drawImage(event.rect(), QImage(self.background))
-
 
 
     def InitLayout(self):
@@ -51,8 +46,7 @@ class HomeWindow(QWidget):
     @pyqtSlot(ColorModes)
     def SwitchColorMode(self, mode : ColorModes):
         """Swaps the background image according to the mode and updates the graph's and header's color scheme"""
-        self.background = f"Assets/Backgrounds/{mode.value}/home-background.jpg"
-        self.update()
+        self.setStyleSheet((StyleSheets.dark if mode == ColorModes.DARK else StyleSheets.light).HomeWindow.value)
         self.graph.SwitchColorMode(mode)
 
 

@@ -1,0 +1,2 @@
+"""Controller for the Weather section of the app. Handles updates based on the user's choice, subsequent choices, restarts, and communication with other elements."""
+from MyWeather.View.components.Weather.WeatherWindow import WeatherTab

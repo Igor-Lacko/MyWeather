@@ -1,4 +1,4 @@
-"""Contain scripts that run on the app start-up\n
+"""Contain scripts/fuctions that run/are userd on the app start-up\n
     -The base module also initializes settings for the app
 """
 from MyWeather.Model.request import CompleteData
@@ -15,6 +15,7 @@ class Fonts:
     header_lead : str
     header_data : str
     graph_header : str
+    weather_tab : str
     other : str
 
 

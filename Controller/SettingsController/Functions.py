@@ -40,6 +40,11 @@ def GraphHeaderFontUpdate(font : str):
     UpdateSettings()
 
 
+def WeatherTabFontUpdate(font : str):
+    settings['fonts']['weather_tab'] = font
+    UpdateSettings()
+
+
 def OtherFontUpdate(font : str):
     settings['fonts']['other'] = font
     UpdateSettings()

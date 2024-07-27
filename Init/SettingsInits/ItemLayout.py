@@ -97,6 +97,15 @@ Items = [
     {
         "type"      :   "SettingsFontMenuItem",
         "stretch"   :   20,
+        "text"      :   "Weather tab",
+        "unique"    :   False,
+        "slot"      :   WeatherTabFontUpdate,
+        "current"   :   FONTS.weather_tab
+    },
+
+    {
+        "type"      :   "SettingsFontMenuItem",
+        "stretch"   :   20,
         "text"      :   "Other",
         "unique"    :   True,
         "objname"   :   "bottom",

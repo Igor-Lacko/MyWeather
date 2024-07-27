@@ -18,7 +18,7 @@ class GraphController(QObject):
 
 
 
-    def UpdateGraph(self, data : obj.Forecast):
+    def UpdateGraph(self, data : obj.Timeline):
         """Updates the graph with data provided by the worker thread"""            
         self.graph.header.widgets[1].ChangeTitle(data.days[0].date_str, data.location)  #title for the first day
         self.graph.graph.setCurrentIndex(0)                                             #switch the day to the first of the data recieved

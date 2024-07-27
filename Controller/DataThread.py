@@ -11,7 +11,7 @@ from MyWeather.Init import LOCATION
 class WeatherFetcher(QObject):
         
     failed = pyqtSignal()
-    ready = pyqtSignal(obj.WeatherData)
+    ready = pyqtSignal(obj.BulkData)
 
     def __init__(self):
         super().__init__()

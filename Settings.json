@@ -1,11 +1,12 @@
 {
-  "theme": "dark",
-  "location": "New York",
+  "theme": "light",
+  "location": "Presov",
   "fonts": {
     "sidebar": "Nimbus Mono PS [UKWN]",
     "header_lead": "URW Bookman [urw]",
     "header_data": "Ubuntu Thin",
     "graph_header": "URW Gothic [UKWN]",
+    "weather_tab": "Yrsa Medium",
     "other": "Lohit Telugu"
   },
   "graph": "fivethirtyeight"

@@ -17,6 +17,7 @@ def ConnectControllers(app : Application, main_window : MainWindow):
     app.header_controller.ConnectHeader(main_window.home.header)
     app.graph_controller.ConnectGraph(main_window.home.window.graph)
     app.sidebar_controller.ConnectSidebar(main_window.sidebar)
+    app.weather_controller.ConnectWeatherTab(main_window.weather)
 
 
 def ConnectSidebarButtons(main_window : MainWindow):

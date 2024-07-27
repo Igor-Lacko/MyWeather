@@ -95,8 +95,8 @@ def ParseRealtimeWeather(response):
 
 
 
-#parses data for the entire forecast
-def ParseForecastWeather(response):
+#parses data for the entire forecast/history (history API returns a forecast object for some reason)
+def ParseTimelineWeather(response):
     local_data = response["location"]
     weather_data = response["forecast"]
 
@@ -105,9 +105,9 @@ def ParseForecastWeather(response):
         "days" : [ParseDailyWeather(day) for day in weather_data["forecastday"]]
     }
 
-    return obj.Forecast(**params)
+    return obj.Timeline(**params)
 
 
 #contains both
 def ParseWeatherData(response):
-    return obj.WeatherData(ParseRealtimeWeather(response), ParseForecastWeather(response))
+    return obj.BulkData(ParseRealtimeWeather(response), ParseTimelineWeather(response))

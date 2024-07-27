@@ -10,4 +10,5 @@
 <a href="https://www.flaticon.com/free-icons/arrows" title="arrows icons">Arrows icons created by rukanicon - Flaticon</a><br>
 <a href="https://www.flaticon.com/free-icons/glyph" title="glyph icons">Glyph icons created by meaicon - Flaticon</a>
 Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>
-
+Image by <a href="https://www.freepik.com/free-vector/hand-drawn-flat-design-stock-market-concept_19928736.htm#query=stock%20chart&position=1&from_view=keyword&track=ais_user&uuid=7cb594ba-0e71-4e5c-beec-e04f7bf07851">Freepik</a>
+<a href="https://www.freepik.com/free-photo/binoculars-magnifying-glass-map_1915354.htm#fromView=search&page=1&position=0&uuid=d24e54e2-323d-40e5-9982-aa60cc972bd0">Image by freepik</a>

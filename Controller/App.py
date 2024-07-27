@@ -3,6 +3,7 @@ from .DataThread import WeatherFetcher
 from .HeaderController import HeaderController
 from .GraphController import GraphController
 from .SidebarController import SidebarController
+from .WeatherTabController.ControllerClass import WeatherController
 
 class Application(widgets.QApplication):
     
@@ -17,6 +18,7 @@ class Application(widgets.QApplication):
         self.header_controller = HeaderController()
         self.graph_controller = GraphController()
         self.sidebar_controller = SidebarController()
+        self.weather_controller = WeatherController()
 
         self.worker_thread.start()
 

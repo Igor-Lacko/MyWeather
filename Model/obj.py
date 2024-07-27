@@ -126,15 +126,15 @@ class Realtime:
 
 
 
-#contains all data for the entire forecast
+#contains all data for the entire history/forecast
 @dataclass
-class Forecast:
+class Timeline:
     location : str
     days : list[Day]
     stats : Stats = field(init=False)
     length : int = field(init=False)
 
-    #initialize the forecast's statistics
+    #initialize the history/forecast's statistics
     def __post_init__(self):
         stat_params = {
             "max_temp" : max(day.stats.max_temp for day in self.days),
@@ -148,10 +148,10 @@ class Forecast:
 
 
 
-#contains both Forecast and Realtime objects, derived from the Forecast response
+#contains both Timeline and Realtime objects, derived from the Timeline response
 @dataclass
-class WeatherData:
+class BulkData:
     current : Realtime
-    forecast : Forecast
+    forecast : Timeline
 
 

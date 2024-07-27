@@ -67,9 +67,10 @@ Icons = [
     {
         "conditions"    :   [
             "heavy rain at times",
-            "Heavy rain",
+            "heavy rain",
             "moderate or heavy rain shower",
-            "torrential rain shower"
+            "torrential rain shower",
+            "thundery outbreaks in nearby"
         ],
 
         "day"   :   "Assets/ConditionIcons/day/heavy-rain.png",

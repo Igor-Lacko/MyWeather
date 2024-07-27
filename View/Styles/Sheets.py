@@ -110,6 +110,11 @@ class DarkStyleSheets(Enum):
     }
     """
 
+    HomeWindow = """QFrame#homewindow{
+        border-image: url('Assets/Backgrounds/dark/home-background.jpg') 0 0 0 0 stretch stretch;
+        border: none;
+    }"""
+
     SettingsMain = """QWidget{
         background-color: rgb(33,33,33)
     }"""
@@ -233,6 +238,74 @@ class DarkStyleSheets(Enum):
 
     """
 
+    WeatherTabWindow = """QFrame#weathertab{
+        border: none;
+        border-image: url("Assets/Backgrounds/dark/bg-weather.jpg") 0 0 0 0 stretch stretch;
+    }
+
+    QLabel#title{
+        color: silver;
+        border: none;
+        font-size: 40;
+    }
+    
+    QFrame#forecast, QFrame#realtime, QFrame#history{
+        background-color: rgb(33,33,33);
+        border: 4px solid silver;
+        border-radius: 15px;
+    }
+    
+    QLabel#forecastdescription, QLabel#realtimedescription, QLabel#historydescription{
+        color: silver;
+        border-top: 2px solid silver;
+        border-bottom: 2px solid silver;
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    QLabel#forecasttitle, QLabel#realtimetitle, QLabel#historytitle{
+        color: silver;
+        border-top: 2px solid silver;
+    }
+
+    QLabel#forecastimage{
+        border-image: url('Assets/StockAPISelections/forecast.jpg');
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+    }
+
+    QLabel#realtimeimage{
+        border-image: url('Assets/StockAPISelections/realtime.jpg');
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+    }
+
+    QLabel#historyimage{
+        border-image: url('Assets/StockAPISelections/history.jpg');
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    QPushButton{
+        background: transparent;
+        color: silver;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    QPushButton:hover:!pressed{
+        background-color: #11c0c0c0;
+        color: silver;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+    """
+
 
 
 
@@ -292,8 +365,9 @@ class LightStyleSheets(Enum):
     """
 
 
-    HomeWindow = """QWidget{
+    HomeWindow = """QFrame#homewindow{
         border-image: url('Assets/Backgrounds/light/home-background.jpg') 0 0 0 0 stretch stretch;
+        border: none;
     }"""
 
     GraphFrame = """
@@ -482,6 +556,75 @@ class LightStyleSheets(Enum):
     }
 
     """
+
+    WeatherTabWindow = """QFrame#weathertab{
+        border: none;
+        border-image: url("Assets/Backgrounds/light/bg-weather.jpg") 0 0 0 0 stretch stretch;
+    }
+    
+    
+    QLabel#title{
+        color: black;
+        border: none;
+        font-size: 40;
+    }
+    
+    QFrame#forecast, QFrame#realtime, QFrame#history{
+        background-color: rgb(250,249,246);
+        border: 4px solid black;
+        border-radius: 15px;
+    }
+    
+    QLabel#forecastdescription, QLabel#realtimedescription, QLabel#historydescription{
+        color: black;
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    QLabel#forecasttitle, QLabel#realtimetitle, QLabel#historytitle{
+        color: black;
+        border-top: 2px solid black;
+    }
+
+    QLabel#forecastimage{
+        border-image: url('Assets/StockAPISelections/forecast.jpg');
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+    }
+
+    QLabel#realtimeimage{
+        border-image: url('Assets/StockAPISelections/realtime.jpg');
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+    }
+
+    QLabel#historyimage{
+        border-image: url('Assets/StockAPISelections/history.jpg');
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    QPushButton{
+        background: transparent;
+        color: black;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    QPushButton:hover:!pressed{
+        background-color: #11000000;
+        color: black;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }"""
+
 
 
 class StyleSheets: 
