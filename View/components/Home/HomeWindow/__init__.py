@@ -2,7 +2,7 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QPaintEvent, QPainter, QImage
 from PyQt6.QtCore import pyqtSlot
-from MyWeather.View.Styles.Sheets import StyleSheets
+from MyWeather.View.StyleSheets.Home import Dark, Light
 from MyWeather.View.utils.enumerations import *
 from .Graph.GraphFrame import GraphFrame
 from MyWeather.Constdata.Mode import MODE
@@ -15,7 +15,7 @@ class HomeWindow(QFrame):
     def __init__(self):
         super().__init__()
         self.setObjectName("homewindow")
-        self.setStyleSheet((StyleSheets.dark if MODE == ColorModes.DARK else StyleSheets.light).HomeWindow.value)
+        self.setStyleSheet((Dark if MODE == ColorModes.DARK else Light).HomeWindow)
         self.InitLayout()
 
 
@@ -46,7 +46,7 @@ class HomeWindow(QFrame):
     @pyqtSlot(ColorModes)
     def SwitchColorMode(self, mode : ColorModes):
         """Swaps the background image according to the mode and updates the graph's and header's color scheme"""
-        self.setStyleSheet((StyleSheets.dark if mode == ColorModes.DARK else StyleSheets.light).HomeWindow.value)
+        self.setStyleSheet((Dark if mode == ColorModes.DARK else Light).HomeWindow)
         self.graph.SwitchColorMode(mode)
 
 

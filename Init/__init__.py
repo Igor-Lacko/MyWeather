@@ -1,4 +1,4 @@
-"""Contain scripts/fuctions that run/are userd on the app start-up\n
+"""Contain scripts/fuctions that run/are userd on the app start-up or when a object has to be constructed\n
     -The base module also initializes settings for the app
 """
 from MyWeather.Model.request import CompleteData

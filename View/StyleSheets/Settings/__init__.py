@@ -1,0 +1,1 @@
+"""Contains QStyleSheets for the settings tab and it's components"""

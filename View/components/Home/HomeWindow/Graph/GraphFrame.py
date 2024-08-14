@@ -1,6 +1,6 @@
 """Contains the main frame for showing the weather graph on the home screen"""
 from . import *
-from MyWeather.View.Styles.Sheets import StyleSheets
+from MyWeather.View.StyleSheets.Graph import Dark, Light
 from MyWeather.Init.HomeTabInits import GraphInit
 from .GraphLayout import GraphLayout
 from PyQt6.QtCore import pyqtSlot
@@ -105,9 +105,7 @@ class GraphFrame(QFrame):
         Args:
             mode (ColorModes): Color mode provided
         """
-
-        return (StyleSheets.dark.GraphFrame if mode == ColorModes.DARK\
-                    else StyleSheets.light.GraphFrame).value
+        return (Dark if mode == ColorModes.DARK else Light).GraphFrame
 
     
     def SwitchColorMode(self, mode : ColorModes):

@@ -58,4 +58,5 @@ class Sidebar(QWidget):
     def UpdateFonts(self, font):
         """Called inside the settings"""
         for button in self.buttons:
+            button.font = font
             button.setFont(gui.QFont(font))

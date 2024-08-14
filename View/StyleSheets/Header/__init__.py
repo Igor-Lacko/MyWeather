@@ -1,0 +1,1 @@
+"""Contains QStyleSheets for the header component on the home tab"""

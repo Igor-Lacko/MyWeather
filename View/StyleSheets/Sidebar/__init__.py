@@ -1,0 +1,1 @@
+"""Contains QStyleSheets for the sidebar component"""

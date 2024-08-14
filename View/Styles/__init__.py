@@ -1,1 +1,0 @@
-"""Contains all Qstylesheets inside an enum class"""

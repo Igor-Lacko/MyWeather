@@ -134,8 +134,7 @@ class Header(QWidget):
         """
 
         (update_button := QPushButton()).setIcon(QIcon(f"Assets/UpdateIcon{MODE.value.title()}.png"))
-        update_button.setStyleSheet(StyleSheets.dark.UpdateButton.value if MODE == ColorModes.DARK\
-                                    else StyleSheets.light.UpdateButton.value)
+        update_button.setStyleSheet((Dark if MODE == ColorModes.DARK else Light).UpdateButton)
         
         update_button.clicked.connect(self.UpdateSameLocation)
         self.subcomponents.append(update_button)
@@ -165,7 +164,7 @@ class Header(QWidget):
         for div in self.subcomponents[1:-1]:
             div.SetColor(ColorModes.LIGHT)
 
-        self.subcomponents[-1].setStyleSheet(StyleSheets.light.UpdateButton.value)
+        self.subcomponents[-1].setStyleSheet(Light.UpdateButton)
         self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconLight.png'))
 
     
@@ -178,7 +177,7 @@ class Header(QWidget):
         for div in self.subcomponents[1:-1]:
             div.SetColor(ColorModes.DARK)
 
-        self.subcomponents[-1].setStyleSheet(StyleSheets.dark.UpdateButton.value)
+        self.subcomponents[-1].setStyleSheet(Dark.UpdateButton)
         self.subcomponents[-1].setIcon(QIcon('Assets/UpdateIconDark.png'))
 
     

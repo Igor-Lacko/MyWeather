@@ -3,8 +3,9 @@ from typing import Callable
 from PyQt6.QtGui import QFont, QFontDatabase
 from PyQt6.QtWidgets import QCompleter
 from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot
-from MyWeather.Init.CityDatabase import database
 from MyWeather.View.utils.enumerations import ColorModes
+from View.StyleSheets.ListView import Dark, Light
+
 
 
 class SettingsItem(QFrame):
@@ -183,14 +184,10 @@ class SettingsSubmitItem(SettingsItem):
     
 
     def SetPopupStyle(self, mode : ColorModes):
-
-        sheet = (StyleSheets.dark.ListViewPopup if mode == ColorModes.DARK
-        
-                else StyleSheets.light.ListViewPopup).value
-        
-        
+        """Applies a style sheet to the item's popup depending on the color mode provided"""
+        sheet = (Dark if mode == ColorModes.DARK else Light).ListViewPopup
         self.completer.popup().setStyleSheet(sheet)
-        
+
 
 
     @pyqtSlot()

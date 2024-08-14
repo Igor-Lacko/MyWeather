@@ -7,10 +7,9 @@ from PyQt6.QtCore import pyqtProperty, QRect, Qt, pyqtSignal
 
 
 class TextImageButton(QFrame):
-    user_submitted = pyqtSignal(int)
-    def __init__(self, title : str, description_text : str, index : int):
+    user_submitted = pyqtSignal(dict)
+    def __init__(self, title : str, description_text : str):
         super().__init__()
-        self.index = index
 
         self._layout_ = QVBoxLayout()
         self._layout_.setContentsMargins(0,0,0,0)
@@ -127,7 +126,10 @@ class TextImageButton(QFrame):
 
 
     def OnClick(self):
-        self.user_submitted.emit(self.index)
+        self.user_submitted.emit({
+            'button'    :   self.button,
+            'api'       :   self.title.text()
+            })
 
 
 
@@ -179,3 +181,5 @@ class AnimatedButton(QPushButton):
         painter.setPen(QColor("black" if self.parentWidget().parentWidget().color_mode.value == "light" else "silver"))
         painter.setFont(self.font())
         painter.drawText(button_area, Alignments.Center, self.text())
+
+

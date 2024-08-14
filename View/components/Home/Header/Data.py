@@ -58,16 +58,12 @@ class HeaderDataText(QVBoxLayout):
         self.SetColor(mode)
     
         self.setContentsMargins(0,0,20,0)
-    
-    
-    
+
+
     def SetColor(self, color_mode : ColorModes):
         """Sets the text color"""
-        
         for widget in self.widgets:
-            widget.setStyleSheet((StyleSheets.dark.HeaderLead if color_mode == ColorModes.DARK else StyleSheets.light.HeaderLead).value)
-
-
+            widget.setStyleSheet((Dark if color_mode == ColorModes.DARK else Light).HeaderText)
 
 
     def UpdateData(self, data : Realtime):

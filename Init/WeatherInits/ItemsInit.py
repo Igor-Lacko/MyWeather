@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QFont
 from MyWeather.View.components.Weather.WeatherWindow import WeatherTab
 from MyWeather.View.components.Weather.WeatherChooseButton import TextImageButton
+from MyWeather.View.components.Weather.Title import Title
 from .. import FONTS
 
 
@@ -19,6 +20,14 @@ def ParseItems(layout : list, parent_layout : QLayout, tab : WeatherTab):
     for item in layout:
         match item['type']:
 
+            case "title":
+                title = Title(item['pointsize'], FONTS.weather_tab, item['text'], tab.width())
+                title.setObjectName("title")        #singleton class
+
+                tab.title = title
+                parent_layout.addWidget(title, stretch=item['stretch'], alignment=item['alignment'])
+
+
             case "label":
                 label = QLabel(text=item['text'])
                 label.setFont(QFont(FONTS.weather_tab, pointSize=item['pointsize']))
@@ -29,7 +38,6 @@ def ParseItems(layout : list, parent_layout : QLayout, tab : WeatherTab):
                 except KeyError:
                     pass
 
-                tab.title = label
                 parent_layout.addWidget(label, stretch=item['stretch'], alignment=item['alignment'])
 
 
@@ -48,7 +56,7 @@ def ParseItems(layout : list, parent_layout : QLayout, tab : WeatherTab):
                 parent_layout.addLayout(layout, stretch=item['stretch'])
 
             case "TextImageButton":
-                button = TextImageButton(item['title'], item['description'], item['index'])
+                button = TextImageButton(item['title'], item['description'])
 
                 try:
                     button.setObjectName(item['objname'])

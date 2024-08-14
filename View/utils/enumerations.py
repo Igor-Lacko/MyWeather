@@ -18,6 +18,8 @@ class Alignments:
     TopRight = Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop
     BottomLeft = Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignBottom
     BottomRight = Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom
+    CenterLeft = Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
+    CenterRight = Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
     Justify = Qt.AlignmentFlag.AlignJustify
 
 

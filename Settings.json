@@ -1,11 +1,11 @@
 {
-  "theme": "light",
+  "theme": "dark",
   "location": "Presov",
   "fonts": {
-    "sidebar": "Nimbus Mono PS [UKWN]",
-    "header_lead": "URW Bookman [urw]",
-    "header_data": "Ubuntu Thin",
-    "graph_header": "URW Gothic [UKWN]",
+    "sidebar": "Courier 10 Pitch",
+    "header_lead": "Z003 [urw]",
+    "header_data": "Chilanka",
+    "graph_header": "padmaa-Bold.1.1",
     "weather_tab": "Yrsa Medium",
     "other": "Lohit Telugu"
   },

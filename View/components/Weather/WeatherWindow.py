@@ -1,8 +1,10 @@
 from . import *
 from MyWeather.View.utils.enumerations import ColorModes
-from MyWeather.View.Styles.Sheets import StyleSheets
+from MyWeather.View.StyleSheets.WeatherTab import Dark, Light
 from MyWeather.Init.WeatherInits import ItemsInit, ItemLayout
 from .WeatherChooseButton import TextImageButton
+from .Title import Title
+from .OptionsMenu import OptionMenu
 
 class WeatherTab(QFrame):
     """Weather tab class"""
@@ -14,19 +16,23 @@ class WeatherTab(QFrame):
         self.selections : list[TextImageButton] = []
         self.selection_layout : QLayout = None      #contains the 3 API choices in a horizontal layout
 
-        self.menu_layout : QLayout = None           #contains the menu that appears after the user makes a choice 
+        self.menu_layout : QLayout = None           #contains the menu that appears after the user makes a choice
+        self.menu : OptionMenu = None               #the menu instance
 
-        self.title = None
+        self.title : Title = None
         self.InitLayout() #stretches at index 0, 2 and 4 on init, the item layout is at index 3
-        self.SetColorMode(self.color_mode)
+        self.SetColorMode(self.color_mode, False)
 
 
 
     @pyqtSlot(ColorModes)
-    def SetColorMode(self, mode : ColorModes, change : bool = False):
+    def SetColorMode(self, mode : ColorModes, change : bool = True):
         """Swaps the background image of the weather tab and updates it's components' color scheme\n
         -If change is passed as True, switches the self.color_mode to the opposite (used when the mode is switched by the app's Sidebar)"""
         self.setStyleSheet(self.GetStyleSheet(mode))
+
+        if self.menu is not None: #set a style sheet to the menu's option popups, if the menu does currently exist
+            self.menu.SetColorMode(mode)
 
         if change:
             self.color_mode = ColorModes.DARK if self.color_mode != ColorModes.DARK else ColorModes.LIGHT
@@ -34,7 +40,7 @@ class WeatherTab(QFrame):
 
     def GetStyleSheet(self, mode : ColorModes):
         """Returns the WeatherTabWindow style sheet from the given color mode"""
-        return (StyleSheets.dark if mode == ColorModes.DARK else StyleSheets.light).WeatherTabWindow.value
+        return (Dark if mode == ColorModes.DARK else Light).WeatherTabWindow
 
 
     def InitLayout(self):

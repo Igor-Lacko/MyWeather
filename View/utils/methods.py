@@ -2,6 +2,7 @@ import PyQt6.QtWidgets as widgets
 from PyQt6.QtCore import QObject
 from PIL import Image
 from sys import argv
+from datetime import date, datetime, timedelta
 
 
 def GetSiblings(widget : widgets.QWidget, type = widgets.QWidget) -> list[QObject] | None:
@@ -66,12 +67,35 @@ def PNGColorSwap(src : str, mode : str, dst : str = None):
     image.save(dst)
 
 
+
+def GetDaylist(day_range : int, future : bool) -> list[str]:
+    """Returns a list of the past days in the specigied range 
+
+    Args:
+        day_range (int): How many days in the past/future to return
+        future (bool): If true, returns the future range days. If false, returns the past range days.
+
+    Returns:
+        list[str]: A list of strings of past/future dates in the format WEEKDAY, DD.MM.YYYY
+    """
+    dates = []
+
+    for delta in range(day_range) if future else reversed(range(day_range * -1 + 1, 1)):
+        dates.append((datetime.now() + timedelta(delta)).strftime("%A, %-d.%-m.%Y"))
+
+    return dates
+
+
+
+
+
 def main():
-    if len(argv) != 3:
-        print("kamo no tak")
-        return
-    
-    PNGColorSwap(argv[1], "dark", argv[2])
+  #  dates = []
+   # for i in range(int(argv[1])):
+   #     dates.append((datetime.now() + timedelta(i)).strftime("%A, %-d.%-m.%Y"))
+
+   # print(dates)
+    print(GetDaylist(3, False))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 from . import *
+from View.StyleSheets.Sidebar import Dark, Light
 
 
 
@@ -28,6 +29,7 @@ class SidebarButton(QToolButton):
 
         self.position = position
         self.index = index
+        self.font = FONTS.sidebar
 
         if not re.match(r".* mode", description):
             self.clicked.connect(lambda: self.tab_switch_signal.emit(self.index))
@@ -49,9 +51,7 @@ class SidebarButton(QToolButton):
         """sets a stylesheet for the button with transparency and some other stuff"""
 
 
-        sheet = StyleSheets.dark\
-        if mode.value == "dark"\
-        else StyleSheets.light                             #get the sheet to be set        
+        sheet = Dark if mode.value == "dark" else Light                             #get the sheet module to be set        
 
 
         #get the default style sheet according to the button's position in the toolbar
@@ -60,7 +60,7 @@ class SidebarButton(QToolButton):
                 if position == "top" else sheet.SidebarButtonBottom)
 
         #join the default and hover style sheets together
-        style_sheet = f"{default.value}\n\n{sheet.SidebarButtonHover.value}"
+        style_sheet = f"{default}\n\n{sheet.SidebarButtonHover}"
 
         #set it to the button
         self.setStyleSheet(style_sheet)
@@ -69,7 +69,7 @@ class SidebarButton(QToolButton):
         self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
         #default font
-        self.setFont(gui.QFont(FONTS.sidebar))
+        self.setFont(gui.QFont(self.font))
 
         #size policy
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)

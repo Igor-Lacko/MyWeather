@@ -1,28 +1,8 @@
 """Dictionary with the layout of the INITIAL items in the Weather tab (so not the views the user chooses)."""
 from . import *
 
-layout = [
-
-    {
-        "type"      :   "stretch",
-        "stretch"   :   5
-    },
-    
-    {
-        "type"      :   "label",
-        "stretch"   :   10,
-        "objname"   :   "title",
-        "text"      :   "Choose your mode.",
-        "pointsize" :   50,
-        "alignment" :   Alignments.TopCenter,
-    },
-
-    {
-        "type"          :   "stretch",
-        "stretch"       :   45,
-    },
-
-    {
+#used other times than just the default init, so better off as a separate variable
+api_options = {
         "type"      :   "layout",
         "layout"    :   "horizontal",
         "spacing"   :   0,
@@ -41,7 +21,6 @@ layout = [
                 "objname"       :   "realtime",
                 "title"         :   "Realtime",
                 "description"   :   "Realtime weather data for the location of your choosing.",
-                "index"         :   0
             },
 
             {
@@ -55,7 +34,6 @@ layout = [
                 "objname"       :   "forecast",
                 "title"         :   "Forecast",
                 "description"   :   "Weather forecast for the location of your choosing up to 3 days in the future.",
-                "index"         :   1
             },
 
             {
@@ -69,7 +47,6 @@ layout = [
                 "objname"       :   "history",
                 "title"         :   "History",
                 "description"   :   "Historic weather data for the location of your choosing. Up to a week in the past.",
-                "index"         :   2
             },
 
             {
@@ -77,12 +54,36 @@ layout = [
                 "stretch"       :   20,
             },
         ]
+    }
+
+#the weather tab layout at the beginning
+layout = [
+
+    {
+        "type"      :   "stretch",
+        "stretch"   :   5
     },
+    
+    {
+        "type"      :   "title",
+        "stretch"   :   10,
+        "text"      :   "Choose your mode.",
+        "alignment" :   Alignments.TopCenter,
+        "pointsize" :   40
+    },
+
+    {
+        "type"          :   "stretch",
+        "stretch"       :   45,
+    },
+
+    api_options,
 
     {
         "type"      :   "stretch",
         "stretch"   :   10
     }
 
-
 ]
+
+

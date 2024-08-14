@@ -2,7 +2,7 @@
 from . import *
 from MyWeather.View.utils.enumerations import Colors, ColorModes
 from PyQt6.QtGui import QPalette
-from .SettingsItem import SettingsSubmitItem #for type checking when applying style sheets to the ListView popup
+from View.StyleSheets.Settings import Dark, Light
 
 class SettingsTab(QWidget):
     """Main settings widget window"""
@@ -15,48 +15,20 @@ class SettingsTab(QWidget):
         self._layout_.setContentsMargins(20,80,20,50)
         self._layout_.setSpacing(0)
         self.setLayout(self._layout_)
-        
 
         self.items = ItemsInit.ParseSettingsItems(self)
-
-
         self.SetColorMode(DEFAULT_MODE)
 
 
-
-
-    def GetItemSheet(self, mode : ColorModes) -> StyleSheets:
+    def GetItemSheet(self, mode : ColorModes) -> str:
         """Helper function because i hated doing the mode if-else block for 1000 times
-
         Args:
             mode (ColorModes): Color mode provided
 
         Returns:
             StyleSheets: Style sheet to be used
         """
-
-        return (StyleSheets.dark.SettingsItem if mode == ColorModes.DARK\
-                    else StyleSheets.light.SettingsItem).value
-    
-
-    def GetMainSheet(self, mode : ColorModes) -> str:
-        """Helper function because i hated doing the mode if-else block for 1000 times
-
-        Args:
-            mode (ColorModes): Color mode provided
-
-        Returns:
-            str: Style sheet to be used
-        """
-
-        return (StyleSheets.dark.SettingsMain if mode == ColorModes.DARK\
-                    else StyleSheets.light.SettingsMain).value
-    
-
-    def GetPopupSheet(self, mode : ColorModes) -> str:
-        return (StyleSheets.dark.ListViewPopup if mode == ColorModes.DARK\
-                    else StyleSheets.light.ListViewPopup).value
-    
+        return (Dark if mode == ColorModes.DARK else Light).SettingsItem
 
 
     def SetColorMode(self, mode : ColorModes):

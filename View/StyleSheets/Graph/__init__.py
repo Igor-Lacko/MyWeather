@@ -1,0 +1,1 @@
+"""Contains QtStyleSheets for the graph component on the home tab"""

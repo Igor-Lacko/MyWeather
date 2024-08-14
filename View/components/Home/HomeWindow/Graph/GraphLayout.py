@@ -60,6 +60,5 @@ class GraphLayout(QStackedLayout):
         Args:
             mode (ColorModes): The Color Mode to be switched on to
         """
-        print(len(self.graphs))
         for graph in self.graphs:
             graph.SwitchColorMode(mode)

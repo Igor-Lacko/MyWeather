@@ -50,7 +50,7 @@ class HeaderLeadText(QVBoxLayout):
         """Sets the text background color"""
 
         for widget in self.widgets:
-            widget.setStyleSheet((StyleSheets.dark.HeaderLead if color_mode == ColorModes.DARK else StyleSheets.light.HeaderLead).value)
+            widget.setStyleSheet((Dark if color_mode == ColorModes.DARK else Light).HeaderText)
 
 
 
