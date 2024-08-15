@@ -8,13 +8,6 @@ class FrameHeader(QHBoxLayout):
     """Graph header class\n
     -initialized as a layout with a dummy widget with a layout instead of just a layout to round out the QFrame borders nicely
     """
-
-    stretch_dict = {
-        0   :   10,
-        1   :   80,
-        2   :   10
-    }
-    
     def __init__(self, range : str):
         """Frame header constructor
 
@@ -30,24 +23,20 @@ class FrameHeader(QHBoxLayout):
         header_layout.addLayout(title := TitleMenu(range))
         header_layout.addWidget(right_button := QPushButton())
 
-        self.widgets = [left_button, title, right_button]
+        self.left_button = left_button
+        self.title = title
+        self.right_button = right_button
 
-        self.SetStretch(header_layout)
         self.SetColor(MODE)
 
         self.addWidget(header_widget)
 
 
-
-    def SetStretch(self, layout):
-        """Sets the stretch according to the stretch_dict dictionary"""
-        for index, stretch in self.stretch_dict.items():
-            layout.setStretch(index, stretch)
-            if type(self.widgets[index]) != TitleMenu:
-                self.widgets[index].setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        
-        layout.setContentsMargins(0,0,0,0)
-        layout.setSpacing(0)
+        header_layout.setStretch(0, 10)
+        header_layout.setStretch(1, 80)
+        header_layout.setStretch(2, 10)
+        header_layout.setContentsMargins(0,0,0,0)
+        header_layout.setSpacing(0)
 
 
 
@@ -57,8 +46,8 @@ class FrameHeader(QHBoxLayout):
         Args:
             mode (ColorModes): The provided color mode
         """
-        self.widgets[0].setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/left-arrow.png"))
-        self.widgets[2].setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/right-arrow.png"))
+        self.left_button.setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/left-arrow.png"))
+        self.right_button.setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/right-arrow.png"))
 
 
 

@@ -29,12 +29,11 @@ class WeatherController(QObject):
             selection.user_submitted.connect(lambda choice: self.StageTransition((0,1), **choice))
 
 
-    def SetLayoutNextStage(self, stage_pair : tuple=(0,1)):
+    def SetLayoutNextStage(self, stage_pair : tuple=(0,1), **kwargs):
         """Modifies the layout for the next stage
 
         Args:
             stage_pair (tuple): a pair of (current_stage, next_stage)
-            kwargs (dict): various arguments for different setups, such as the API choice when initializing the option menu, etc...
         """
         match stage_pair:
             case(0,1): #the first stage transition
@@ -57,13 +56,8 @@ class WeatherController(QObject):
                 self.weather_tab._layout_.setStretch(2,45)
 
                 #add the layout with api selections
-                selection_layout = GetSelectionLayout(self.weather_tab)
-                self.ConnectSelections()
-                self.effects = SetGroupInvisible(self.weather_tab.selections)
-                self.weather_tab._layout_.insertLayout(3, selection_layout, 30)
+                self.weather_tab._layout_.insertLayout(3, kwargs['selection_layout'], 30)
 
-                #wait 100 ms and show the options and the title
-                QTimer.singleShot(100, lambda: ShowTitleSelections(self))
 
 
     def StageTransition(self, stage_pair : tuple, **kwargs):
@@ -108,20 +102,28 @@ class WeatherController(QObject):
                 #----Opposite case, transition from the second stage back to the first----#
                 self.api = None
 
+                #----Recreate the selection layout----#
+                selection_layout = GetSelectionLayout(self.weather_tab)
+                self.ConnectSelections()
+                self.effects = SetGroupInvisible(self.weather_tab.selections)
+
                 #----Parallel animation groups with the title fading and the option menu sizing in----#
                 self.animations = GetParallelGroup([FadeOutAnimation(self.weather_tab.title, 1500),
                                                     SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab)],
-                                                    slot=lambda: self.SetLayoutNextStage((1,0)))
+                                                    slot=lambda: self.SetLayoutNextStage((1,0), **{'selection_layout' : selection_layout}))
 
                 #----Change title text on finish----#
                 self.animations.finished.connect(lambda: self.weather_tab.title.setText("Choose your mode."))
+
+                #wait 100 ms and show the options and the title
+                self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowTitleSelections(self)))
 
                 self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
 
             case(1,2):
                 #----Transition from the second stage to the third----#
-                raise NotImplementedError("Will be a while before i do this!")
+                raise NotImplementedError("Next on the TODO list!")
 
 
 #----END OF THE CONTROLLER CLASS, STAGE OPERATIONS PUT HERE TO AVOID CIRCULAR IMPORTS----#
@@ -135,6 +137,7 @@ class WeatherController(QObject):
 
 def HideAnimationFinished(controller : WeatherController):
         """End of the animation that hides the API selections. Removes all items from the layout (including QSpacerItems)"""
+        ClearEffect(controller.weather_tab.selections)
         while controller.weather_tab.selection_layout.count():
             item = controller.weather_tab.selection_layout.takeAt(0)
 
@@ -155,12 +158,10 @@ def HideAnimationFinished(controller : WeatherController):
 
 def ShowTitleSelections(controller : WeatherController):
         """Simillar to ShowTitleMenu, expect in the reverse stage transition"""
-        show_animations = GetParallelGroup([MoveInAnimation(selection, 2000) for selection in controller.weather_tab.selections])
+        show_animations = GetParallelGroup([MoveInAnimation(selection, 1500) for selection in controller.weather_tab.selections])
         show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
-        controller.animations = GetSequentialGroup([FadeInAnimation(controller.weather_tab.title, 2500), show_animations])
+        controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 2500), show_animations], slot=lambda: ClearEffect(controller.weather_tab.selections))
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
-
-
 
 
 
@@ -177,6 +178,7 @@ def ShowTitleMenu(controller : WeatherController):
         """Shows the title and the API config menu"""
         controller.weather_tab.menu.setGraphicsEffect(invisible := QGraphicsOpacityEffect(controller.weather_tab.menu))
         invisible.setOpacity(0)         #use a graphics effect to keep the menu invisible
-        controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 500), SizeOutAnimation(controller.weather_tab.menu, 500, controller.weather_tab)])
+        controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 500), SizeOutAnimation(controller.weather_tab.menu, 500, controller.weather_tab)], 
+                                                    slot=lambda: ClearEffect([controller.weather_tab.menu]))
         controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [invisible]))    
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)

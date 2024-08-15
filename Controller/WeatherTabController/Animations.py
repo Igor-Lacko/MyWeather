@@ -61,7 +61,15 @@ def MoveInAnimation(widget : QWidget, duration : int) -> QPropertyAnimation:
 
 def FadeOutAnimation(widget : QWidget, duration : int) -> QPropertyAnimation:
     """Animation that fades a widget until it isn't visible"""
-    widget.setGraphicsEffect(fade := QGraphicsOpacityEffect(widget))
+
+    #set a effect to the widget if it isn't there already
+    if widget.graphicsEffect() is None:
+        fade = QGraphicsOpacityEffect(widget)
+        widget.setGraphicsEffect(fade)
+
+    else:
+        fade = widget.graphicsEffect()
+
     fade.setOpacity(1)              #so that the effect doesn't show immediately
     (fade_animation := QPropertyAnimation(fade, b"opacity")).setDuration(duration)
     fade_animation.setStartValue(1)
@@ -72,7 +80,15 @@ def FadeOutAnimation(widget : QWidget, duration : int) -> QPropertyAnimation:
 
 def FadeInAnimation(widget : QWidget, duration : int) -> QPropertyAnimation:
     """Opposite of FadeOutAnimation, fades a widget in until it's fully visible"""
-    widget.setGraphicsEffect(fade := QGraphicsOpacityEffect(widget))
+
+    #set a effect to the widget if it isn't there already
+    if widget.graphicsEffect() is None:
+        fade = QGraphicsOpacityEffect(widget)
+        widget.setGraphicsEffect(fade)
+
+    else:
+        fade = widget.graphicsEffect()
+
     fade.setOpacity(0)              #so that the effect doesn't show immediately
     (fade_animation := QPropertyAnimation(fade, b"opacity")).setDuration(duration)
     fade_animation.setStartValue(0)

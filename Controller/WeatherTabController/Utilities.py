@@ -9,3 +9,10 @@ def GetSelectionLayout(tab : WeatherTab):
     ParseItems(api_options['items'], layout, tab)
     tab.selection_layout = layout
     return layout
+
+
+def ClearEffect(widgets : list[QWidget]):
+    """Deletes the widget's effect"""
+    for widget in widgets:
+        widget.graphicsEffect().deleteLater()
+        widget.setGraphicsEffect(None)
