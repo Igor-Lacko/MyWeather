@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt, QObject, pyqtSignal, pyqtSlot
 from MyWeather.Model import obj
-from MyWeather.View.components.Home.HomeWindow.Graph.GraphFrame import GraphFrame
-from MyWeather.View.components.Home.HomeWindow.Graph.GraphLayout import GraphLayout
+from MyWeather.View.components.DataViews.GraphView.Container import ExtendedGraphContainer
+from MyWeather.View.components.DataViews.GraphView.StackedGraphLayout import StackedGraphLayout
 
 class GraphController(QObject):
     """Updates the graph"""
@@ -12,42 +12,27 @@ class GraphController(QObject):
 
 
 
-    def ConnectGraph(self, graph : GraphFrame):
+    def ConnectGraph(self, graph : ExtendedGraphContainer):
         """Connect the controller to the graph"""
         self.graph = graph
 
 
 
     def UpdateGraph(self, data : obj.Timeline):
-        """Updates the graph with data provided by the worker thread"""            
-        self.graph.header.widgets[1].ChangeTitle(data.days[0].date_str, data.location)  #title for the first day
-        self.graph.graph.setCurrentIndex(0)                                             #switch the day to the first of the data recieved
+        """Updates the graph with data provided by the worker thread"""
+        self.graph.data = data
+        self.graph.index = 0  
+        self.graph.header.ChangeTitle(data.days[0].date_str, data.location)  #title for the first day
+        self.graph.graphs.setCurrentIndex(0)                                             #switch the day to the first of the data recieved
 
         for index, day in enumerate(data.days):
-            self.graph.daylist[index].date = day.date_str           #set new date
-            self.graph.daylist[index].location = data.location      #set new location
+            self.graph.layouts[index].date = day.date_str           #set new date
+            self.graph.layouts[index].location = data.location      #set new location
 
-            self.UpdateGraphData(day, self.graph.daylist[index])    #update variables for the GraphLayout which contains the entire day
-
-            for graph in self.graph.daylist[index].graphs:
+            for graph in self.graph.layouts[index].graphs:
                 graph.Update(day)
 
 
 
     def FailureHandler(self):
         print("Fail :((")
-
-
-    def UpdateGraphData(self, dailydata : obj.Day, graph : GraphLayout):
-        """Updates the graph's variables containing actual weather data"""
-        
-        #temperature graph data
-        graph.actual = [hour.temperature_data.actual_temperature for hour in dailydata.hours]
-        graph.feelslike = [hour.temperature_data.feelslike for hour in dailydata.hours]
-
-        #wind graph data
-        graph.wind_speed = [hour.wind_data.speed for hour in dailydata.hours]
-
-        #rain graph data
-        graph.chance_of_rain = [hour.rain_data.rain_chance for hour in dailydata.hours]
-        graph.humidity = [hour.humidity for hour in dailydata.hours]

@@ -1,9 +1,14 @@
 """Initializes the graph with InitWeatherData"""
-from ...View.components.Home.HomeWindow.Graph.FrameHeader import FrameHeader
+from ...View.components.DataViews.GraphView.Container import ExtendedGraphContainer
 from . import InitWeatherData
+from MyWeather.Constdata.Mode import MODE
 
-def GetGraphHeader() -> FrameHeader:
-    """Initializes the frame header with the on-init weather data"""
-    return FrameHeader(f"Forecast for {InitWeatherData.forecast.days[0].date_str}, {InitWeatherData.forecast.location}")
+def InitGraph() -> ExtendedGraphContainer:
+    """Initial home window graph constructor
+
+    Returns:
+        ExtendedGraphContainer: ExtendedGraphContainer object with InitWeatherData
+    """
 
 
+    return ExtendedGraphContainer(InitWeatherData.forecast, MODE, 'forecast')

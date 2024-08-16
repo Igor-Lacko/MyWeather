@@ -1,7 +1,8 @@
-GraphFrame = """QFrame#GraphFrame{
-    border: 7px solid black;
-    border-radius: 15px;
-    background-color: rgb(250,249,246)
+GraphFrame = """QFrame#graph_frame{
+    border: 5px solid black;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    background-color: white;
 }
 
 QPushButton{
@@ -13,17 +14,19 @@ QPushButton:hover:!pressed{
     background-color: #11000000;
 }
 
-QWidget#header_widget{
+QFrame#header_widget{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     border-bottom: 2px solid black;
+    background: transparent;
 }
 
-QLabel#title_widget{
+QLabel{
     color: black;
     border-left: 2px solid black;
     border-right: 2px solid black;
     border-bottom: none;
     border-top: none;
-    background: transparent;
 }
 
 QComboBox{
@@ -48,8 +51,4 @@ QComboBox:hover:!pressed{
 QComboBox QAbstractItemView{
     background-color: rgb(250,249,246);
     color: black;
-}
-
-FigureCanvasQTAgg{
-    border-bottom: 2px black solid;
 }"""

@@ -2,6 +2,7 @@
 from . import *
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtCore import pyqtSlot
+from MyWeather.View.utils.enumerations import ColorModes #absolute import to avoid enum comparision issues
 
 
 class BaseGraphHeader(QFrame):
@@ -15,6 +16,10 @@ class BaseGraphHeader(QFrame):
             data (dict[str,str]): A set of keyword arguments, only one used in subclass is the location and current date
         """
         super().__init__()
+        self.setObjectName("header_widget")
+
+        #set the data description based on the api
+        self.description = "Data" if data['api'] == "history" else "Forecast"
 
         #initialize the layout/spacing
         self._layout_ = QHBoxLayout()
@@ -24,6 +29,7 @@ class BaseGraphHeader(QFrame):
 
         #initialize the title and menu
         self._layout_.addWidget(self.GetTitle(data['date'], data['location'], False if data['api'] == 'history' else True), stretch=90)
+        self._layout_.addWidget(self.GetMenu(), stretch=10)
 
 
 
@@ -37,7 +43,7 @@ class BaseGraphHeader(QFrame):
         """
 
         #initialize the title
-        (title := QLabel(text=f"{'Forecast' if forecast else 'Data'} for {location}, {date}."))\
+        (title := QLabel(text=f"{'Forecast' if forecast else 'Data'} for {location}, {date}"))\
         .setFont(QFont(FONTS.graph_header, pointSize=15))
         title.setAlignment(Alignments.Center)
         title.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -51,9 +57,9 @@ class BaseGraphHeader(QFrame):
         """Returns a QComboBox with the data choices as items"""
 
         #initialize the menu
-        (menu := QComboBox()).addItems(["Temp", "Rain", "Wind", "Sunset/rise"])
+        (menu := QComboBox()).addItems(["Temp", "Wind", "Rain", "Water"])
         menu.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        menu.setFont(QFont(FONTS.graph_header, pointSize=15))
+        menu.setFont(QFont(FONTS.graph_header, pointSize=14))
 
         #add it to the widget
         self.menu = menu
@@ -83,10 +89,9 @@ class ExtendedGraphHeader(BaseGraphHeader):
         """
         super().__init__(**data)
 
-        #how many days the historic data/forecast includes
-        self.range = data['range']
+        #add buttons
+        self.AddButtons(data['color_mode'])
 
-        #the layout for the base class looks like 90% Title|10% menu, so we need to add buttons to both ends
 
 
     def AddButtons(self, mode : ColorModes):
@@ -96,21 +101,29 @@ class ExtendedGraphHeader(BaseGraphHeader):
             mode (ColorModes): The initial color mode (used for settring an icon to the buttons)
         """
 
+        #initialize the buttons and their names
+        self.left_button = QPushButton()
+        self.right_button = QPushButton()
+        self.left_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.right_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.left_button.setObjectName("left_button")
+        self.right_button.setObjectName("right_button")
+
         #set the initial color scheme
-        self.left_button, self.right_button = QPushButton()
         self.SetButtonIcons(mode)
 
         #insert the buttons into the layout
         self._layout_.insertWidget(0, self.left_button, stretch=10)
-        self._layout_.addWidget(self.left_button, stretch=10)
+        self._layout_.addWidget(self.right_button, stretch=10)
 
         #align the title and menu so they take up 80% of the layout (so that the stretches add up to 100)
         self._layout_.setStretch(1, 72)             #title
         self._layout_.setStretch(2, 8)              #menu
 
 
+
     def SetButtonIcons(self, mode : ColorModes):
-        """Sets an icon to the left and righ buttons depending on the mode argument
+        """Sets an icon to the left and right buttons depending on the mode argument
 
         Args:
             mode (ColorModes): The color mode scheme of the icons
@@ -118,3 +131,14 @@ class ExtendedGraphHeader(BaseGraphHeader):
         self.left_button.setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/left-arrow.png"))
         self.right_button.setIcon(QIcon(f"Assets/GraphFrameIcons/{mode.value}/right-arrow.png"))
 
+
+
+    def ChangeTitle(self, date : str, location : str):
+        """Updates the graph's title based on the parameters
+
+        Args:
+            date (str): _description_
+            location (str): _description_
+        """
+
+        self.title.setText(f"{self.description} for {location}, {date}")

@@ -1,8 +1,8 @@
 {
-  "theme": "dark",
+  "theme": "light",
   "location": "Presov",
   "fonts": {
-    "sidebar": "Courier 10 Pitch",
+    "sidebar": "DejaVu Math TeX Gyre",
     "header_lead": "Z003 [urw]",
     "header_data": "Chilanka",
     "graph_header": "padmaa-Bold.1.1",
