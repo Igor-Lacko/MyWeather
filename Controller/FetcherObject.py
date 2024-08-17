@@ -3,6 +3,7 @@ from MyWeather.Model import obj, request as API
 from PyQt6.QtCore import pyqtSignal, QObject
 import geocoder
 from .CommunicatorObject import DataCommunicator
+from MyWeather.Init import LOCATION
 
 
 class WeatherFetcher(QObject):
@@ -11,6 +12,7 @@ class WeatherFetcher(QObject):
         """Weather fetcher constructor"""
         super().__init__()
         self.communicator = communicator
+        self.current_location = LOCATION
 
 
     def FetchNewData(self, opts):
@@ -31,46 +33,28 @@ class WeatherFetcher(QObject):
                 location = f"{location[0]},{location[1]}"
 
             else:
-                c
+                self.communicator.data = None
+                return
 
         else:
             location = self.current_location
 
-        try:
-            match opts['api']:
-                #get data based on the api
-                case 'bulk':
-                    data = API.CompleteData(location, opts['days'], opts['date'])
+        match opts['api']:
+            #get data based on the api
+            case 'bulk':
+                data = API.CompleteData(location, opts['days'], opts['date'])
 
-                case 'realtime':
-                    data = API.RealtimeWeather(location)
+            case 'realtime':
+                data = API.RealtimeWeather(location)
 
-                case 'forecast':
-                    data = API.Forecast(location, opts['days'], opts['date'])
+            case 'forecast':
+                data = API.Forecast(location, opts['days'], opts['date'])
 
-                case 'history':
-                    data = API.HistoricWeather(location)        #TODO: Add restrictions
+            case 'history':
+                data = API.HistoricWeather(location)        #TODO: Add restrictions
 
-            if data is None:
-                if opts['api'] == 'bulk': #the failure is from home tab
-                    self.failed_home.emit()
+        self.communicator.data = data
 
-                else:
-                    self.failed_weather.emit()
-
-                return
-
-        except Exception:
-            if opts['api'] == 'bulk': #the failure is from home tab
-                self.failed_home.emit()
-
-            else:
-                self.failed_weather.emit()
-
-            return
-
-        #emit a success signal based on the api
-        self.EmitSuccess(data, opts['api'])
 
 
     #used on the home tab, so only with bulk data
@@ -82,16 +66,14 @@ class WeatherFetcher(QObject):
                 location = f"{location[0]},{location[1]}"
 
             else:
-                self.failed_home.emit()
+                self.communicator.data = None
                 return
 
         else:
             location = self.current_location
 
         if (data := API.CompleteData(location, days=days, dt=date)) is None:
-            print("nn")
-            self.failed_home.emit()
-            return
+            self.communicator.data = None
 
         else:
-            self.bulk.emit(data)
+            self.communicator.data = data

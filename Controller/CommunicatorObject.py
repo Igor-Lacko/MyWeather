@@ -1,11 +1,15 @@
 from MyWeather.Model import obj, request as API
-from PyQt6.QtCore import QThread, pyqtSignal, QObject
+from PyQt6.QtCore import QThread, pyqtSignal, QObject, QTimer, QEventLoop
 import geocoder
 from MyWeather.Init import LOCATION
+from enum import Enum
 
 
-
-
+class State(Enum):
+    """Helper enum when checking for success"""
+    Idle = 0
+    Failed = 1
+    Success = 2
 
 
 class DataCommunicator(QObject):
@@ -16,112 +20,87 @@ class DataCommunicator(QObject):
     bulk = pyqtSignal(obj.BulkData)
     timeline = pyqtSignal(obj.Timeline)         #mutual for history/forecast since it's the same class
     realtime = pyqtSignal(obj.Realtime)
+    fetch = pyqtSignal(dict)
+    update = pyqtSignal()
 
     def __init__(self):
         super().__init__()
-        self.current_location = LOCATION
+        self.state : State = State.Idle
         self.data : obj.BulkData | obj.Realtime | obj.Timeline = None
+        self.api : str = None
 
 
-    def FetchNewData(self, opts):
-        """Fetches new data based on the api argument
 
-        Args:
-            location (str): The location the data will be describing. Mandatory for all APIs
-            api (str, optional): _description_. Defaults to 'bulk'.
-            days (int, optional): Number of days the data will show, mandatory for Bulk/Forecast/History. Defaults to 3.
-            date (_type_, optional): Date restriction, optional for Bulk/Forecast/History. Defaults to None.
-        """
-        self.current_location = opts['location']
 
-        if opts['location'].lower() == "current":
-            location = geocoder.ip('me').latlng
-
-            if location is not None:
-                location = f"{location[0]},{location[1]}"
-
-            else:
-                self.failed_home.emit()
-                return
-
-        else:
-            location = self.current_location
-
-        try:
-            match opts['api']:
-                #get data based on the api
-                case 'bulk':
-                    data = API.CompleteData(location, opts['days'], opts['date'])
-
-                case 'realtime':
-                    data = API.RealtimeWeather(location)
-
-                case 'forecast':
-                    data = API.Forecast(location, opts['days'], opts['date'])
-
-                case 'history':
-                    data = API.HistoricWeather(location)        #TODO: Add restrictions
-
-            if data is None:
-                if opts['api'] == 'bulk': #the failure is from home tab
-                    self.failed_home.emit()
-
-                else:
-                    self.failed_weather.emit()
-
-                return
-
-        except Exception:
-            if opts['api'] == 'bulk': #the failure is from home tab
-                self.failed_home.emit()
-
-            else:
-                self.failed_weather.emit()
-
+    def CheckSuccess(self):
+        """Called after fetch/update, implements a custom "timeout" with QTimer"""
+        if self.data is None:
+            self.state = State.Failed
             return
 
-        #emit a success signal based on the api
-        self.EmitSuccess(data, opts['api'])
+        self.state = State.Success
 
 
-    #used on the home tab, so only with bulk data
-    def UpdateData(self, days : int=3, date=None):
-        if self.current_location.lower() == "current":
-            location = geocoder.ip('me').latlng
+    def AwaitResponse(self):
+        """Called after fetch/update, implements a custom "timeout" with QTimer"""
+        for _ in range(5):
+            loop = QEventLoop()         #use a QEventLoop to block the for loop for a second
+            QTimer.singleShot(1000, loop.quit)
+            loop.exec()
 
-            if location is not None:
-                location = f"{location[0]},{location[1]}"
-
-            else:
-                self.failed_home.emit()
+            self.CheckSuccess()
+            #check if the request was successful
+            if self.state == State.Success:
+                self.SignalSuccess()
                 return
 
-        else:
-            location = self.current_location
+        self.SignalFail()
 
-        if (data := API.CompleteData(location, days=days, dt=date)) is None:
-            print("nn")
+
+    def SignalFail(self):
+        """Emits one of the fail signals depending on self.api (since Home tab uses bulk api and Weather tab uses the other types)"""
+        print('EPIC FAIL')
+        if self.api == 'bulk':
             self.failed_home.emit()
-            return
 
         else:
-            self.bulk.emit(data)
+            self.failed_weather.emit()
+
+        #reset
+        self.api = None
+        self.state = State.Idle
 
 
-    def EmitSuccess(self, data : obj.Realtime | obj.Timeline | obj.BulkData, api : str):
+    def SignalSuccess(self):
         """Emits one of the defined signals based on the provided type
 
         Args:
             data (obj.Realtime | obj.Timeline | obj.BulkData): The provided weather data
-            api (str): API/data type as a string, for easier conditionals with case
         """
 
-        match api:
+        print(self.api)
+        match self.api:
             case 'realtime':
-                self.realtime.emit(data)
+                self.realtime.emit(self.data)
 
             case 'forecast' | 'history':
-                self.timeline.emit(data)
+                self.timeline.emit(self.data)
 
             case 'bulk':
-                self.bulk.emit(data)
+                self.bulk.emit(self.data)
+
+        #reset
+        self.api = None
+        self.state = State.Idle
+
+
+    #Signal emitter methods
+    def UpdateData(self):
+        self.api = 'bulk'
+        self.update.emit()
+        self.AwaitResponse()
+
+    def FetchNewData(self, opts):
+        self.api = opts['api']
+        self.fetch.emit(opts)
+        self.AwaitResponse()
