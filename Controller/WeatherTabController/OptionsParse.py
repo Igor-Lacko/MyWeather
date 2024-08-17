@@ -1,0 +1,1 @@
+"""Parser for the option menu configuration, calls Model.Request based on the data provided"""

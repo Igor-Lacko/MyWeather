@@ -42,7 +42,7 @@ def ConnectSettingsMenus(main_window : MainWindow):
                     item.menu.currentTextChanged.connect(lambda font: main_window.weather.UpdateFonts(font))
 
                 case "Graph header":
-                    item.menu.currentTextChanged.connect(lambda font: main_window.home.window.graph.header.widgets[1].UpdateFonts(font))
+                    item.menu.currentTextChanged.connect(lambda font: main_window.home.window.graph.header.UpdateFonts(font))
                 
                 case "Other":
                     item.menu.currentTextChanged.connect(lambda font: UpdateSettingsFonts(main_window.settings, font))

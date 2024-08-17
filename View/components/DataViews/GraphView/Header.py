@@ -73,7 +73,7 @@ class BaseGraphHeader(QFrame):
             font (str): The new font
         """
 
-        for widget in [self.title. self.menu]:
+        for widget in [self.title, self.menu]:
             widget.setFont(QFont(font, pointSize=15))
 
 
