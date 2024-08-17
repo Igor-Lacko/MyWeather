@@ -1,9 +1,10 @@
 from PyQt6 import QtWidgets as widgets, QtCore as core
-from .DataThread import WeatherFetcher
+from .CommunicatorObject import WeatherFetcher
 from .HeaderController import HeaderController
-from .GraphController import GraphController
+from .HomeGraphController import GraphController
 from .SidebarController import SidebarController
 from .WeatherTabController.ControllerClass import WeatherController
+from functools import partial
 
 class Application(widgets.QApplication):
     
@@ -25,13 +26,17 @@ class Application(widgets.QApplication):
 
 
     def ConnectThreadController(self):
-        
-        #----------FAILURE CONNECTS----------#
-        self.worker_object.failed.connect(self.header_controller.FailureHandler)
-        self.worker_object.failed.connect(self.graph_controller.FailureHandler)
+        #----------FAILURE CONNECTS FOR HOME TAB----------#
+        self.worker_object.failed_home.connect(self.header_controller.FailureHandler)
+        self.worker_object.failed_home.connect(self.graph_controller.FailureHandler)
 
+        #----------SUCCESS CONNECTS FOR HOME TAB----------#
+        self.worker_object.bulk.connect(lambda data: self.header_controller.UpdateHeader(data.current, self.header_controller.header))
+        self.worker_object.bulk.connect(lambda data: self.graph_controller.UpdateGraph(data.forecast))
 
+        #----------FAILURE CONNECT FOR WEATHER TAB----------#
+        #self.worker_object.failed_weather.connect(self.weather_controller.ResponseFailed)
 
-        #----------SUCCESS CONNECTS----------#
-        self.worker_object.ready.connect(lambda data: self.header_controller.UpdateHeader(data.current, self.header_controller.header))
-        self.worker_object.ready.connect(lambda data: self.graph_controller.UpdateGraph(data.forecast))
+        #----------SUCCESS CONNECTS FOR WEATHER TAB----------#
+        for signal in [self.worker_object.realtime, self.worker_object.timeline]:
+            signal.connect(self.weather_controller.ResponseSuccess)

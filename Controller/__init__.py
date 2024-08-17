@@ -1,1 +1,1 @@
-"""Controller for the app. Empty so far"""
+"""Controller for the app"""

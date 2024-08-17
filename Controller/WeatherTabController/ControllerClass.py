@@ -1,20 +1,26 @@
 """Contains the main Weather tab controller class."""
 from . import *
-from PyQt6.QtCore import QObject, QAbstractAnimation, QTimer
+from PyQt6.QtCore import QObject, QAbstractAnimation, QTimer, pyqtSignal
 from PyQt6.QtWidgets import *
 from MyWeather.Init.WeatherInits.OptionMenuInit import OptionMenuParser
+from MyWeather.Model.request import *
+from MyWeather.Model.obj import BulkData, Timeline, Realtime
+from MyWeather.View.components.DataViews.GraphView.Container import BaseGraphContainer
 from .Animations import *
 from .Utilities import *
+from .OptionsParse import GetOptions
 
 
 class WeatherController(QObject):
     """Inherits from QObject for access to signals/slots... etc"""
+    fetch_data = pyqtSignal(dict)
 
     def __init__(self):
         super().__init__()
         self.animations = None
         self.stage = 0
-        self.api = None
+        self.api : str = None
+        self.data : Realtime | Timeline | BulkData = None
 
 
     def ConnectWeatherTab(self, tab : WeatherTab):
@@ -29,6 +35,21 @@ class WeatherController(QObject):
             selection.user_submitted.connect(lambda choice: self.StageTransition((0,1), **choice))
 
 
+    def ResponseSuccess(self, data):
+        self.data = data
+        self.StageTransition(1,2)
+
+
+
+
+    def GetResponse(self):
+        """Calls the worker object which will either return None or a response\n
+        - If the operation fails, the controller remains in stage 1 and shows a error popup\n
+        - If it succeeds, it will begin the stage transition from 1 to 2"""
+        self.fetch_data.emit(GetOptions(self.api.lower(), self.weather_tab.menu))
+
+
+
     def SetLayoutNextStage(self, stage_pair : tuple=(0,1), **kwargs):
         """Modifies the layout for the next stage
 
@@ -40,7 +61,7 @@ class WeatherController(QObject):
                 self.weather_tab._layout_.setStretch(0, 30)
                 self.weather_tab._layout_.setStretch(2, 5)
                 self.weather_tab._layout_.insertWidget(3, menu := OptionMenuParser(self.api, self.weather_tab.color_mode,
-                    lambda: self.StageTransition((1,0)), lambda: self.StageTransition((1,2)))) #the reset/submit button slots
+                    lambda: self.StageTransition((1,0)), lambda: self.GetResponse())) #the reset/submit button slots
                 self.weather_tab.menu = menu
                 self.weather_tab.menu.hide()
                 self.weather_tab._layout_.setStretch(3, 45)
