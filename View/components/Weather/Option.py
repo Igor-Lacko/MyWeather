@@ -1,16 +1,19 @@
 """Contains the QFrame Option subclass that makes up the OptionMenu"""
 from . import *
 from PyQt6.QtGui import QPixmap
-from PyQt6.QtCore import Qt, pyqtProperty
+from PyQt6.QtCore import Qt, pyqtProperty, pyqtSignal
 from math import ceil
 
 class AbstractOption(QFrame):
     """"Main" option class, contains things that almost every option has (so a description and a HBox layout with 50/ stretch), subclasses fill out the second half of the option"""
-    def __init__(self, text : str, pointsize : int):
+    def __init__(self, text : str, pointsize : int, key : str | None):
         """Option constructor"""
         super().__init__()
+
+        self.key = key                                      #which setting the option connects to (None for TwoButtonsOption)
+
         self._layout_ = QHBoxLayout()
-        self._layout_.setContentsMargins(10,0,0,0)              #some padding at the left border for the text
+        self._layout_.setContentsMargins(10,0,0,0)          #some padding at the left border for the text
         self._layout_.setSpacing(0)
         self.setLayout(self._layout_)
 
@@ -19,19 +22,28 @@ class AbstractOption(QFrame):
             self._layout_.addWidget(self.description, stretch=50)
 
 
-
-
-
     def GetLabel(self, text : str, pointsize : int, wrap : bool=False) -> QLabel:
         (label := QLabel(text=text)).setFont(QFont(FONTS.weather_tab, pointSize=pointsize))
         label.setWordWrap(wrap)
         return label
 
 
+    @pyqtProperty(str)
+    def value(self):
+        """Default placeholder property, returns a value depending on the option type in subclasses"""
+        return 'None'
+
+
+
+
+
+
+
+
 class TwoButtonsOption(AbstractOption):
     """Abstract option subclass which contains two buttons (the reset and submit buttons, probably never used after that)"""
     def __init__(self, pointsize : int, space : int):
-        super().__init__(None, None)
+        super().__init__(None, None, None)
 
         self._layout_.addStretch(space)
         self.reset_button, self.submit_button = QPushButton(text="✖"), QPushButton(text="✔")
@@ -46,8 +58,8 @@ class TwoButtonsOption(AbstractOption):
 
 class ComboBoxOption(AbstractOption):
     """Abstract option subclass which contains a combobox to select items from"""
-    def __init__(self, text: str, pointsize: int, items : list[str]):
-        super().__init__(text, pointsize)
+    def __init__(self, text: str, pointsize: int, key : str, items : list[str]):
+        super().__init__(text, pointsize, key)
         self.combo_box = QComboBox()
 
         self.combo_box.setEditable(True)
@@ -65,10 +77,18 @@ class ComboBoxOption(AbstractOption):
         self._layout_.addWidget(self.combo_box)
 
 
+    @pyqtProperty(str)
+    def value(self):
+        return self.combo_box.currentText()
+
+
+
+
+
 class LineEditOption(AbstractOption):
     """Abstract option subclass with a line edit to type in an item"""
-    def __init__(self, text: str, pointsize: int, placeholder : str, items : list[str]):
-        super().__init__(text, pointsize)
+    def __init__(self, text: str, pointsize: int, key : str, placeholder : str, items : list[str]):
+        super().__init__(text, pointsize, key)
         self.line_edit = QLineEdit()
 
         (completer := QCompleter(items, self.line_edit)).setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
@@ -84,10 +104,20 @@ class LineEditOption(AbstractOption):
         self._layout_.addWidget(self.line_edit)
 
 
+
+    @pyqtProperty(str)
+    def value(self):
+        return self.line_edit.text()
+
+
+
+
+
+
 class ImageOption(AbstractOption):
     """Abstract option subclass with another QLabel used with QPixmap"""
     def __init__(self, text: str, pointsize: int, image_path : str):
-        super().__init__(text, pointsize)
+        super().__init__(text, pointsize, None)
         self.image = QLabel()
 
         self.image.setPixmap(QPixmap(image_path))
@@ -98,16 +128,24 @@ class ImageOption(AbstractOption):
         self._layout_.setSpacing(10)
 
 
+
+
+
 class SliderOption(AbstractOption):
     """Abstract option subclass with a slider to pick from a range"""
-    def __init__(self, text: str, pointsize: int, range : int):
-        super().__init__(text, pointsize)
+    def __init__(self, text: str, pointsize: int, key : str, range : int):
+        super().__init__(text, pointsize, key)
         self.slider = Slider(range, pointsize)
 
         self.slider.setFixedWidth(300)
         self.slider.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
 
         self._layout_.addWidget(self.slider, stretch=50)
+
+
+    @pyqtProperty(int)
+    def value(self):
+        return self.slider.value
 
 
 class Slider(QFrame):

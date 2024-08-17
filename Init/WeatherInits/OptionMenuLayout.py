@@ -25,6 +25,7 @@ realtime_menu_layout = [
         "stretch"   :   20,
         "type"      :   "lineeditoption",
         "name"      :   "realtimelocationoption",
+        "key"       :   "location",
 
         "label"     :   {
             "text"      :   "Select the location you want to view the current weather for",
@@ -43,6 +44,7 @@ realtime_menu_layout = [
         "stretch"   :   20,
         "type"      :   "comboboxoption",
         "name"      :   "realtimeviewoption",
+        "key"       :   "view",
 
         "label"     :   {
             "text"      :   "Select the appearance of the weather data",
@@ -97,6 +99,7 @@ forecast_menu_layout = [
         "type"      :   "lineeditoption",
         "stretch"   :   20,
         "name"      :   "forecastlocationoption",
+        "key"       :   "location",
 
         "label"     :   {
             "text"      :   "Select the location you want to view the current weather for",
@@ -115,6 +118,7 @@ forecast_menu_layout = [
         "type"      :   "comboboxoption",
         "stretch"   :   20,
         "name"      :   "forecastviewoption",
+        "key"       :   "view",
 
         "label"     :   {
             "text"      :   "Select the appearance of the weather data",
@@ -132,6 +136,7 @@ forecast_menu_layout = [
         "type"      :   "slideroption",
         "stretch"   :   20,
         "name"      :   "forecastdayoption",
+        "key"       :   "range",
 
         "label"     :   {
             "text"      :   "Select how many days you want to view the forecast for",
@@ -149,6 +154,7 @@ forecast_menu_layout = [
         "type"      :   "comboboxoption",
         "stretch"   :   20,
         "name"      :   "forecastdateoption",
+        "key"       :   "date",
 
         "label"     :   {
             "text"      :   "Or if you want to only see one day, pick a date from the upcoming 3 days",
@@ -191,6 +197,7 @@ history_menu_layout = [
         "type"      :   "lineeditoption",
         "stretch"   :   20,
         "name"      :   "historylocationoption",
+        "key"       :   "location",
 
         "label"     :   {
             "text"      :   "Select the location you want to view the current weather for",
@@ -209,6 +216,7 @@ history_menu_layout = [
         "stretch"   :   20,
         "type"      :   "comboboxoption",
         "name"      :   "historyviewoption",
+        "key"       :   "view",
 
         "label"     :   {
             "text"      :   "Select the appearance of the weather data",
@@ -217,7 +225,7 @@ history_menu_layout = [
         },
 
         "combobox"  :   {
-            "items"     :   ["Graph", "Text"],
+            "items"     :   ["Graph", "Tabs"],
             "name"      :   "historyviewcombobox"
         }
     },
@@ -226,6 +234,7 @@ history_menu_layout = [
         "type"      :   "slideroption",
         "stretch"   :   20,
         "name"      :   "historydayoption",
+        "key"       :   "range",
 
         "label"     :   {
             "text"      :   "Select how many days in the past do you want to view the weather for",
@@ -243,6 +252,7 @@ history_menu_layout = [
         "type"      :   "comboboxoption",
         "stretch"   :   20,
         "name"      :   "historydateoption",
+        "key"       :   "date",
 
         "label"     :   {
             "text"      :   "Or if you want to only see one day, pick a date from the 7 past days",

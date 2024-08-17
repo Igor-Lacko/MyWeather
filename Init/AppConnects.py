@@ -9,6 +9,8 @@ def ConnectThread(app : Application, main_window : MainWindow):
     """Connects the app's worker thread to all components which are to be updated"""
     main_window.home.header.update_data.connect(app.worker_object.UpdateData)
     main_window.home.header.fetch_new_data.connect(app.worker_object.FetchNewData)
+    app.weather_controller.fetch_data.connect(app.worker_object.FetchNewData)
+
 
 
 

@@ -106,8 +106,7 @@ class ExtendedGraphHeader(BaseGraphHeader):
         self.right_button = QPushButton()
         self.left_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.right_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        self.left_button.setObjectName("left_button")
-        self.right_button.setObjectName("right_button")
+
 
         #set the initial color scheme
         self.SetButtonIcons(mode)

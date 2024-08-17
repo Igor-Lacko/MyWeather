@@ -38,7 +38,7 @@ def OptionMenuParser(api_choice : str, color_mode : ColorModes, reset : Callable
                 menu.items.append(option)
 
             case "comboboxoption":
-                option = ComboBoxOption(item['label']['text'], item['label']['pointsize'], item['combobox']['items'])
+                option = ComboBoxOption(item['label']['text'], item['label']['pointsize'], item['key'], item['combobox']['items'])
                 option.setObjectName(item['name'])
                 option.description.setObjectName(item['label']['name'])
                 option.combo_box.setObjectName(item['combobox']['name'])
@@ -47,7 +47,7 @@ def OptionMenuParser(api_choice : str, color_mode : ColorModes, reset : Callable
                 menu.items.append(option)
 
             case "lineeditoption":
-                option = LineEditOption(item['label']['text'], item['label']['pointsize'], item['lineedit']['example'], item['lineedit']['items'])
+                option = LineEditOption(item['label']['text'], item['label']['pointsize'], item['key'], item['lineedit']['example'], item['lineedit']['items'])
                 option.setObjectName(item['name'])
                 option.description.setObjectName(item['label']['name'])
                 option.line_edit.setObjectName(item['lineedit']['name'])
@@ -62,10 +62,9 @@ def OptionMenuParser(api_choice : str, color_mode : ColorModes, reset : Callable
                 option.image.setObjectName(item['image']['name'])
 
                 menu._layout_.addWidget(option, stretch=item['stretch'])
-                menu.items.append(option)
 
             case "slideroption":
-                option = SliderOption(item['label']['text'], item['label']['pointsize'], item['slider']['range'])
+                option = SliderOption(item['label']['text'], item['label']['pointsize'], item['key'],item['slider']['range'])
                 option.setObjectName(item['name'])
                 option.description.setObjectName(item['label']['name'])
                 option.slider.setObjectName(item['slider']['name'])

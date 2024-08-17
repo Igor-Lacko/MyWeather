@@ -31,7 +31,7 @@ class Header(QWidget):
     }
 
     update_data = pyqtSignal()
-    fetch_new_data = pyqtSignal(str)
+    fetch_new_data = pyqtSignal(dict)
 
     def __init__(self, data : Realtime, icon_path : str):
         """Header constructor, sets up the layouts
@@ -210,7 +210,12 @@ class Header(QWidget):
         Args:
             location (str): The new location. If == "current" (case insensitive) calls the user latitude and longitude using the geocoder library
         """
-        self.fetch_new_data.emit(location)
+        self.fetch_new_data.emit({
+            'api'           :       'bulk',
+            'location'      :       location,
+            'days'          :       3,
+            'date'          :       None
+            })
 
 
 

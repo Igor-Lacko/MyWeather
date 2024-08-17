@@ -1,5 +1,5 @@
 from . import api
-from swagger_client.rest import ApiException
+from weatherapi.rest import ApiException
 from urllib3.exceptions import NewConnectionError, MaxRetryError
 from termcolor import colored
 from datetime import date, timedelta
@@ -13,18 +13,14 @@ def RealtimeWeather(city : str) -> parse.obj.Realtime:
     try:
         response = api.realtime_weather(q=city)
     
-    except ApiException:
-        print(colored("\n\n--------------------Error: Invalid argument in API call--------------------\n", "red"))
+    except Exception:
+        print(colored("\n\n--------------------Error--------------------\n", "red"))
         return None
-    
-    except (NewConnectionError, MaxRetryError):
-        print(colored("\n\n--------------------Error: Connection unsuccessful----------------------\n", "red"))
-        return None
-    
+
     else:
         if response is None:
             return None
-        
+
         return parse.ParseRealtimeWeather(response)
 
 
@@ -33,15 +29,11 @@ def RealtimeWeather(city : str) -> parse.obj.Realtime:
 def Forecast(city : str, days : int = 3, dt : date = None) -> parse.obj.Timeline:
     try:
         response = api.forecast_weather(q=city, days=days, dt=dt)
-    
-    except ApiException:
-        print(colored("\n\n--------------------Error: Invalid argument in API call--------------------\n", "red"))
+
+    except Exception:
+        print(colored("\n\n--------------------Error--------------------\n", "red"))
         return None
-    
-    except (NewConnectionError, MaxRetryError):
-        print(colored("\n\n--------------------Error: Connection unsuccessful----------------------\n", "red"))
-        return None
-    
+
     else:
         return parse.ParseTimelineWeather(response)
 
@@ -50,15 +42,12 @@ def Forecast(city : str, days : int = 3, dt : date = None) -> parse.obj.Timeline
 def HistoricWeather(city : str, beginning : date = date.today() - timedelta(days=7)):
     try:
         response = api.history_weather(q=city, dt=beginning)
-    
-    except ApiException:
-        print(colored("\n\n--------------------Error: Invalid argument in API call--------------------\n", "red"))
+
+    except Exception:
+        print(colored("\n\n--------------------Error--------------------\n", "red"))
         return None
-    
-    except (NewConnectionError, MaxRetryError):
-        print(colored("\n\n--------------------Error: Connection unsuccessful----------------------\n", "red"))
-        return None
-    
+
+
     else:
         return parse.ParseTimelineWeather(response)
 
@@ -69,15 +58,15 @@ def CompleteData(city : str, days : int = 3, dt : date = None) -> parse.obj.Bulk
     try:
         response = api.forecast_weather(q=city, days=days, dt=dt)
     
-    except ApiException:
-        print(colored("\n\n--------------------Error: Invalid argument in API call--------------------\n", "red"))
+    except Exception:
+        print(colored("\n\n--------------------Error--------------------\n", "red"))
         return None
-    
-    except (NewConnectionError, MaxRetryError):
-        print(colored("\n\n--------------------Error: Connection unsuccessful----------------------\n", "red"))
-        return None
-    
+
+
     else:
+        if response is None:
+            return None
+
         return parse.ParseWeatherData(response)
 
 
