@@ -20,7 +20,7 @@ def GetRealtimeView(data : obj.Realtime | obj.Day, view : str, mode : ColorModes
     layout = QHBoxLayout()
     match view:
         case "graph":
-            layout.setContentsMargins(20,0,20,0)
+            layout.setContentsMargins(50,0,50,0)
             graph = BaseGraphContainer(data, mode, 'realtime')
             layout.addWidget(graph)
 

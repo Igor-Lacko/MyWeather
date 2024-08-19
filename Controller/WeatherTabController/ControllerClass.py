@@ -81,7 +81,16 @@ class WeatherController(QObject):
                 self.weather_tab._layout_.setStretch(2,45)
 
                 #add the layout with api selections
-                self.weather_tab._layout_.insertLayout(3, kwargs['selection_layout'], 30)
+                self.weather_tab._layout_.insertLayout(3, self.weather_tab.selection_layout, 30)
+
+            case(1,2):
+                #delete the old option menu
+                self.weather_tab._layout_.removeWidget(self.weather_tab.menu)
+                self.weather_tab.menu.deleteLater()
+                self.weather_tab.menu = None
+
+                #insert the view layout
+                self.weather_tab._layout_.insertLayout(3, GetView(self.data, self.view, self.api, self.weather_tab.color_mode), 45)
 
 
 
@@ -149,18 +158,21 @@ class WeatherController(QObject):
             case(1,2):
                 #----Transition from the second stage to the third----#
 
-                #----Hide the title and delete the option menu----#
-                self.animations = GetParallelGroup([SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab),
-                                                    FadeOutAnimation(self.weather_tab.title, 1000)])
-
-                #----Set the title text accordingly to the API type, location, and length----#
-                self.weather_tab.title.setText(GetTitle(self.data, self.api))
-
                 #----Set the layout for next stage with the view layout as the keyword argument----#
                 view_layout = GetView(self.data, self.view, self.api, self.weather_tab.color_mode)
                 self.weather_tab.view_layout = view_layout
-                print(self.data)
-                #self.SetLayoutNextStage((1,2), {"view" : view_layout})
+
+                #----Hide the title and delete the option menu----#
+                self.animations = GetParallelGroup([SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab),
+                                                    FadeOutAnimation(self.weather_tab.title, 1000)],
+                                                    slot=lambda: self.SetLayoutNextStage((1,2)))
+
+                #----Set the title text accordingly to the API type, location, and length----#
+                self.animations.finished.connect(lambda: self.weather_tab.title.setText(GetTitle(self.data, self.api)))
+                self.animations.finished.connect(lambda: print(self.weather_tab.styleSheet()))
+
+                self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
 
 
 #----END OF THE CONTROLLER CLASS, STAGE OPERATIONS PUT HERE TO AVOID CIRCULAR IMPORTS----#

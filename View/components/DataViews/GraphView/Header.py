@@ -48,6 +48,9 @@ class BaseGraphHeader(QFrame):
         title.setAlignment(Alignments.Center)
         title.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
+        title.setObjectName("base_title")
+
+
         #add it to the widget
         self.title = title
         return title
@@ -60,6 +63,9 @@ class BaseGraphHeader(QFrame):
         (menu := QComboBox()).addItems(["Temp", "Wind", "Rain", "Water"])
         menu.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         menu.setFont(QFont(FONTS.graph_header, pointSize=14))
+
+        menu.setObjectName("base_menu")
+
 
         #add it to the widget
         self.menu = menu
@@ -88,6 +94,8 @@ class ExtendedGraphHeader(BaseGraphHeader):
             data (dict[str,str]): Used with some new keyword arguments, such as day range or API choice
         """
         super().__init__(**data)
+        self.title.setObjectName("extended_title")
+        self.menu.setObjectName("extended_menu")
 
         #add buttons
         self.AddButtons(data['color_mode'])
@@ -104,6 +112,8 @@ class ExtendedGraphHeader(BaseGraphHeader):
         #initialize the buttons and their names
         self.left_button = QPushButton()
         self.right_button = QPushButton()
+        self.left_button.setObjectName("left_button")
+        self.right_button.setObjectName("right_button")
         self.left_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.right_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 

@@ -1,3 +1,5 @@
+from ..Graph.Light import GraphFrame
+
 WeatherTabWindow = """QFrame#weathertab{
     border: none;
     border-image: url("Assets/Backgrounds/light/bg-weather.jpg") 0 0 0 0 stretch stretch;
@@ -191,4 +193,4 @@ QSlider::handle:horizontal:hover:!pressed{
 
 QSlider::handle:horizontal:pressed{
     background-color: rgb(32,178,170);
-}"""
+}""" + f"\n{GraphFrame}"

@@ -47,6 +47,7 @@ class BaseGraphContainer(QFrame):
 
 
 
+
     def AddHeader(self) -> BaseGraphHeader:
         """Base method returning a graph header object\n
         - Kept as a method to make graph header inheritance possible
@@ -106,6 +107,8 @@ class ExtendedGraphContainer(BaseGraphContainer):
         #connect the header's buttons to the day switcher
         self.header.left_button.clicked.connect(self.SwitchDayBackward)
         self.header.right_button.clicked.connect(self.SwitchDayForward)
+
+        self.setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).GraphFrame)
 
 
 
@@ -168,6 +171,7 @@ class ExtendedGraphContainer(BaseGraphContainer):
         """Header's left button slot. Switches the current StackedGraphLayout to one back, if already at the start switches to the last one in the list"""
         self.index = (self.index - 1 if self.index > 0 else (len(self.data.days) - 1))
         self.graphs.setCurrentIndex(self.index)
+        self.header.ChangeTitle(self.data.days[self.index].date_str, self.data.location)
 
 
 
