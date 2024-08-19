@@ -16,8 +16,9 @@ class WeatherTab(QFrame):
         self.selections : list[TextImageButton] = []
         self.selection_layout : QLayout = None      #contains the 3 API choices in a horizontal layout
 
-        self.menu_layout : QLayout = None           #contains the menu that appears after the user makes a choice
         self.menu : OptionMenu = None               #the menu instance
+
+        self.view_layout : QLayout = None           #The layout containing the data views
 
         self.title : Title = None
         self.InitLayout() #stretches at index 0, 2 and 4 on init, the item layout is at index 3

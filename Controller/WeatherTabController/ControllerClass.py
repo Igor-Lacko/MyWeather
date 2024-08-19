@@ -3,8 +3,9 @@ from . import *
 from PyQt6.QtCore import QObject, QAbstractAnimation, QTimer, pyqtSignal
 from PyQt6.QtWidgets import *
 from MyWeather.Init.WeatherInits.OptionMenuInit import OptionMenuParser
+from MyWeather.Init.WeatherInits.DataViewInit import GetView
 from MyWeather.Model.request import *
-from MyWeather.Model.obj import BulkData, Timeline, Realtime
+from MyWeather.Model.obj import BulkData, Timeline, Realtime, Day
 from MyWeather.View.components.DataViews.GraphView.Container import BaseGraphContainer
 from .Animations import *
 from .Utilities import *
@@ -20,7 +21,8 @@ class WeatherController(QObject):
         self.animations = None
         self.stage = 0
         self.api : str = None
-        self.data : Realtime | Timeline | BulkData = None
+        self.data : Realtime | Timeline | BulkData | Day = None
+        self.view : str = None
 
 
     def ConnectWeatherTab(self, tab : WeatherTab):
@@ -38,7 +40,7 @@ class WeatherController(QObject):
     def ResponseSuccess(self, data):
         """Set the stage transition into motion"""
         self.data = data
-        self.StageTransition(1,2)
+        self.StageTransition((1,2))
 
 
 
@@ -47,7 +49,8 @@ class WeatherController(QObject):
         """Calls the worker object which will either return None or a response\n
         - If the operation fails, the controller remains in stage 1 and shows a error popup\n
         - If it succeeds, it will begin the stage transition from 1 to 2"""
-        self.fetch_data.emit(GetOptions(self.api.lower(), self.weather_tab.menu))
+        self.view = (options := GetOptions(self.api, self.weather_tab.menu))['view'].lower()
+        self.fetch_data.emit(options)
 
 
 
@@ -101,7 +104,7 @@ class WeatherController(QObject):
                     \t-stretch 45\n
                     \t-stretch 10"""
 
-                self.api = kwargs['api']
+                self.api = kwargs['api'].lower()
 
                 #---Parallel animation groups running at the same time for the movement and fading of the api choices---#
                 move_animations = GetParallelGroup([MoveOutAnimation(selection, 2500) for selection in self.weather_tab.selections])
@@ -115,7 +118,7 @@ class WeatherController(QObject):
                                                         slot=lambda: HideAnimationFinished(self))
 
                 #---Change title text on finish---#
-                self.animations.finished.connect(lambda: self.weather_tab.title.setText(f"{self.api} API configuration"))
+                self.animations.finished.connect(lambda: self.weather_tab.title.setText(f"{self.api.title()} API configuration"))
 
                 self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
@@ -152,6 +155,12 @@ class WeatherController(QObject):
 
                 #----Set the title text accordingly to the API type, location, and length----#
                 self.weather_tab.title.setText(GetTitle(self.data, self.api))
+
+                #----Set the layout for next stage with the view layout as the keyword argument----#
+                view_layout = GetView(self.data, self.view, self.api, self.weather_tab.color_mode)
+                self.weather_tab.view_layout = view_layout
+                print(self.data)
+                #self.SetLayoutNextStage((1,2), {"view" : view_layout})
 
 
 #----END OF THE CONTROLLER CLASS, STAGE OPERATIONS PUT HERE TO AVOID CIRCULAR IMPORTS----#

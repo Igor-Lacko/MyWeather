@@ -19,7 +19,8 @@ class DataCommunicator(QObject):
     failed_weather = pyqtSignal()
     bulk = pyqtSignal(obj.BulkData)
     timeline = pyqtSignal(obj.Timeline)         #mutual for history/forecast since it's the same class
-    realtime = pyqtSignal(obj.Realtime)
+    realtime_graph = pyqtSignal(obj.Day)
+    realtime_text = pyqtSignal(obj.Realtime)
     fetch = pyqtSignal(dict)
     update = pyqtSignal()
 
@@ -80,7 +81,11 @@ class DataCommunicator(QObject):
 
         match self.api:
             case 'realtime':
-                self.realtime.emit(self.data)
+                if isinstance(self.data, obj.Realtime):
+                    self.realtime_text.emit(self.data)
+
+                else:
+                    self.realtime_graph.emit(self.data)
 
             case 'forecast' | 'history':
                 self.timeline.emit(self.data)

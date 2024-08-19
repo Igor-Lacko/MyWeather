@@ -45,7 +45,7 @@ class WeatherFetcher(QObject):
                 data = API.CompleteData(location, opts['days'], opts['date'])
 
             case 'realtime':
-                data = API.RealtimeWeather(location)
+                data = API.RealtimeWeather(location) if opts['view'] == 'text' else API.Forecast(location, 1).days[0]
 
             case 'forecast':
                 data = API.Forecast(location, opts['days'], opts['date'])

@@ -71,6 +71,7 @@ class Hour:
     rain_data : RainData
     is_day : bool = field(init=False)
     time_str : str = field(init=False)
+    location : str = field(init=False)
 
     #initialize the is_day variable, (night from 22 to 6)
     def __post_init__(self): 
@@ -100,6 +101,7 @@ class Day:
     condition : str             #condition as text (such as for example "sunny", "raining", etc.)
     hours : list[Hour]          #individual hours
     date_str : str = field(init=False)
+    location : str = field(init=False)
 
     def __post_init__(self):
         self.date_str = f"{self.date.day}.{self.date.month}.{self.date.year}"
@@ -134,7 +136,7 @@ class Timeline:
     stats : Stats = field(init=False)
     length : int = field(init=False)
 
-    #initialize the history/forecast's statistics
+    #initialize the history/forecast's statistics and the location variable for days/hours
     def __post_init__(self):
         stat_params = {
             "max_temp" : max(day.stats.max_temp for day in self.days),
@@ -145,6 +147,14 @@ class Timeline:
         }
         self.stats = Stats(**stat_params)
         self.length = len(self.days)
+
+        #add locations to the days/hours
+        for day in self.days:
+            day.location = self.location
+
+            for hour in day.hours:
+                hour.location = self.location
+
 
 
 

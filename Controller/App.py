@@ -49,5 +49,5 @@ class Application(widgets.QApplication):
         #self.worker_object.failed_weather.connect(self.weather_controller.ResponseFailed)
 
         #----------SUCCESS CONNECTS FOR WEATHER TAB----------#
-        for signal in [self.communicator_object.realtime, self.communicator_object.timeline]:
+        for signal in [self.communicator_object.realtime_graph, self.communicator_object.realtime_text, self.communicator_object.timeline]:
             signal.connect(self.weather_controller.ResponseSuccess)
