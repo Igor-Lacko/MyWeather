@@ -78,7 +78,6 @@ class DataCommunicator(QObject):
             data (obj.Realtime | obj.Timeline | obj.BulkData): The provided weather data
         """
 
-        print(self.api)
         match self.api:
             case 'realtime':
                 self.realtime.emit(self.data)
@@ -96,11 +95,13 @@ class DataCommunicator(QObject):
 
     #Signal emitter methods
     def UpdateData(self):
+        self.data = None
         self.api = 'bulk'
         self.update.emit()
         self.AwaitResponse()
 
     def FetchNewData(self, opts):
+        self.data = None
         self.api = opts['api']
         self.fetch.emit(opts)
         self.AwaitResponse()

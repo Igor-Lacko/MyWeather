@@ -36,6 +36,7 @@ class WeatherController(QObject):
 
 
     def ResponseSuccess(self, data):
+        """Set the stage transition into motion"""
         self.data = data
         self.StageTransition(1,2)
 
@@ -144,7 +145,13 @@ class WeatherController(QObject):
 
             case(1,2):
                 #----Transition from the second stage to the third----#
-                raise NotImplementedError("Next on the TODO list!")
+
+                #----Hide the title and delete the option menu----#
+                self.animations = GetParallelGroup([SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab),
+                                                    FadeOutAnimation(self.weather_tab.title, 1000)])
+
+                #----Set the title text accordingly to the API type, location, and length----#
+                self.weather_tab.title.setText(GetTitle(self.data, self.api))
 
 
 #----END OF THE CONTROLLER CLASS, STAGE OPERATIONS PUT HERE TO AVOID CIRCULAR IMPORTS----#

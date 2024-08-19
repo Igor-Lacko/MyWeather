@@ -31,5 +31,5 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
             return options
 
         case _:
-            print('fr fr')
+            pass
 
