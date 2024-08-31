@@ -76,7 +76,7 @@ def GetForecastView(data : obj.Timeline, view : str, tab : WeatherTab) -> QHBoxL
     layout.addStretch(20)
 
     for day in data.days:
-        layout.addWidget(picker := GraphPicker(day, 0, tab.color_mode), stretch=40)
+        layout.addWidget(picker := GraphPicker(day, tab.color_mode), stretch=40)
         layout.addStretch(20)
 
         tab.tabs.append(picker)

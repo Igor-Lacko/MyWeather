@@ -1,11 +1,41 @@
-Idle = """QFrame{
+Idle = """QFrame#main{
     background-color: rgb(250,249,246);
     border: none;
     border-radius: 15px;
+}
+
+QLabel#text, QLabel#icon{
+    background: transparent;
+    border: none;
+}
+
+QLabel#text{
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+QLabel#icon{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }"""
 
-Hover = """QFrame{
-    background-color: #ff000000;
+Hover = """QFrame#main{
+    background-color: rgb(250,249,246);
     border: none;
     border-radius: 15px;
+}
+
+QLabel#text, QLabel#icon{
+    background-color: #33000000;
+    border: none;
+}
+
+QLabel#text{
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+QLabel#icon{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }"""

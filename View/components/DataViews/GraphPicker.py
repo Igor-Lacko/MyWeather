@@ -15,25 +15,22 @@ class GraphPicker(QFrame):
     #custom clicked signal since it's a subclassed QFrame
     clicked = pyqtSignal()
 
-    def __init__(self, data : obj.Day, index : int, color_mode : ColorModes):
+    def __init__(self, data : obj.Day, color_mode : ColorModes):
         """Graph picker constructor
 
         Args:
             data (obj.Day): The weather data provided, only used to get a condition and a icon from that
-            index (int): Place of the picker in the list of them, used to set a object name for stylesheets
             color_mode (ColorModes): Passed as a parameter and used as an instance attribute since it would be much more tedious to handle from the parent widget
         """
         super().__init__()
 
-        self.setObjectName(f"graphpicker{index}")
-
+        #keep the color scheme as a instance attribute
         self.color_mode = color_mode
 
         #states to change stylesheets
         self.pressed = self.hovered = False
 
-
-        self.date = data.date_str
+        #keep the condition as an instance attribute for the icon
         self.condition = data.condition.lower()
 
         #initialize a VBox Layout with room for a date and icon
@@ -48,10 +45,16 @@ class GraphPicker(QFrame):
         self._layout_.addWidget(self.icon, stretch=50)
 
         #add a label with the date of the day
-        self.text = QLabel(text=self.date)
-        self.text.setFont(QFont(FONTS.weather_tab, pointSize=17))
+        self.text = QLabel(text=f"{data.location}\n{data.date_str}")
+        self.text.setFont(QFont(FONTS.weather_tab, pointSize=31))
         self.text.setAlignment(Alignments.Center)
+        self.text.setWordWrap(True)
         self._layout_.addWidget(self.text, stretch=50)
+
+        #set object names for the style sheets
+        self.setObjectName("main")
+        self.icon.setObjectName("icon")
+        self.text.setObjectName("text")
 
         self.setLayout(self._layout_)
         self.setStyleSheet()
@@ -67,8 +70,8 @@ class GraphPicker(QFrame):
         for icon in Icons:
             if self.condition in icon['conditions']:
                 return QPixmap(icon['day']).scaled(
-                    50,
-                    50,
+                    200,
+                    200,
                     Qt.AspectRatioMode.KeepAspectRatio,
                     Qt.TransformationMode.SmoothTransformation
                 )
