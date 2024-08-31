@@ -5,7 +5,7 @@ Idle = """QFrame{
 }"""
 
 Hover = """QFrame{
-    background-color: #11c0c0c0;
+    background-color: #ffc0c0c0;
     border: none;
     border-radius: 15px;
 }"""

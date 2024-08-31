@@ -213,7 +213,7 @@ class Header(QWidget):
         self.fetch_new_data.emit({
             'api'           :       'bulk',
             'location'      :       location,
-            'days'          :       3,
+            'range'         :       3,
             'date'          :       None
             })
 

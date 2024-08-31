@@ -157,7 +157,6 @@ class WeatherController(QObject):
 
             case(1,2):
                 #----Transition from the second stage to the third----#
-                print(self.weather_tab.menu.graphicsEffect())
 
                 #----Set the layout for next stage with the view layout as the keyword argument----#
                 GetView(self.data, self.view, self.api, self.weather_tab)
@@ -258,4 +257,4 @@ def ShowViewTitle(controller : WeatherController):
             controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
         else:
-            raise NotImplementedError("Not done yet!")
+            pass

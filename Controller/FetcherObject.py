@@ -42,13 +42,13 @@ class WeatherFetcher(QObject):
         match opts['api']:
             #get data based on the api
             case 'bulk':
-                data = API.CompleteData(location, opts['days'], opts['date'])
+                data = API.CompleteData(location, opts['range'], None)
 
             case 'realtime':
                 data = API.RealtimeWeather(location) if opts['view'] == 'text' else API.Forecast(location, 1).days[0]
 
             case 'forecast':
-                data = API.Forecast(location, opts['days'], opts['date'])
+                data = API.Forecast(location, opts['range'], None)
 
             case 'history':
                 data = API.HistoricWeather(location)        #TODO: Add restrictions

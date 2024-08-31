@@ -34,7 +34,7 @@ class GraphPicker(QFrame):
 
 
         self.date = data.date_str
-        self.condition = data.condition
+        self.condition = data.condition.lower()
 
         #initialize a VBox Layout with room for a date and icon
         self._layout_ = QVBoxLayout()
@@ -54,7 +54,7 @@ class GraphPicker(QFrame):
         self._layout_.addWidget(self.text, stretch=50)
 
         self.setLayout(self._layout_)
-
+        self.setStyleSheet()
 
 
 
@@ -73,18 +73,20 @@ class GraphPicker(QFrame):
                     Qt.TransformationMode.SmoothTransformation
                 )
 
-        raise FileNotFoundError("Wrong condition")
+        raise FileNotFoundError(f"Wrong condition '{self.condition}'")
 
 
     def enterEvent(self, event):
         """Sets hover state to True"""
         self.hovered = True
+        self.setStyleSheet()
         super().enterEvent(event)
 
 
-    def LeaveEvent(self, event):
+    def leaveEvent(self, event):
         """Sets hover state to False"""
         self.hovered = False
+        self.setStyleSheet()
         super().leaveEvent(event)
 
 
@@ -92,6 +94,7 @@ class GraphPicker(QFrame):
         """Checks the event button and sets pressed state to True if needed"""
         if event.button() == Qt.MouseButton.LeftButton:
             self.pressed = True
+            self.setStyleSheet()
 
         super().mousePressEvent(event)
 
@@ -100,12 +103,20 @@ class GraphPicker(QFrame):
         """Checks the event button, sets pressed to false if needed and if the user is hovering over it (signalling intention to click) emits the clicked signal"""
         if event.button() == Qt.MouseButton.LeftButton:
             self.pressed = False
+            self.setStyleSheet()
 
             if self.hovered:
                 self.clicked.emit()
 
 
     def setStyleSheet(self):
-        """Override of setStyleSheet, checks states and sets the sheed based on that"""
+        """Override of setStyleSheet, checks states and sets the sheet based on that"""
+
+        #imitation of QPushButton's hover:!pressed state
+        if self.hovered and not self.pressed:
+            super().setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).Hover)
+
+        else:
+            super().setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).Idle)
 
 

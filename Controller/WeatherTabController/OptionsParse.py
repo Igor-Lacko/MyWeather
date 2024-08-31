@@ -30,6 +30,23 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
 
             return options
 
-        case _:
-            pass
+        case 'forecast':    #needs a length/date pick in addition
+            options = {
+                'api'           :   'forecast',
+                'location'      :   None,
+                'view'          :   None,
+                'range'        :   None   
+            }
+
+            for item in menu.items:
+                if item.key == 'location':
+                    options['location'] = item.value
+
+                if item.key == 'view':
+                    options['view'] = item.value
+
+                if item.key == 'range':
+                    options['range'] = item.value
+
+            return options
 
