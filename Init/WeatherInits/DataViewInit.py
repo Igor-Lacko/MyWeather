@@ -3,26 +3,33 @@ from . import *
 from MyWeather.View.components.DataViews.GraphView.Container import BaseGraphContainer
 from MyWeather.Model import obj
 from MyWeather.View.utils.enumerations import ColorModes
+from MyWeather.View.components.Weather.WeatherWindow import WeatherTab
+from MyWeather.Controller.WeatherTabController.Animations import SetWidgetInvisible
 
 
-def GetView(data : obj.Realtime | obj.Day, view : str, api : str, mode : ColorModes) -> QHBoxLayout:
+def GetView(data : obj.Realtime | obj.Day, view : str, api : str, tab : WeatherTab) -> QHBoxLayout:
     match api:
         case 'realtime':
-            return GetRealtimeView(data, view, mode)
+            return GetRealtimeView(data, view, tab)
 
         case _:
             raise NotImplementedError("Not done yet!")
 
 
 
-def GetRealtimeView(data : obj.Realtime | obj.Day, view : str, mode : ColorModes) -> QHBoxLayout:
+def GetRealtimeView(data : obj.Realtime | obj.Day, view : str, tab : WeatherTab) -> QHBoxLayout:
     
     layout = QHBoxLayout()
     match view:
         case "graph":
-            layout.setContentsMargins(50,0,50,0)
-            graph = BaseGraphContainer(data, mode, 'realtime')
+            layout.setContentsMargins(500,0,500,0)
+            graph = BaseGraphContainer(data, tab.color_mode, 'realtime')
             layout.addWidget(graph)
+
+            SetWidgetInvisible(graph)               #hide the graph until it's animation starts (handled by the controller)
+
+            tab.graph = graph
+            tab.view_layout = layout
 
         case "text":
             raise NotImplementedError("Text view not implemented yet!")

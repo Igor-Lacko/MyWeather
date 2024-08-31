@@ -20,6 +20,9 @@ class WeatherTab(QFrame):
 
         self.view_layout : QLayout = None           #The layout containing the data views
 
+        self.graph = None                           #the currently displayed graph (a singleton in the case of realtime)
+        self.tabs = None                            #tabs (graph pickers)
+
         self.title : Title = None
         self.InitLayout() #stretches at index 0, 2 and 4 on init, the item layout is at index 3
         self.SetColorMode(self.color_mode, False)

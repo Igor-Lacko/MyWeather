@@ -90,7 +90,7 @@ class WeatherController(QObject):
                 self.weather_tab.menu = None
 
                 #insert the view layout
-                self.weather_tab._layout_.insertLayout(3, GetView(self.data, self.view, self.api, self.weather_tab.color_mode), 45)
+                self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout, 45)
 
 
 
@@ -157,10 +157,10 @@ class WeatherController(QObject):
 
             case(1,2):
                 #----Transition from the second stage to the third----#
+                print(self.weather_tab.menu.graphicsEffect())
 
                 #----Set the layout for next stage with the view layout as the keyword argument----#
-                view_layout = GetView(self.data, self.view, self.api, self.weather_tab.color_mode)
-                self.weather_tab.view_layout = view_layout
+                GetView(self.data, self.view, self.api, self.weather_tab)
 
                 #----Hide the title and delete the option menu----#
                 self.animations = GetParallelGroup([SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab),
@@ -169,7 +169,9 @@ class WeatherController(QObject):
 
                 #----Set the title text accordingly to the API type, location, and length----#
                 self.animations.finished.connect(lambda: self.weather_tab.title.setText(GetTitle(self.data, self.api)))
-                self.animations.finished.connect(lambda: print(self.weather_tab.styleSheet()))
+
+                #----Perform the animations which show the data displayed----#
+                self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowViewTitle(self)))
 
                 self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
@@ -231,3 +233,29 @@ def ShowTitleMenu(controller : WeatherController):
                                                     slot=lambda: ClearEffect([controller.weather_tab.menu]))
         controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [invisible]))    
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
+
+
+
+
+
+
+
+
+#----------STAGE 3 OPERATIONS----------#
+def ShowViewTitle(controller : WeatherController):
+    """Shows the view depending on the controller API (so either a graph, or the tabs to select a graph)\n
+    - Also, just like with all stage transitions, fades the title back into view"""
+    #Show the title first
+    title_animation = FadeInAnimation(controller.weather_tab.title, 1000)
+
+    #create a data show animation depending on the API type and view
+    if controller.api == 'realtime':
+        if controller.view == 'graph':       #realtime API/single graph
+
+            controller.animations = GetParallelGroup([title_animation, SizeOutAnimation(controller.weather_tab.graph, 2500, controller.weather_tab)])
+            controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [controller.weather_tab.graph.graphicsEffect()]))
+            controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
+        else:
+            raise NotImplementedError("Not done yet!")

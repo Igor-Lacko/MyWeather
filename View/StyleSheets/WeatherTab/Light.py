@@ -1,5 +1,4 @@
 from ..Graph.Light import GraphFrame
-
 WeatherTabWindow = """QFrame#weathertab{
     border: none;
     border-image: url("Assets/Backgrounds/light/bg-weather.jpg") 0 0 0 0 stretch stretch;

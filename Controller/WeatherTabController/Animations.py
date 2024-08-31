@@ -112,11 +112,14 @@ def SizeOutAnimation(widget : QWidget, duration : int, parent : QWidget) -> QPro
     size_out_animation.setStartValue(QRect(midpoint.x(), midpoint.y(), 0, 0))
     size_out_animation.setEndValue(QRect(topleft.x(), topleft.y(), widget.width(), widget.height()))
 
+    #----Set an easing curve for a less-weird look----#
+    size_out_animation.setEasingCurve(QEasingCurve.Type.InOutCubic)
+
     return size_out_animation
 
 
 def SizeInAnimation(widget : QWidget, duration : int, parent : QWidget) -> QPropertyAnimation:
-    """Opposite of SizeOutAnimation, stretches a widgit into itself until it's not visible"""
+    """Opposite of SizeOutAnimation, stretches a widget into itself until it's not visible"""
 
     #----Get the widget midpoint/topleft coordinate (so the animation's finishing/starting point)----#
     midpoint = widget.mapTo(parent, QPoint(parent.width() // 2, parent.height() // 2))
@@ -157,3 +160,9 @@ def SetGroupInvisible(group : list[QWidget]):
         effects.append(invisible)
 
     return effects
+
+
+def SetWidgetInvisible(widget : QWidget):
+    """Sets ONE QWidget invisible, using a QGraphicsOpacityEffect of opacity 0"""
+    widget.setGraphicsEffect(invisible := QGraphicsOpacityEffect(widget))
+    invisible.setOpacity(0)

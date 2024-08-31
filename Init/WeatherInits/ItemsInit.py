@@ -21,7 +21,7 @@ def ParseItems(layout : list, parent_layout : QLayout, tab : WeatherTab):
         match item['type']:
 
             case "title":
-                title = Title(item['pointsize'], FONTS.weather_tab, item['text'], tab.width())
+                title = Title(item['pointsize'], FONTS.weather_tab, item['text'])
                 title.setObjectName("title")        #singleton class
 
                 tab.title = title
