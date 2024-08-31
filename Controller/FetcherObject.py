@@ -51,7 +51,7 @@ class WeatherFetcher(QObject):
                 data = API.Forecast(location, opts['range'], None)
 
             case 'history':
-                data = API.HistoricWeather(location)        #TODO: Add restrictions
+                data = API.HistoricWeather(location, opts['range'])        #TODO: Add restrictions
 
         self.communicator.data = data
 

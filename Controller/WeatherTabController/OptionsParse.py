@@ -16,7 +16,7 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
     match api:
         case 'realtime':    #the simplest option, only needs a location and viewType
             options = {
-                'api'       :   'realtime',
+                'api'       :   api,
                 'location'  :   None,
                 'view'      :   None
             }
@@ -30,12 +30,12 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
 
             return options
 
-        case 'forecast':    #needs a length/date pick in addition
+        case 'forecast' | 'history':        #needs a length/date pick in addition
             options = {
-                'api'           :   'forecast',
+                'api'           :   api,
                 'location'      :   None,
                 'view'          :   None,
-                'range'        :   None   
+                'range'         :   None   
             }
 
             for item in menu.items:
@@ -49,4 +49,7 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
                     options['range'] = item.value
 
             return options
+
+        case _:                             #invalid argument
+            raise ValueError("Invalid API argument")
 

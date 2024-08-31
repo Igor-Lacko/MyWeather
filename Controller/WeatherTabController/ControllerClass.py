@@ -53,7 +53,6 @@ class WeatherController(QObject):
         self.fetch_data.emit(options)
 
 
-
     def SetLayoutNextStage(self, stage_pair : tuple=(0,1), **kwargs):
         """Modifies the layout for the next stage
 

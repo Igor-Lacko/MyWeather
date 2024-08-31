@@ -39,9 +39,9 @@ def Forecast(city : str, days : int = 3, dt : date = None) -> parse.obj.Timeline
 
 
 #historic weather up to 7 days ahead
-def HistoricWeather(city : str, beginning : date = date.today() - timedelta(days=7)):
+def HistoricWeather(city : str, days : int = 7):
     try:
-        response = api.history_weather(q=city, dt=beginning)
+        response = api.history_weather(q=city, dt=date.today() - timedelta(days=days), end_dt=date.today() - timedelta(days=1))
 
     except Exception:
         print(colored("\n\n--------------------Error--------------------\n", "red"))

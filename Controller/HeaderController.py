@@ -61,7 +61,7 @@ class HeaderController(QObject):
 
 
     def FailureHandler(self):
-        print("Fail :((")
+        raise ConnectionRefusedError("Header update not possible")
 
 
     def ConnectHeader(self, Header):

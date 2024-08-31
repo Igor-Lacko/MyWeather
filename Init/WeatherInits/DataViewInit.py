@@ -16,8 +16,11 @@ def GetView(data : obj.Realtime | obj.Day, view : str, api : str, tab : WeatherT
         case 'forecast':
             return GetForecastView(data, view, tab)
 
+        case 'history':
+            return GetHistoryView(data, view, tab)
+
         case _:
-            raise NotImplementedError("Not done yet!")
+            raise ValueError("Invalid API argument")
 
 
 
@@ -62,7 +65,7 @@ def GetForecastView(data : obj.Timeline, view : str, tab : WeatherTab) -> QHBoxL
     if len(data.days) == 1:
         match view:
             case "graph":
-                return GetSingleGraph(data, 'forecast', tab)
+                return GetSingleGraph(data.days[0], 'forecast', tab)
 
             case "text":
                 raise NotImplementedError("Text view not implemented yet!")
@@ -83,3 +86,32 @@ def GetForecastView(data : obj.Timeline, view : str, tab : WeatherTab) -> QHBoxL
 
     tab.view_layout = layout
     return layout
+
+
+def GetHistoryView(data : obj.Timeline, view : str, tab : WeatherTab) -> QHBoxLayout:
+    if len(data.days) == 1:
+        match view:
+            case "graph":
+                return GetSingleGraph(data.days[0], 'history', tab)
+
+            case "text":
+                raise NotImplementedError("Text view not implemented yet!")
+
+            case _:
+                raise ValueError(f"View argument '{view}' not one of graph or text")
+
+    (layout := QHBoxLayout()).setContentsMargins(0,0,0,0)
+    layout.setSpacing(0)
+
+    layout.addStretch(20)
+
+    for day in data.days:
+        print('aaaa')
+        layout.addWidget(picker := GraphPicker(day, tab.color_mode), stretch=40)
+        layout.addStretch(20)
+
+        tab.tabs.append(picker)
+
+    tab.view_layout = layout
+    return layout
+
