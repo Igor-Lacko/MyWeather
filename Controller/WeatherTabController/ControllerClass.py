@@ -18,6 +18,7 @@ class WeatherController(QObject):
 
     def __init__(self):
         super().__init__()
+        self.weather_tab : WeatherTab = None
         self.animations = None
         self.stage = 0
         self.api : str = None
@@ -169,7 +170,25 @@ class WeatherController(QObject):
                 #----Perform the animations which show the data displayed----#
                 self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowViewTitle(self)))
 
+                #----Connect the new view to the reverse stage transition----#
+                self.animations.finished.connect(lambda: ConnectReturnButton(self))
+
                 self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
+
+            case(2,0):
+                #----Transition from the third stage to the start, used when the return button on the realtime graph is clicked or the return option among graph pickers----#
+                if self.weather_tab.return_option is not None:
+                    #insert animations to remove tabs and bring back the initial ones
+                    pass
+
+                elif self.weather_tab.graph is not None:
+                    #insert animations to remove graph and bring back API selections
+                    pass
+
+                else:
+                    raise NameError("Neither graph nor return option exist")
+
 
 
 
@@ -252,4 +271,24 @@ def ShowViewTitle(controller : WeatherController):
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
     else:
+        #insert animation to show tabs
         pass
+
+
+def ConnectReturnButton(controller : WeatherController):
+    """Connects return button for either graph or the graph pickers to the 2-->0 stage transition
+
+    Args:
+        controller (WeatherController): The controller instance, has access to the weather tab
+    """
+
+    if controller.weather_tab.return_option is not None:
+        controller.weather_tab.return_option.button.clicked.connect(lambda: controller.StageTransition((2,0)))
+
+    elif controller.weather_tab.graph is not None:
+        controller.weather_tab.graph.header.reset_button.clicked.connect(lambda: controller.StageTransition((2,0)))
+
+    else:
+        raise NameError("Neither graph button nor tab return button exist")
+
+

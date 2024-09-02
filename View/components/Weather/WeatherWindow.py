@@ -3,7 +3,8 @@ from MyWeather.View.utils.enumerations import ColorModes
 from MyWeather.View.StyleSheets.WeatherTab import Dark, Light
 from MyWeather.Init.WeatherInits import ItemsInit, ItemLayout
 from .WeatherChooseButton import TextImageButton
-from ..Graphs.GraphPicker import GraphPicker
+from ..Graphs.GraphPicker import GraphPicker, ReturnOption
+from ..Graphs.Container import BaseGraphContainer
 from .Title import Title
 from .OptionsMenu import OptionMenu
 
@@ -21,8 +22,10 @@ class WeatherTab(QFrame):
 
         self.view_layout : QLayout = None           #The layout containing the data views
 
-        self.graph = None                           #the currently displayed graph (a singleton in the case of realtime)
+        self.graph : BaseGraphContainer = None      #the currently displayed graph (a singleton in the case of realtime)
         self.tabs : list[GraphPicker] = []          #tabs (graph pickers)
+
+        self.return_option : ReturnOption = None    #the return option among the tabs
 
         self.title : Title = None
         self.InitLayout() #stretches at index 0, 2 and 4 on init, the item layout is at index 3

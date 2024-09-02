@@ -146,6 +146,9 @@ class ReturnOption(QFrame):
         button.setFont(QFont(FONTS.weather_tab, pointSize=20))
         button.setObjectName("graph_picker_return_button")
 
+        #add access to the button as a instance variable (to be later connected with signals/slots)
+        self.button = button 
+
         #set fixed height since the widgets completely ignore stretch for whatever reason
         button.setFixedHeight(50)
 
