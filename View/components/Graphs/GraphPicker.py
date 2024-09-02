@@ -123,3 +123,32 @@ class GraphPicker(QFrame):
             super().setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).Idle)
 
 
+
+class ReturnOption(QFrame):
+    """Custom return option displayed alongside the graph pickers"""
+
+    def __init__(self):
+        """Return option constructor"""
+        super().__init__()
+        self.setObjectName("graph_picker_return")
+
+        #initialize layout and set spacing to zero
+        (_layout_ := QVBoxLayout()).setContentsMargins(0,0,0,0)
+        _layout_.setSpacing(0)
+
+        #add a image
+        _layout_.addWidget(image := QLabel(), stretch=85)
+        image.setObjectName("graph_picker_return_image")
+
+
+        #add a button
+        _layout_.addWidget(button := QPushButton(text="Return to API selection"), stretch=15)
+        button.setFont(QFont(FONTS.weather_tab, pointSize=20))
+        button.setObjectName("graph_picker_return_button")
+
+        #set fixed height since the widgets completely ignore stretch for whatever reason
+        button.setFixedHeight(50)
+
+        #set the layout
+        self.setLayout(_layout_)
+        self._layout_ = _layout_

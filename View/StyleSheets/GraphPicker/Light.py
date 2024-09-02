@@ -1,6 +1,6 @@
 Idle = """QFrame#main{
     background-color: rgb(250,249,246);
-    border: 5px dotted turquoise;
+    border: 5px solid turquoise;
     border-radius: 15px;
 }
 
@@ -21,7 +21,7 @@ QLabel#icon{
 
 Hover = """QFrame#main{
     background-color: rgb(250,249,246);
-    border: 5px dotted turquoise;
+    border: 5px solid turquoise;
     border-radius: 15px;
 }
 

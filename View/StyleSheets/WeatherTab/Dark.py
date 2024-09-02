@@ -31,7 +31,7 @@ QLabel#forecasttitle, QLabel#realtimetitle, QLabel#historytitle{
     border-top: 2px solid silver;
 }
 
-QLabel#forecastimage, QLabel#realtimeomage, QLabel#historyimage{
+QLabel#forecastimage, QLabel#realtimeomage, QLabel#historyimage, QLabel#graph_picker_return_image{
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
 }
@@ -48,9 +48,14 @@ QLabel#historyimage{
     border-image: url('Assets/StockAPISelections/history.jpg');
 }
 
+QLabel#graph_picker_return_image{
+    border-image: url('Assets/door.jpg');
+}
+
 QPushButton#forecastbutton,
 QPushButton#realtimebutton,
-QPushButton#historybutton{
+QPushButton#historybutton,
+QPushButton#graph_picker_return_button{
     background: transparent;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
@@ -60,7 +65,8 @@ QPushButton#historybutton{
 
 QPushButton#forecastbutton:hover:!pressed,
 QPushButton#realtimebutton:hover:!pressed,
-QPushButton#historybutton:hover:!pressed{
+QPushButton#historybutton:hover:!pressed,
+QPushButton#graph_picker_return_button:hover:!pressed{
     background-color: #11c0c0c0;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
@@ -186,9 +192,17 @@ QSlider::handle:horizontal{
 }
 
 QSlider::handle:horizontal:hover:!pressed{
-    background-color: rgb(127,255,0);
+    background-color: rgb(127, 255, 0);
 }
 
 QSlider::handle:horizontal:pressed{
-    background-color: rgb(32,178,170);
+    background-color: rgb(32, 178, 170);
+}
+
+QFrame#graph_picker_return{
+    border: 5px solid turquoise;
+    background-color: rgb(33, 33, 33);
+    color: silver;
+    border-radius: 15px;
 }""" + f"\n{GraphFrame}"
+

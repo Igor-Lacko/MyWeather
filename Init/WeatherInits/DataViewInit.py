@@ -1,9 +1,11 @@
 """Contains constructors for the data view layout in the weather tab after the option menu vanishes and a successful response is gotten"""
 from . import *
+from PyQt6.QtGui import QFont
 from MyWeather.View.components.Graphs.Container import BaseGraphContainer
-from MyWeather.View.components.Graphs.GraphPicker import GraphPicker
-from MyWeather.Model import obj
+from MyWeather.View.components.Graphs.GraphPicker import GraphPicker, ReturnOption
 from MyWeather.View.components.Weather.WeatherWindow import WeatherTab
+from MyWeather.Model import obj
+from MyWeather.Init import FONTS
 from MyWeather.Controller.WeatherTabController.Animations import SetWidgetInvisible
 
 
@@ -63,6 +65,10 @@ def GetForecastView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
 
     layout.addStretch(20)
 
+    layout.addWidget(ReturnOption(), stretch=40)
+
+    layout.addStretch(20)
+
     for day in data.days:
         layout.addWidget(picker := GraphPicker(day, tab.color_mode), stretch=40)
         layout.addStretch(20)
@@ -79,6 +85,10 @@ def GetHistoryView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
 
     (layout := QHBoxLayout()).setContentsMargins(0,0,0,0)
     layout.setSpacing(0)
+
+    layout.addStretch(20)
+
+    layout.addWidget(ReturnOption(), stretch=40)
 
     layout.addStretch(20)
 
