@@ -106,6 +106,7 @@ class WeatherController(QObject):
                 #reset instance attributes
                 self.weather_tab.tabs = []
                 self.weather_tab.return_option = None
+                self.weather_tab.graph = None
                 self.weather_tab.view_layout = None
 
                 #insert the selection layout into the main layout
@@ -208,15 +209,16 @@ class WeatherController(QObject):
 
             case(2,0):
                 #----Transition from the third stage to the start, used when the return button on the realtime graph is clicked or the return option among graph pickers----#
+                
+                #----Recreate the API selection layout----#
+                selection_layout = GetSelectionLayout(self.weather_tab)
+                self.ConnectSelections()
+
+                #----Set the selections invisible until their animation begins----#
+                self.effects = SetGroupInvisible(self.weather_tab.selections)
+
+                #----Create animations depending on the current view----#
                 if self.weather_tab.return_option is not None:
-                    #----Recreate the API selection layout----#
-                    selection_layout = GetSelectionLayout(self.weather_tab)
-                    self.ConnectSelections()
-
-                    #----Set the selections invisible until their animation begins----#
-                    self.effects = SetGroupInvisible(self.weather_tab.selections)
-
-
                     self.animations = GetParallelGroup(
                         [MoveOutAnimation(tab, 1000) for tab in self.weather_tab.tabs]
                         +
@@ -225,19 +227,21 @@ class WeatherController(QObject):
                         [FadeOutAnimation(self.weather_tab.title, 1000)],
                         slot=lambda: self.SetLayoutNextStage((2,0)))
 
-                    #----Restore initial text and begin the selection animation after a while----#
-                    self.animations.finished.connect(lambda: self.weather_tab.title.setText("Choose your mode"))
-                    self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowTitleSelections(self)))
-
-                    self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
-
                 elif self.weather_tab.graph is not None:
-                    #insert animations to remove graph and bring back API selections
-                    pass
+                    self.animations = GetParallelGroup(
+                        [SizeInAnimation(self.weather_tab.graph, 1000, self.weather_tab),
+                        FadeOutAnimation(self.weather_tab.title, 1000)],
+                        slot=lambda: self.SetLayoutNextStage((2,0))
+                    )
 
                 else:
                     raise NameError("Neither graph nor return option exist")
 
+                #----Restore initial text and begin the selection animation after a while----#
+                self.animations.finished.connect(lambda: self.weather_tab.title.setText("Choose your mode"))
+                self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowTitleSelections(self)))
+
+                self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
 
 
