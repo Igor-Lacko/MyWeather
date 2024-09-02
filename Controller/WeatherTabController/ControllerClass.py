@@ -159,6 +159,10 @@ class WeatherController(QObject):
                 #----Set the layout for next stage with the view layout as the keyword argument----#
                 GetView(self.data, self.api, self.weather_tab)
 
+                #----If a multiple day choice is made, hide the tabs until their animation starts----#
+                if len(self.weather_tab.tabs) != 0:
+                    self.effects = SetGroupInvisible(self.weather_tab.tabs + [self.weather_tab.return_option])
+
                 #----Hide the title and delete the option menu----#
                 self.animations = GetParallelGroup([SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab),
                                                     FadeOutAnimation(self.weather_tab.title, 1000)],
@@ -224,7 +228,7 @@ def HideAnimationFinished(controller : WeatherController):
 
 def ShowTitleSelections(controller : WeatherController):
         """Simillar to ShowTitleMenu, expect in the reverse stage transition"""
-        show_animations = GetParallelGroup([MoveInAnimation(selection, 1500) for selection in controller.weather_tab.selections])
+        show_animations = GetParallelGroup([MoveInAnimation(selection, 1500) for selection in controller.weather_tab.selections] + [FadeInAnimation(selection, 1500) for selection in controller.weather_tab.selections])
         show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
         controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 2500), show_animations], slot=lambda: ClearEffect(controller.weather_tab.selections))
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
@@ -237,9 +241,6 @@ def ShowTitleSelections(controller : WeatherController):
 
 
 #----------STAGE 2 OPERATIONS----------#
-
-
-
 def ShowTitleMenu(controller : WeatherController):
         """Shows the title and the API config menu"""
         controller.weather_tab.menu.setGraphicsEffect(invisible := QGraphicsOpacityEffect(controller.weather_tab.menu))
@@ -271,8 +272,16 @@ def ShowViewTitle(controller : WeatherController):
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
     else:
-        #insert animation to show tabs
-        pass
+        #create a MoveInAnimation group for the graph pickers and a fade animation for the title
+        controller.animations = GetParallelGroup([
+            FadeInAnimation(controller.weather_tab.title, 1000),
+            show_animations := GetParallelGroup([MoveInAnimation(selection, 1000) for selection in controller.weather_tab.tabs] + [FadeInAnimation(selection, 1500) for selection in controller.weather_tab.tabs])])
+
+        #make the graph pickers visible upon starting the show animations and clear the effects upon their end
+        show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
+        controller.animations.finished.connect(lambda: ClearEffect(controller.weather_tab.selections))
+        controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
 
 
 def ConnectReturnButton(controller : WeatherController):

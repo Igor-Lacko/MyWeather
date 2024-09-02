@@ -127,7 +127,7 @@ forecast_menu_layout = [
         },
 
         "combobox"  :   {
-            "items"     :   GetDaylist(3, True),
+            "items"     :   ["None"] + GetDaylist(3, True),
             "name"      :   "forecastdatecombobox"
         }
     },

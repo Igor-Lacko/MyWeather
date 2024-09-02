@@ -65,7 +65,10 @@ def GetForecastView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
 
     layout.addStretch(20)
 
-    layout.addWidget(ReturnOption(), stretch=40)
+    layout.addWidget(return_option := ReturnOption(), stretch=40)
+    tab.return_option = return_option
+
+    tab.tabs.append(return_option)
 
     layout.addStretch(20)
 
@@ -88,7 +91,10 @@ def GetHistoryView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
 
     layout.addStretch(20)
 
-    layout.addWidget(ReturnOption(), stretch=40)
+    layout.addWidget(return_option := ReturnOption(), stretch=40)
+    tab.return_option = return_option
+
+    tab.tabs.append(return_option)
 
     layout.addStretch(20)
 
