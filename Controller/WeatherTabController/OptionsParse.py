@@ -14,19 +14,15 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
     """
 
     match api:
-        case 'realtime':    #the simplest option, only needs a location and viewType
+        case 'realtime':    #the simplest option, only needs a location
             options = {
                 'api'       :   api,
                 'location'  :   None,
-                'view'      :   None
             }
 
             for item in menu.items:
                 if item.key == 'location':
                     options['location'] = item.value
-
-                if item.key == 'view':
-                    options['view'] = item.value
 
             return options
 
@@ -34,16 +30,12 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
             options = {
                 'api'           :   api,
                 'location'      :   None,
-                'view'          :   None,
                 'range'         :   None   
             }
 
             for item in menu.items:
                 if item.key == 'location':
                     options['location'] = item.value
-
-                if item.key == 'view':
-                    options['view'] = item.value
 
                 if item.key == 'range':
                     options['range'] = item.value

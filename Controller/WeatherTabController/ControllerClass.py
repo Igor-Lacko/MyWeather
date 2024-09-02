@@ -6,7 +6,7 @@ from MyWeather.Init.WeatherInits.OptionMenuInit import OptionMenuParser
 from MyWeather.Init.WeatherInits.DataViewInit import GetView
 from MyWeather.Model.request import *
 from MyWeather.Model.obj import BulkData, Timeline, Realtime, Day
-from MyWeather.View.components.DataViews.GraphView.Container import BaseGraphContainer
+from MyWeather.View.components.Graphs.Container import BaseGraphContainer
 from .Animations import *
 from .Utilities import *
 from .OptionsParse import GetOptions
@@ -22,7 +22,6 @@ class WeatherController(QObject):
         self.stage = 0
         self.api : str = None
         self.data : Realtime | Timeline | BulkData | Day = None
-        self.view : str = None
 
 
     def ConnectWeatherTab(self, tab : WeatherTab):
@@ -49,8 +48,7 @@ class WeatherController(QObject):
         """Calls the worker object which will either return None or a response\n
         - If the operation fails, the controller remains in stage 1 and shows a error popup\n
         - If it succeeds, it will begin the stage transition from 1 to 2"""
-        self.view = (options := GetOptions(self.api, self.weather_tab.menu))['view'].lower()
-        self.fetch_data.emit(options)
+        self.fetch_data.emit(GetOptions(self.api, self.weather_tab.menu))
 
 
     def SetLayoutNextStage(self, stage_pair : tuple=(0,1), **kwargs):
@@ -158,7 +156,7 @@ class WeatherController(QObject):
                 #----Transition from the second stage to the third----#
 
                 #----Set the layout for next stage with the view layout as the keyword argument----#
-                GetView(self.data, self.view, self.api, self.weather_tab)
+                GetView(self.data, self.api, self.weather_tab)
 
                 #----Hide the title and delete the option menu----#
                 self.animations = GetParallelGroup([SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab),
@@ -247,13 +245,11 @@ def ShowViewTitle(controller : WeatherController):
     #Show the title first
     title_animation = FadeInAnimation(controller.weather_tab.title, 1000)
 
-    #create a data show animation depending on the API type and view
+    #create a data show animation depending on the API type
     if controller.api == 'realtime':
-        if controller.view == 'graph':       #realtime API/single graph
+        controller.animations = GetParallelGroup([title_animation, SizeOutAnimation(controller.weather_tab.graph, 2500, controller.weather_tab)])
+        controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [controller.weather_tab.graph.graphicsEffect()]))
+        controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
-            controller.animations = GetParallelGroup([title_animation, SizeOutAnimation(controller.weather_tab.graph, 2500, controller.weather_tab)])
-            controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [controller.weather_tab.graph.graphicsEffect()]))
-            controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
-
-        else:
-            pass
+    else:
+        pass

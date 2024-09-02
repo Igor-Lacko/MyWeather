@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt, QObject, pyqtSignal, pyqtSlot
 from MyWeather.Model import obj
-from MyWeather.View.components.DataViews.GraphView.Container import ExtendedGraphContainer
-from MyWeather.View.components.DataViews.GraphView.StackedGraphLayout import StackedGraphLayout
+from MyWeather.View.components.Graphs.Container import ExtendedGraphContainer
+from MyWeather.View.components.Graphs.StackedGraphLayout import StackedGraphLayout
 
 class GraphController(QObject):
     """Updates the graph"""

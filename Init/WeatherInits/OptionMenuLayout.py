@@ -41,24 +41,6 @@ realtime_menu_layout = [
     },
 
     {
-        "stretch"   :   20,
-        "type"      :   "comboboxoption",
-        "name"      :   "realtimeviewoption",
-        "key"       :   "view",
-
-        "label"     :   {
-            "text"      :   "Select the appearance of the weather data",
-            "pointsize" :   20,
-            "name"      :   "realtimeviewdescription"
-        },
-
-        "combobox"  :   {
-            "items"     :   ["Graph", "Text"],
-            "name"      :   "realtimeviewcombobox"
-        }
-    },
-
-    {
         "type"      :   "imageoption",
         "name"      :   "tenkinokomeme",
         "stretch"   :   50,
@@ -111,24 +93,6 @@ forecast_menu_layout = [
             "items"     :   database,
             "example"   :   "e.g. 'New York'",
             "name"      :   "forecastlocationlineedit"
-        }
-    },
-
-    {
-        "type"      :   "comboboxoption",
-        "stretch"   :   20,
-        "name"      :   "forecastviewoption",
-        "key"       :   "view",
-
-        "label"     :   {
-            "text"      :   "Select the appearance of the weather data",
-            "pointsize" :   20,
-            "name"      :   "forecastviewdescription"
-        },
-
-        "combobox"  :   {
-            "items"     :   ["Graph", "Tabs"],
-            "name"      :   "forecastviewcombobox"
         }
     },
 
@@ -209,24 +173,6 @@ history_menu_layout = [
             "items"     :   database,
             "example"   :   "e.g. 'New York'",
             "name"      :   "historylocationlineedit"
-        }
-    },
-
-    {
-        "stretch"   :   20,
-        "type"      :   "comboboxoption",
-        "name"      :   "historyviewoption",
-        "key"       :   "view",
-
-        "label"     :   {
-            "text"      :   "Select the appearance of the weather data",
-            "pointsize" :   20,
-            "name"      :   "historyviewdescription"
-        },
-
-        "combobox"  :   {
-            "items"     :   ["Graph", "Tabs"],
-            "name"      :   "historyviewcombobox"
         }
     },
 

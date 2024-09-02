@@ -1,5 +1,5 @@
 """Initializes the graph with InitWeatherData"""
-from ...View.components.DataViews.GraphView.Container import ExtendedGraphContainer
+from ...View.components.Graphs.Container import ExtendedGraphContainer
 from . import InitWeatherData
 from MyWeather.Constdata.Mode import MODE
 

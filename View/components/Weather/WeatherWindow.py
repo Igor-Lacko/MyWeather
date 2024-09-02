@@ -3,7 +3,7 @@ from MyWeather.View.utils.enumerations import ColorModes
 from MyWeather.View.StyleSheets.WeatherTab import Dark, Light
 from MyWeather.Init.WeatherInits import ItemsInit, ItemLayout
 from .WeatherChooseButton import TextImageButton
-from ..DataViews.GraphPicker import GraphPicker
+from ..Graphs.GraphPicker import GraphPicker
 from .Title import Title
 from .OptionsMenu import OptionMenu
 
