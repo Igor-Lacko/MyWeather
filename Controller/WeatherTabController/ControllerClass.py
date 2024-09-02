@@ -134,9 +134,6 @@ class WeatherController(QObject):
                     \t-label 10\n
                     \t-stretch 45\n
                     \t-stretch 10"""
-                
-                PrintLayout(self.weather_tab._layout_)
-                print("\n\n\n\n")
 
                 self.api = kwargs['api'].lower()
 
@@ -320,7 +317,7 @@ def ShowViewTitle(controller : WeatherController):
     title_animation = FadeInAnimation(controller.weather_tab.title, 1000)
 
     #create a data show animation depending on the API type
-    if controller.api == 'realtime':
+    if controller.api == 'realtime' or len(controller.data.days) == 1:
         controller.animations = GetParallelGroup([title_animation, SizeOutAnimation(controller.weather_tab.graph, 500, controller.weather_tab)])
         controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [controller.weather_tab.graph.graphicsEffect()]))
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
