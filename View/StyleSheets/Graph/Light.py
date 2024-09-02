@@ -15,6 +15,17 @@ QPushButton#left_button:hover:!pressed{
     background-color: #11000000;
 }
 
+QPushButton#graph_reset_button{
+    border: none;
+    border-top-left-radius: 8px;
+    background-color: darkred;
+    color: white;
+}
+
+QPushButton#graph_reset_button:hover:!pressed{
+    background-color: #b81414;
+}
+
 QFrame#header_widget{
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;

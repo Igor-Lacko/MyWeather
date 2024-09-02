@@ -7,13 +7,13 @@ from MyWeather.View.utils.enumerations import ColorModes #absolute import to avo
 
 class BaseGraphHeader(QFrame):
     """Graph header superclass, enough only for realtime weather, multiple-day superclass inherits from this"""
-    def __init__(self, **data):
+    def __init__(self, button : bool=True, **data):
         """Graph header constructor, default graph header has these items: \n 
         - a title with a Forecast for {city}, {country}, {date}\n
         - a menu to choose what data will the graph show (temperature, rain, wind, sunset/sunrise) 
 
         Args:
-            data (dict[str,str]): A set of keyword arguments, only one used in subclass is the location and current date
+            data (dict[str,str]): A set of keyword arguments, only one used in subclass is the location and current date, also if the graph has a reset button (only used in the parent class)
         """
         super().__init__()
         self.setObjectName("header_widget")
@@ -30,6 +30,21 @@ class BaseGraphHeader(QFrame):
         #initialize the title and menu
         self._layout_.addWidget(self.GetTitle(data['date'], data['location'], False if data['api'] == 'history' else True), stretch=90)
         self._layout_.addWidget(self.GetMenu(), stretch=10)
+
+        #add a reset button if the graph has it as an argument
+        if button:
+            #insert the button at the start of the layout
+            self._layout_.insertWidget(0, reset_button := QPushButton(text='✖'), stretch=10)
+
+            #readjust the stretches to be a 10|80|10 layout
+            self._layout_.setStretch(1, 80)
+
+            #set a button name for the style sheets to recognize it
+            reset_button.setObjectName("graph_reset_button")
+
+            reset_button.setFont(QFont(FONTS.weather_tab, pointSize=20))
+            reset_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+            self.reset_button = reset_button
 
 
 
@@ -93,7 +108,7 @@ class ExtendedGraphHeader(BaseGraphHeader):
         Args:
             data (dict[str,str]): Used with some new keyword arguments, such as day range or API choice
         """
-        super().__init__(**data)
+        super().__init__(False, **data)             #the extended version never uses a button
         self.title.setObjectName("extended_title")
         self.menu.setObjectName("extended_menu")
 

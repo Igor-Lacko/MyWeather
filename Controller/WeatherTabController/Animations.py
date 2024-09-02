@@ -102,7 +102,7 @@ def SizeOutAnimation(widget : QWidget, duration : int, parent : QWidget) -> QPro
     widget.show()
 
     #----Get the widget midpoint and top left coordinates----#
-    midpoint = widget.mapTo(parent, QPoint(parent.width() // 2, parent.height() // 2))
+    midpoint = widget.mapTo(parent, QPoint(widget.width() // 2, widget.height() // 2))
     topleft = widget.mapTo(parent, QPoint(0, 0))
 
     #----Inititalize the animation and it's duration----#

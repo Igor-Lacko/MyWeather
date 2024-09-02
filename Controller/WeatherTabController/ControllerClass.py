@@ -247,7 +247,7 @@ def ShowViewTitle(controller : WeatherController):
 
     #create a data show animation depending on the API type
     if controller.api == 'realtime':
-        controller.animations = GetParallelGroup([title_animation, SizeOutAnimation(controller.weather_tab.graph, 2500, controller.weather_tab)])
+        controller.animations = GetParallelGroup([title_animation, SizeOutAnimation(controller.weather_tab.graph, 500, controller.weather_tab)])
         controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [controller.weather_tab.graph.graphicsEffect()]))
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
