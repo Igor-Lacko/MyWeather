@@ -39,8 +39,19 @@ class WeatherTab(QFrame):
         -If change is passed as True, switches the self.color_mode to the opposite (used when the mode is switched by the app's Sidebar)"""
         self.setStyleSheet(self.GetStyleSheet(mode))
 
-        if self.menu is not None: #set a style sheet to the menu's option popups, if the menu does currently exist
+        #set a style sheet to the menu's option popups, if the menu does currently exist
+        if self.menu is not None: 
             self.menu.SetColorMode(mode)
+
+        #simillarly do the same for a graph if it's being displayed
+        if self.graph is not None:  
+            self.graph.SwitchColorMode()
+
+        #finally, do the same for the graph picker widgets if they exist
+        if len(self.tabs) != 0:
+            for tab in self.tabs:
+                if tab is not self.return_option:        #handled by the window's stylesheets
+                    tab.SwitchColorMode()
 
         if change:
             self.color_mode = ColorModes.DARK if self.color_mode != ColorModes.DARK else ColorModes.LIGHT

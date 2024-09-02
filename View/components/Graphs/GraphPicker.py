@@ -123,6 +123,12 @@ class GraphPicker(QFrame):
             super().setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).Idle)
 
 
+    def SwitchColorMode(self):
+        """Switches the current color mode and sets a style sheet"""
+        self.color_mode = ColorModes.DARK if self.color_mode == ColorModes.LIGHT else ColorModes.LIGHT
+        self.setStyleSheet()
+
+
 
 class ReturnOption(QFrame):
     """Custom return option displayed alongside the graph pickers"""

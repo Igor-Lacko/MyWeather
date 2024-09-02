@@ -52,7 +52,7 @@ def MoveOutAnimation(widget : QWidget, duration : int) -> QPropertyAnimation:
 def MoveInAnimation(widget : QWidget, duration : int) -> QPropertyAnimation:
     """Opposite of MoveOutAnimation, moves a widget into position from the bottom of the screen"""
     (move_animation := QPropertyAnimation(widget, b"pos")).setDuration(duration)
-    move_animation.setStartValue(QPoint(widget.x(), widget.parentWidget().parentWidget().height()))
+    move_animation.setStartValue(QPoint(widget.x(), widget.parentWidget().height()))
     move_animation.setEndValue(QPoint(widget.x(), widget.y()))
     move_animation.setEasingCurve(QEasingCurve.Type.InOutCubic)
 

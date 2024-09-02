@@ -68,6 +68,7 @@ class WeatherController(QObject):
                 self.weather_tab.menu.hide()
                 self.weather_tab._layout_.setStretch(3, 45)
 
+
             case(1,0): #back from second to first
                 #remove the menu
                 self.weather_tab._layout_.removeWidget(self.weather_tab.menu)
@@ -90,6 +91,28 @@ class WeatherController(QObject):
                 #insert the view layout
                 self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout, 45)
 
+            case(2,0):
+                #rearrange spacing
+                self.weather_tab._layout_.setStretch(0, 5)
+                self.weather_tab._layout_.setStretch(2, 45)
+
+                #remove all items from the view layout
+                ClearLayout(self.weather_tab.view_layout)
+
+                #remove the view layout from the main/parent layout and delete it
+                self.weather_tab._layout_.removeItem(self.weather_tab.view_layout)
+                self.weather_tab.view_layout.deleteLater()
+
+                #reset instance attributes
+                self.weather_tab.tabs = []
+                self.weather_tab.return_option = None
+                self.weather_tab.view_layout = None
+
+                #insert the selection layout into the main layout
+                self.weather_tab._layout_.insertLayout(3, self.weather_tab.selection_layout, 30)
+
+
+
 
 
     def StageTransition(self, stage_pair : tuple, **kwargs):
@@ -110,6 +133,9 @@ class WeatherController(QObject):
                     \t-label 10\n
                     \t-stretch 45\n
                     \t-stretch 10"""
+                
+                PrintLayout(self.weather_tab._layout_)
+                print("\n\n\n\n")
 
                 self.api = kwargs['api'].lower()
 
@@ -161,7 +187,7 @@ class WeatherController(QObject):
 
                 #----If a multiple day choice is made, hide the tabs until their animation starts----#
                 if len(self.weather_tab.tabs) != 0:
-                    self.effects = SetGroupInvisible(self.weather_tab.tabs + [self.weather_tab.return_option])
+                    self.effects = SetGroupInvisible(self.weather_tab.tabs)
 
                 #----Hide the title and delete the option menu----#
                 self.animations = GetParallelGroup([SizeInAnimation(self.weather_tab.menu, 700, self.weather_tab),
@@ -183,8 +209,27 @@ class WeatherController(QObject):
             case(2,0):
                 #----Transition from the third stage to the start, used when the return button on the realtime graph is clicked or the return option among graph pickers----#
                 if self.weather_tab.return_option is not None:
-                    #insert animations to remove tabs and bring back the initial ones
-                    pass
+                    #----Recreate the API selection layout----#
+                    selection_layout = GetSelectionLayout(self.weather_tab)
+                    self.ConnectSelections()
+
+                    #----Set the selections invisible until their animation begins----#
+                    self.effects = SetGroupInvisible(self.weather_tab.selections)
+
+
+                    self.animations = GetParallelGroup(
+                        [MoveOutAnimation(tab, 1000) for tab in self.weather_tab.tabs]
+                        +
+                        [FadeOutAnimation(tab, 1000) for tab in self.weather_tab.tabs]
+                        +
+                        [FadeOutAnimation(self.weather_tab.title, 1000)],
+                        slot=lambda: self.SetLayoutNextStage((2,0)))
+
+                    #----Restore initial text and begin the selection animation after a while----#
+                    self.animations.finished.connect(lambda: self.weather_tab.title.setText("Choose your mode"))
+                    self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowTitleSelections(self)))
+
+                    self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
                 elif self.weather_tab.graph is not None:
                     #insert animations to remove graph and bring back API selections
@@ -207,16 +252,15 @@ class WeatherController(QObject):
 
 def HideAnimationFinished(controller : WeatherController):
         """End of the animation that hides the API selections. Removes all items from the layout (including QSpacerItems)"""
+
+        #reset the effects attribute
         ClearEffect(controller.weather_tab.selections)
-        while controller.weather_tab.selection_layout.count():
-            item = controller.weather_tab.selection_layout.takeAt(0)
+        controller.effects = []
 
-            if type(item) != QSpacerItem:
-                item.widget().deleteLater()
+        #remove all items from the layout
+        ClearLayout(controller.weather_tab.selection_layout)
 
-            else:
-                del(item)
-
+        #remove the layout from ther main/parent layout and delete it
         controller.weather_tab._layout_.removeItem(controller.weather_tab.selection_layout)
         controller.weather_tab.selection_layout.deleteLater()
         controller.weather_tab.selection_layout = None
@@ -228,9 +272,13 @@ def HideAnimationFinished(controller : WeatherController):
 
 def ShowTitleSelections(controller : WeatherController):
         """Simillar to ShowTitleMenu, expect in the reverse stage transition"""
-        show_animations = GetParallelGroup([MoveInAnimation(selection, 1500) for selection in controller.weather_tab.selections] + [FadeInAnimation(selection, 1500) for selection in controller.weather_tab.selections])
+        show_animations = GetParallelGroup([MoveInAnimation(selection, 1500) for selection in controller.weather_tab.selections] + 
+                                            [FadeInAnimation(selection, 1500) for selection in controller.weather_tab.selections])
+
         show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
-        controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 2500), show_animations], slot=lambda: ClearEffect(controller.weather_tab.selections))
+        controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 2500), show_animations], 
+                                                    slot=lambda: ClearEffect(controller.weather_tab.selections))
+
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
 
@@ -245,8 +293,10 @@ def ShowTitleMenu(controller : WeatherController):
         """Shows the title and the API config menu"""
         controller.weather_tab.menu.setGraphicsEffect(invisible := QGraphicsOpacityEffect(controller.weather_tab.menu))
         invisible.setOpacity(0)         #use a graphics effect to keep the menu invisible
-        controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 500), SizeOutAnimation(controller.weather_tab.menu, 500, controller.weather_tab)], 
+        controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 500), 
+                                                    SizeOutAnimation(controller.weather_tab.menu, 500, controller.weather_tab)], 
                                                     slot=lambda: ClearEffect([controller.weather_tab.menu]))
+
         controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [invisible]))    
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
@@ -279,8 +329,9 @@ def ShowViewTitle(controller : WeatherController):
 
         #make the graph pickers visible upon starting the show animations and clear the effects upon their end
         show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
-        controller.animations.finished.connect(lambda: ClearEffect(controller.weather_tab.selections))
+        controller.animations.finished.connect(lambda: ClearEffect(controller.weather_tab.tabs))
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
 
 
 

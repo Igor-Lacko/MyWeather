@@ -45,3 +45,23 @@ def GetTitle(data : obj.Realtime | obj.Timeline, api : str) -> str:
 
         case _:
             raise ValueError("Incorrect API argument")
+
+
+def PrintLayout(layout : QLayout):
+    """Just a informative function i used sometimes during the weather section development mostly to check widgets/their stretches in different stages"""
+    for index in range(layout.count()):
+        print(layout.itemAt(index), layout.stretch(index))
+
+
+def ClearLayout(layout : QLayout):
+    """Removes all items from a layout"""
+    while layout.count():
+            #remove the item
+            item = layout.takeAt(0)
+
+            #check if it's a spacer item (which doesn't have deleteLater built in)
+            if type(item) != QSpacerItem:
+                item.widget().deleteLater()
+
+            else:
+                del(item)
