@@ -3,7 +3,7 @@ from . import *
 from PyQt6.QtCore import QObject, QAbstractAnimation, QTimer, pyqtSignal
 from PyQt6.QtWidgets import *
 from MyWeather.Init.WeatherInits.OptionMenuInit import OptionMenuParser
-from MyWeather.Init.WeatherInits.DataViewInit import GetView
+from MyWeather.Init.WeatherInits.DataViewInit import GetView, GetSingleGraph
 from MyWeather.Model.request import *
 from MyWeather.Model.obj import BulkData, Timeline, Realtime, Day
 from MyWeather.View.components.Graphs.Container import BaseGraphContainer
@@ -20,7 +20,6 @@ class WeatherController(QObject):
         super().__init__()
         self.weather_tab : WeatherTab = None
         self.animations = None
-        self.stage = 0
         self.api : str = None
         self.data : Realtime | Timeline | BulkData | Day = None
 
@@ -50,6 +49,11 @@ class WeatherController(QObject):
         - If the operation fails, the controller remains in stage 1 and shows a error popup\n
         - If it succeeds, it will begin the stage transition from 1 to 2"""
         self.fetch_data.emit(GetOptions(self.api, self.weather_tab.menu))
+
+
+    def SetGraph(self, data : obj.Day):
+        """Intermediate function, calls the 2-->3 stage transition with the provided data"""
+        self.StageTransition((2,3), **{'data' : data})
 
 
     def SetLayoutNextStage(self, stage_pair : tuple=(0,1), **kwargs):
@@ -91,6 +95,24 @@ class WeatherController(QObject):
                 #insert the view layout
                 self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout, 45)
 
+            case(2,3):
+                #from the second stage to the final one, so when the graph pickers are clicked and a graph is shown
+                #basically just replace one view layout with another
+
+                #first remove all items from the current instance
+                ClearLayout(kwargs['old_layout'])
+
+                #remove the old view layout from the weather
+                self.weather_tab._layout_.removeItem(kwargs['old_layout'])
+                kwargs['old_layout'].deleteLater()
+
+                #reset some instance attributes
+                self.weather_tab.tabs = []
+                self.weather_tab.return_option = None
+
+                #Insert the new layout into the main one
+                self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout)
+
             case(2,0):
                 #rearrange spacing
                 self.weather_tab._layout_.setStretch(0, 5)
@@ -108,6 +130,8 @@ class WeatherController(QObject):
                 self.weather_tab.return_option = None
                 self.weather_tab.graph = None
                 self.weather_tab.view_layout = None
+                self.api = None
+                self.data = None
 
                 #insert the selection layout into the main layout
                 self.weather_tab._layout_.insertLayout(3, self.weather_tab.selection_layout, 30)
@@ -200,6 +224,37 @@ class WeatherController(QObject):
 
                 #----Connect the new view to the reverse stage transition----#
                 self.animations.finished.connect(lambda: ConnectReturnButton(self))
+
+                #----Connect the graph pickers (if they exist) to the final stage transition----#
+                if len(self.weather_tab.tabs) != 0:
+                    self.animations.finished.connect(lambda: ConnectGraphPickers(self))
+
+                self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
+            case(2,3):
+                #----Transition to the final stage, when a graph is picked from multiple choices. Only Forecast/History API----#
+
+                #----Make a copy of the current view layout since GetSingleGraph replaces it----#
+                old_layout = self.weather_tab.view_layout
+
+                #----Make a single graph in the view layout----#
+                GetSingleGraph(kwargs['data'], self.api, self.weather_tab)
+
+                #----Create animations that move out/fade the selections and fade the title out and back in----#
+                self.animations = GetParallelGroup(
+                    [MoveOutAnimation(tab, 1000) for tab in self.weather_tab.tabs]
+                    +
+                    [FadeOutAnimation(tab, 1000) for tab in self.weather_tab.tabs]
+                    +
+                    [FadeOutAnimation(self.weather_tab.title, 1000)],
+                    slot=lambda: self.SetLayoutNextStage((2,3), **{'old_layout' : old_layout}))
+
+                #----Change the title as the animations finish----#
+                self.animations.finished.connect(lambda: self.weather_tab.title.setText(
+                    GetTitle(self.data, self.api, one_day=True, date_str=kwargs['data'].date_str)))
+
+                #----Show the graph a while after the animations finish----#
+                self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowGraph(self)))
 
                 self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
@@ -335,6 +390,12 @@ def ShowViewTitle(controller : WeatherController):
 
 
 
+def ShowGraph(controller : WeatherController):
+    """Special case of ShowViewTitle, used when a graph needs to be shown"""
+    controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 1000), SizeOutAnimation(controller.weather_tab.graph, 1000, controller.weather_tab)])
+    controller.animations.stateChanged.connect(lambda state: ShowIfStarted(state, [controller.weather_tab.graph.graphicsEffect()]))
+    controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
 
 def ConnectReturnButton(controller : WeatherController):
     """Connects return button for either graph or the graph pickers to the 2-->0 stage transition
@@ -351,5 +412,21 @@ def ConnectReturnButton(controller : WeatherController):
 
     else:
         raise NameError("Neither graph button nor tab return button exist")
+
+
+
+def ConnectGraphPickers(controller : WeatherController):
+    """Connects all the options when picking from days to show a graph for to actually show the graph
+
+    Args:
+        controller (WeatherController): The controller instance, has access to both the weather window/tab and the data to be displayed
+    """
+
+    if len(controller.weather_tab.tabs) == 0:
+        raise ValueError("Error: Cannot connect the graph selections since they don't exist")
+
+    for selection in controller.weather_tab.tabs[1:]:     #skip the first item since it's the return option
+        selection.clicked.connect(controller.SetGraph)
+
 
 

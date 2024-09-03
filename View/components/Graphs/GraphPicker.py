@@ -12,8 +12,8 @@ from MyWeather.View.StyleSheets.GraphPicker import Dark, Light
 class GraphPicker(QFrame):
     """The graph selector frame"""
 
-    #custom clicked signal since it's a subclassed QFrame
-    clicked = pyqtSignal()
+    #custom clicked signal since it's a subclassed QFrame, which will emit it's data
+    clicked = pyqtSignal(obj.Day)
 
     def __init__(self, data : obj.Day, color_mode : ColorModes):
         """Graph picker constructor
@@ -24,6 +24,9 @@ class GraphPicker(QFrame):
         """
         super().__init__()
 
+        #keep the data as an instance attribute to later emit it
+        self.data = data
+
         #keep the color scheme as a instance attribute
         self.color_mode = color_mode
 
@@ -31,7 +34,7 @@ class GraphPicker(QFrame):
         self.pressed = self.hovered = False
 
         #keep the condition as an instance attribute for the icon
-        self.condition = data.condition.lower()
+        self.condition = self.data.condition.lower()
 
         #initialize a VBox Layout with room for a date and icon
         self._layout_ = QVBoxLayout()
@@ -45,7 +48,7 @@ class GraphPicker(QFrame):
         self._layout_.addWidget(self.icon, stretch=50)
 
         #add a label with the date of the day
-        self.text = QLabel(text=f"{data.location}\n{data.date_str}")
+        self.text = QLabel(text=f"{self.data.location}\n{self.data.date_str}")
         self.text.setFont(QFont(FONTS.weather_tab, pointSize=31))
         self.text.setAlignment(Alignments.Center)
         self.text.setWordWrap(True)
@@ -109,7 +112,7 @@ class GraphPicker(QFrame):
             self.setStyleSheet()
 
             if self.hovered:
-                self.clicked.emit()
+                self.clicked.emit(self.data)
 
 
     def setStyleSheet(self):
