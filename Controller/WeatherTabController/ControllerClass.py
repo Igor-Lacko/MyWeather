@@ -136,6 +136,25 @@ class WeatherController(QObject):
                 #insert the selection layout into the main layout
                 self.weather_tab._layout_.insertLayout(3, self.weather_tab.selection_layout, 30)
 
+            case(3,2):
+                #basically the same as (2,3), just replaces one view_layout with another and resets some instance attributes
+
+                #remove the matplotlib figure
+                self.weather_tab.graph.DeleteGraph()
+
+                #remove all items from the old view_layout
+                ClearLayout(kwargs['old_layout'])
+
+                #remove the old layout from the main layout and delete it
+                self.weather_tab._layout_.removeItem(kwargs['old_layout'])
+                kwargs['old_layout'].deleteLater()
+
+                #reset the graph instance attribute
+                self.weather_tab.graph = None
+
+                #insert the new view_layout
+                self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout, 45)
+
 
 
 
@@ -240,6 +259,9 @@ class WeatherController(QObject):
                 #----Make a single graph in the view layout----#
                 GetSingleGraph(kwargs['data'], self.api, self.weather_tab)
 
+                #----Connect the graph's reset button to the reverse stage transition----#
+                self.weather_tab.graph.header.reset_button.clicked.connect(lambda: self.StageTransition((3,2)))
+
                 #----Create animations that move out/fade the selections and fade the title out and back in----#
                 self.animations = GetParallelGroup(
                     [MoveOutAnimation(tab, 1000) for tab in self.weather_tab.tabs]
@@ -292,6 +314,34 @@ class WeatherController(QObject):
                 #----Restore initial text and begin the selection animation after a while----#
                 self.animations.finished.connect(lambda: self.weather_tab.title.setText("Choose your mode"))
                 self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowTitleSelections(self)))
+
+                self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
+
+            case(3,2):
+                #----Transition from the final stage (one graph) to the previous where a selection of graphs is displayed----#
+
+                #----Again, make a copy of the old view layout----#
+                old_layout = self.weather_tab.view_layout
+
+                #----Create a new view_layout----#
+                GetView(self.data, self.api, self.weather_tab)
+
+                #----Hide the selections until their animation starts----#
+                self.effects = SetGroupInvisible(self.weather_tab.tabs)
+
+                #----Create animations that size in the graph and fade the title----#
+                self.animations = GetParallelGroup([
+                    SizeInAnimation(self.weather_tab.graph, 1000, self.weather_tab),
+                    FadeInAnimation(self.weather_tab.title, 1000),
+                ], slot=lambda: self.SetLayoutNextStage((3,2), **{'old_layout' : old_layout}))
+
+                #----Change the title on animation finish and show the title again after a while----#
+                self.animations.finished.connect(lambda: self.weather_tab.title.setText(GetTitle(self.data, self.api)))
+                self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowViewTitle(self)))
+
+                #----Connect the return option and the other graph pickers----#
+                self.animations.finished.connect(lambda: ConnectReturnButton(self))
+                self.animations.finished.connect(lambda: ConnectGraphPickers(self))
 
                 self.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 

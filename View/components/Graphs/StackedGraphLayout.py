@@ -27,7 +27,7 @@ class StackedGraphLayout(QStackedLayout):
         [hour.rain_data.rain_chance for hour in data.hours])
         self.precip_graph = PrecipitationGraph([hour.rain_data.precip_height for hour in data.hours])
 
-        self.graphs = [self.temperature_graph, self.wind_graph, self.rain_graph, self.precip_graph]
+        self.graphs : list[AbstractGraph] = [self.temperature_graph, self.wind_graph, self.rain_graph, self.precip_graph]
 
         #add them to the layout
         for graph in self.graphs:

@@ -1,5 +1,6 @@
 """Module containing the QFrame subclass (GraphContainer) which contains the entire Header + Graph and MultiGraphContainer (which contains multiple StackedGraphLayouts)"""
 from . import *
+from matplotlib import pyplot
 from PyQt6.QtCore import pyqtSlot
 from .Header import BaseGraphHeader, ExtendedGraphHeader
 from .StackedGraphLayout import StackedGraphLayout
@@ -89,6 +90,15 @@ class BaseGraphContainer(QFrame):
         self.setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).GraphFrame)
         self.color_mode = ColorModes.DARK if self.color_mode == ColorModes.LIGHT else ColorModes.LIGHT
         self.graphs.SwitchColorMode(self.color_mode)
+
+
+    def DeleteGraph(self):
+        """Deletes the matplotlib graph"""
+        for graph in self.graphs.graphs:
+            pyplot.close(graph.figure)
+            self.graphs.removeWidget(graph)
+            del(graph)
+
 
 
 
