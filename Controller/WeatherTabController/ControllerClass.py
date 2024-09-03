@@ -118,6 +118,10 @@ class WeatherController(QObject):
                 self.weather_tab._layout_.setStretch(0, 5)
                 self.weather_tab._layout_.setStretch(2, 45)
 
+                #free up the graph memotry if a graph is displayed
+                if self.weather_tab.graph is not None:
+                    self.weather_tab.graph.DeleteGraph()
+
                 #remove all items from the view layout
                 ClearLayout(self.weather_tab.view_layout)
 
@@ -332,7 +336,7 @@ class WeatherController(QObject):
                 #----Create animations that size in the graph and fade the title----#
                 self.animations = GetParallelGroup([
                     SizeInAnimation(self.weather_tab.graph, 1000, self.weather_tab),
-                    FadeInAnimation(self.weather_tab.title, 1000),
+                    FadeOutAnimation(self.weather_tab.title, 1000),
                 ], slot=lambda: self.SetLayoutNextStage((3,2), **{'old_layout' : old_layout}))
 
                 #----Change the title on animation finish and show the title again after a while----#
@@ -436,6 +440,7 @@ def ShowViewTitle(controller : WeatherController):
         #make the graph pickers visible upon starting the show animations and clear the effects upon their end
         show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
         controller.animations.finished.connect(lambda: ClearEffect(controller.weather_tab.tabs))
+        controller.animations.finished.connect(lambda: SelectionsSet(controller))
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
 
 
@@ -480,3 +485,7 @@ def ConnectGraphPickers(controller : WeatherController):
 
 
 
+def SelectionsSet(controller : WeatherController):
+    """Changes the selection's Set state to True so the StyleSheet can change"""
+    for selection in controller.weather_tab.tabs[1:]:
+        selection.set = True

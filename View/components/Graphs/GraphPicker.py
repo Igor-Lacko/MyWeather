@@ -31,7 +31,7 @@ class GraphPicker(QFrame):
         self.color_mode = color_mode
 
         #states to change stylesheets
-        self.pressed = self.hovered = self.submitted = False
+        self.pressed = self.hovered = self.submitted = self.set = False
 
         #keep the condition as an instance attribute for the icon
         self.condition = self.data.condition.lower()
@@ -60,7 +60,8 @@ class GraphPicker(QFrame):
         self.text.setObjectName("text")
 
         self.setLayout(self._layout_)
-        self.setStyleSheet()
+        super().setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).Idle)
+
 
 
 
@@ -120,7 +121,7 @@ class GraphPicker(QFrame):
         """Override of setStyleSheet, checks states and sets the sheet based on that\n
         - If the submitted state is set to True, the StyleSheet isn't set because the widget's animation is ongoing"""
 
-        if not self.submitted:
+        if not self.submitted and self.set:
             #imitation of QPushButton's hover:!pressed state
             if self.hovered and not self.pressed:
                 super().setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).Hover)

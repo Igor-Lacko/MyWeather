@@ -122,7 +122,7 @@ def SizeInAnimation(widget : QWidget, duration : int, parent : QWidget) -> QProp
     """Opposite of SizeOutAnimation, stretches a widget into itself until it's not visible"""
 
     #----Get the widget midpoint/topleft coordinate (so the animation's finishing/starting point)----#
-    midpoint = widget.mapTo(parent, QPoint(parent.width() // 2, parent.height() // 2))
+    midpoint = widget.mapTo(parent, QPoint(widget.width() // 2, widget.height() // 2))
     topleft = widget.mapTo(parent, QPoint(0, 0))
 
     #----Initialize the animation and it's duration----#
