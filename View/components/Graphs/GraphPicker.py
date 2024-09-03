@@ -68,7 +68,7 @@ class GraphPicker(QFrame):
             QPixmap: Initialized and scaled icon
         """
         for icon in Icons:
-            if self.condition in icon['conditions']:
+            if self.condition.lower().strip() in icon['conditions']:
                 return QPixmap(icon['day']).scaled(
                     200,
                     200,

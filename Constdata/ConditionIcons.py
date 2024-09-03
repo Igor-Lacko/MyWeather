@@ -47,7 +47,7 @@ Icons = [
             "patchy light rain",
             "patchy light drizzle",
             "light rain",
-            "light rain shower",
+            "light rain shower"
         ],
 
         "day"   :   "Assets/ConditionIcons/day/light-rain.png",

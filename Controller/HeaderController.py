@@ -1,10 +1,9 @@
 """Contains the controller for the header of the home tab"""
 from PyQt6.QtGui import QPixmap
-from PyQt6.QtCore import Qt, QObject, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import Qt, QObject
 from MyWeather.View.components.Home.Header.Header import Header
-from MyWeather.Init import LOCATION
 from Constdata.ConditionIcons import Icons
-from MyWeather.Model import request as API, obj
+from MyWeather.Model import obj
 
 class HeaderController(QObject):
 
@@ -29,7 +28,7 @@ class HeaderController(QObject):
 
 
         for map in Icons:
-            if condition in map['conditions']:
+            if condition.lower().strip() in map['conditions']:
                 return map[daynight]
 
 
@@ -85,6 +84,6 @@ def GetHeaderIcon(condition : str, is_day : bool) -> str:
 
 
         for map in Icons:
-            if condition.lower() in map['conditions']:          #sometimes the API results differed in lower or upper case
+            if condition.lower().strip() in map['conditions']:          #sometimes the API results differed in lower or upper case
                 return map[daynight]
 
