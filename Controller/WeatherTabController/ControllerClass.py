@@ -52,7 +52,10 @@ class WeatherController(QObject):
 
 
     def SetGraph(self, data : obj.Day):
-        """Intermediate function, calls the 2-->3 stage transition with the provided data"""
+        """Intermediate function, calls the 2-->3 stage transition with the provided data and locks the stylesheets for the graph options"""
+        for selection in self.weather_tab.tabs:
+            selection.submitted = True
+
         self.StageTransition((2,3), **{'data' : data})
 
 
@@ -243,7 +246,7 @@ class WeatherController(QObject):
                 self.animations.finished.connect(lambda: self.weather_tab.title.setText(GetTitle(self.data, self.api)))
 
                 #----Perform the animations which show the data displayed----#
-                self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowViewTitle(self)))
+                self.animations.finished.connect(lambda: QTimer.singleShot(200, lambda: ShowViewTitle(self)))
 
                 #----Connect the new view to the reverse stage transition----#
                 self.animations.finished.connect(lambda: ConnectReturnButton(self))
@@ -304,6 +307,11 @@ class WeatherController(QObject):
                         +
                         [FadeOutAnimation(self.weather_tab.title, 1000)],
                         slot=lambda: self.SetLayoutNextStage((2,0)))
+                    
+                    for selection in self.weather_tab.tabs:         #also lock the stylesheet for the other selections
+                        if selection is not self.weather_tab.return_option:
+                            selection.submitted = True
+
 
                 elif self.weather_tab.graph is not None:
                     self.animations = GetParallelGroup(
@@ -385,7 +393,6 @@ def ShowTitleSelections(controller : WeatherController):
         show_animations = GetParallelGroup([MoveInAnimation(selection, 1500) for selection in controller.weather_tab.selections] + 
                                             [FadeInAnimation(selection, 1500) for selection in controller.weather_tab.selections])
 
-        show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
         controller.animations = GetParallelGroup([FadeInAnimation(controller.weather_tab.title, 2500), show_animations], 
                                                     slot=lambda: ClearEffect(controller.weather_tab.selections))
 
@@ -435,10 +442,9 @@ def ShowViewTitle(controller : WeatherController):
         #create a MoveInAnimation group for the graph pickers and a fade animation for the title
         controller.animations = GetParallelGroup([
             FadeInAnimation(controller.weather_tab.title, 1000),
-            show_animations := GetParallelGroup([MoveInAnimation(selection, 1000) for selection in controller.weather_tab.tabs] + [FadeInAnimation(selection, 1500) for selection in controller.weather_tab.tabs])])
+            show_animations := GetParallelGroup([MoveInAnimation(selection, 1500) for selection in controller.weather_tab.tabs] + [FadeInAnimation(selection, 1500) for selection in controller.weather_tab.tabs])])
 
         #make the graph pickers visible upon starting the show animations and clear the effects upon their end
-        show_animations.stateChanged.connect(lambda state: ShowIfStarted(state, controller.effects))
         controller.animations.finished.connect(lambda: ClearEffect(controller.weather_tab.tabs))
         controller.animations.finished.connect(lambda: SelectionsSet(controller))
         controller.animations.start(policy=QAbstractAnimation.DeletionPolicy.DeleteWhenStopped)
