@@ -74,7 +74,7 @@ class BaseGraphContainer(QFrame):
             StackedGraphLayout: Initialized StackedLayout, each containing one graph
         """
 
-        self.graphs = StackedGraphLayout(self.data, self.data.location)
+        self.graphs = StackedGraphLayout(self.data, self.data.location, self.color_mode)
         return self.graphs
 
 
@@ -87,9 +87,9 @@ class BaseGraphContainer(QFrame):
 
     def SwitchColorMode(self):
         """Switches the color scheme for the graph, the base version just switches the style sheet and one graph"""
-        self.setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).GraphFrame)
         self.color_mode = ColorModes.DARK if self.color_mode == ColorModes.LIGHT else ColorModes.LIGHT
         self.graphs.SwitchColorMode(self.color_mode)
+        self.setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).GraphFrame)
 
 
     def DeleteGraph(self):
@@ -151,7 +151,7 @@ class ExtendedGraphContainer(BaseGraphContainer):
 
         #add a new graph layout for each day in the list
         for day in self.data.days:
-            (dummy := QWidget()).setLayout(graph := StackedGraphLayout(day, self.data.location))
+            (dummy := QWidget()).setLayout(graph := StackedGraphLayout(day, self.data.location, self.color_mode))
             self.graphs.addWidget(dummy)
             self.layouts.append(graph)
             self.dummy_widgets.append(dummy)    #TODO: evaluate whether this isn't useless later on tbh
@@ -188,12 +188,12 @@ class ExtendedGraphContainer(BaseGraphContainer):
     def SwitchColorMode(self):
         """Color mode switcher, does the same as the base version but for multiple GraphStackedLayout objects"""
         self.color_mode = ColorModes.DARK if self.color_mode == ColorModes.LIGHT else ColorModes.LIGHT
-        self.setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).GraphFrame)
 
         self.header.SetButtonIcons(self.color_mode)
 
         for layout in self.layouts:
             layout.SwitchColorMode(self.color_mode)
 
+        self.setStyleSheet((Dark if self.color_mode == ColorModes.DARK else Light).GraphFrame)
 
 

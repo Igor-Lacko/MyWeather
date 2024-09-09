@@ -50,8 +50,7 @@ class WeatherTab(QFrame):
         #finally, do the same for the graph picker widgets if they exist
         if len(self.tabs) != 0:
             for tab in self.tabs:
-                if tab is not self.return_option:        #handled by the window's stylesheets
-                    tab.SwitchColorMode()
+                tab.SwitchColorMode()
 
         if change:
             self.color_mode = ColorModes.DARK if self.color_mode != ColorModes.DARK else ColorModes.LIGHT

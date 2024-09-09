@@ -7,6 +7,8 @@ Idle = """QFrame#main{
 QLabel#text, QLabel#icon{
     background: transparent;
     border: none;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 QLabel#text{
@@ -28,6 +30,8 @@ Hover = """QFrame#main{
 QLabel#text, QLabel#icon{
     background-color: #33000000;
     border: none;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 QLabel#text{

@@ -8,11 +8,11 @@ use("QtAgg")
 
 class AbstractGraph(FigureCanvasQTAgg):
     """Graph superclass, implements common aspects for all graphs"""
-    def __init__(self):
+    def __init__(self, color_mode : ColorModes):
         """Graph superclass constructor"""
 
         #initial color mode and matplotlib's theme
-        self.color_mode = MODE
+        self.color_mode = color_mode
         pyplot.style.use(GRAPH_MODE)
 
         #initialize the figure/axes
@@ -87,7 +87,7 @@ class AbstractGraph(FigureCanvasQTAgg):
 class TemperatureGraph(AbstractGraph):
     """Abstract graph subclass containing temperature data"""
 
-    def __init__(self, actual : list[float], feelslike : list[float]):
+    def __init__(self, color_mode : ColorModes, actual : list[float], feelslike : list[float]):
         """Temperature graph constructor
 
         Args:
@@ -95,7 +95,7 @@ class TemperatureGraph(AbstractGraph):
             feelslike (list[float]): List of feelslike temperatures troughout the day
         """
 
-        super().__init__()
+        super().__init__(color_mode)
 
         self.axes.set_title('Temperature')
         self.axes.set_ylabel('°C', rotation=0, loc='top')
@@ -143,14 +143,14 @@ class TemperatureGraph(AbstractGraph):
 class WindSpeedGraph(AbstractGraph):
     """AbstractGraph subclass containing wind speed"""
 
-    def __init__(self, speed : list[float]):
+    def __init__(self, color_mode : ColorModes, speed : list[float]):
         """Wind graph constructor
 
         Args:
             speed (list[float]): List of wind speeds for each hour for the given day
         """
 
-        super().__init__()
+        super().__init__(color_mode)
 
         #set titles and plot data
         self.axes.set_title('Wind speed')
@@ -192,7 +192,7 @@ class WindSpeedGraph(AbstractGraph):
 class RainGraph(AbstractGraph):
     """AbstractGraph subclass containing humidity and chance of rain"""
 
-    def __init__(self, humidity : list[int], chance_of_rain : list[int]):
+    def __init__(self, color_mode : ColorModes, humidity : list[int], chance_of_rain : list[int]):
         """Water data graph constructor
 
         Args:
@@ -200,7 +200,7 @@ class RainGraph(AbstractGraph):
             chance_of_rain (list[int]): List of rain chances for a given day
         """
 
-        super().__init__()
+        super().__init__(color_mode)
 
         #titles and plotting
         self.axes.set_title("Rain/humidity")
@@ -245,14 +245,14 @@ class RainGraph(AbstractGraph):
 class PrecipitationGraph(AbstractGraph):
     """Abstract graph subclass containing data for the precipitation height"""
 
-    def __init__(self, heights : list[float]):
+    def __init__(self, color_mode : ColorModes, heights : list[float]):
         """Precipitation graph constructor
 
         Args:
             height (list[float]): List of the water heights for each hour for a given day
         """
 
-        super().__init__()
+        super().__init__(color_mode)
 
         #titles and plot
         self.axes.set_title("Precipitation height")

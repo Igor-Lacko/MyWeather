@@ -98,9 +98,15 @@ class WeatherController(QObject):
                 #insert the view layout
                 self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout, 45)
 
+                #re-adjust the stretch if the view type is the graph selections
+                if len(self.weather_tab.tabs) != 0:
+                    self.weather_tab._layout_.setStretch(3, 30)
+                    self.weather_tab._layout_.setStretch(0, 5)
+                    self.weather_tab._layout_.setStretch(2, 45)
+
             case(2,3):
                 #from the second stage to the final one, so when the graph pickers are clicked and a graph is shown
-                #basically just replace one view layout with another
+                #basically just replace one view layout with another and re-arrange the stretch
 
                 #first remove all items from the current instance
                 ClearLayout(kwargs['old_layout'])
@@ -116,11 +122,12 @@ class WeatherController(QObject):
                 #Insert the new layout into the main one
                 self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout)
 
-            case(2,0):
-                #rearrange spacing
-                self.weather_tab._layout_.setStretch(0, 5)
-                self.weather_tab._layout_.setStretch(2, 45)
+                #re-arrange the stretch
+                self.weather_tab._layout_.setStretch(3, 45)
+                self.weather_tab._layout_.setStretch(0, 30)
+                self.weather_tab._layout_.setStretch(2, 5)
 
+            case(2,0):
                 #free up the graph memotry if a graph is displayed
                 if self.weather_tab.graph is not None:
                     self.weather_tab.graph.DeleteGraph()
@@ -160,7 +167,11 @@ class WeatherController(QObject):
                 self.weather_tab.graph = None
 
                 #insert the new view_layout
-                self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout, 45)
+                self.weather_tab._layout_.insertLayout(3, self.weather_tab.view_layout, 30)
+
+                #rearrange spacing
+                self.weather_tab._layout_.setStretch(0, 5)
+                self.weather_tab._layout_.setStretch(2, 45)
 
 
 
@@ -309,8 +320,7 @@ class WeatherController(QObject):
                         slot=lambda: self.SetLayoutNextStage((2,0)))
                     
                     for selection in self.weather_tab.tabs:         #also lock the stylesheet for the other selections
-                        if selection is not self.weather_tab.return_option:
-                            selection.submitted = True
+                        selection.submitted = True
 
 
                 elif self.weather_tab.graph is not None:
@@ -466,7 +476,7 @@ def ConnectReturnButton(controller : WeatherController):
     """
 
     if controller.weather_tab.return_option is not None:
-        controller.weather_tab.return_option.button.clicked.connect(lambda: controller.StageTransition((2,0)))
+        controller.weather_tab.return_option.clicked.connect(lambda: controller.StageTransition((2,0)))
 
     elif controller.weather_tab.graph is not None:
         controller.weather_tab.graph.header.reset_button.clicked.connect(lambda: controller.StageTransition((2,0)))
@@ -493,5 +503,5 @@ def ConnectGraphPickers(controller : WeatherController):
 
 def SelectionsSet(controller : WeatherController):
     """Changes the selection's Set state to True so the StyleSheet can change"""
-    for selection in controller.weather_tab.tabs[1:]:
+    for selection in controller.weather_tab.tabs:
         selection.set = True

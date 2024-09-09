@@ -65,7 +65,7 @@ def GetForecastView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
 
     layout.addStretch(20)
 
-    layout.addWidget(return_option := ReturnOption(), stretch=40)
+    layout.addWidget(return_option := ReturnOption(tab.color_mode), stretch=60)
     tab.return_option = return_option
 
     tab.tabs.append(return_option)
@@ -73,7 +73,7 @@ def GetForecastView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
     layout.addStretch(20)
 
     for day in data.days:
-        layout.addWidget(picker := GraphPicker(day, tab.color_mode), stretch=40)
+        layout.addWidget(picker := GraphPicker(day, tab.color_mode), stretch=60)
         layout.addStretch(20)
         picker.setParent(tab)
 
@@ -87,12 +87,13 @@ def GetHistoryView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
     if len(data.days) == 1:
         return GetSingleGraph(data.days[0], 'history', tab)
 
+
     (layout := QHBoxLayout()).setContentsMargins(0,0,0,0)
     layout.setSpacing(0)
 
     layout.addStretch(20)
 
-    layout.addWidget(return_option := ReturnOption(), stretch=40)
+    layout.addWidget(return_option := ReturnOption(tab.color_mode), stretch=60)
     tab.return_option = return_option
 
     tab.tabs.append(return_option)
@@ -100,10 +101,11 @@ def GetHistoryView(data : obj.Timeline, tab : WeatherTab) -> QHBoxLayout:
     layout.addStretch(20)
 
     for day in data.days:
-        layout.addWidget(picker := GraphPicker(day, tab.color_mode), stretch=40)
+        layout.addWidget(picker := GraphPicker(day, tab.color_mode), stretch=60)
         layout.addStretch(20)
 
         tab.tabs.append(picker)
+
 
     tab.view_layout = layout
     return layout

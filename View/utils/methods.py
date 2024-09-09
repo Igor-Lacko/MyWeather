@@ -95,7 +95,7 @@ def main():
    #     dates.append((datetime.now() + timedelta(i)).strftime("%A, %-d.%-m.%Y"))
 
    # print(dates)
-    print(GetDaylist(3, False))
+    PNGColorSwap('../../Assets/door-light.png', 'dark', '../../Assets/door-dark.png')
 
 
 if __name__ == "__main__":
