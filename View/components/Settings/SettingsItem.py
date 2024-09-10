@@ -47,9 +47,10 @@ class SettingsItem(QFrame):
         self._layout_.addWidget(lead_text)
         lead_text.setFixedWidth(200)
         self._layout_.setStretch(0,10)
-        
+
+        lead_text.setWordWrap(True)
         return lead_text
-    
+
 
     def InitLayout(self):
         """Removes some boilerplate code arount stretching/spacing the layout"""

@@ -16,9 +16,12 @@ def ColorModeUpdate(mode : str):
     settings['theme'] = mode.lower()
     UpdateSettings()
 
-
 def LocationUpdate(location : str):
     settings['location'] = location.title()
+    UpdateSettings()
+
+def NumberDaysUpdate(num : str):
+    settings['num_days'] = num
     UpdateSettings()
 
 def SidebarFontUpdate(font : str):

@@ -13,7 +13,7 @@ class AbstractGraph(FigureCanvasQTAgg):
 
         #initial color mode and matplotlib's theme
         self.color_mode = color_mode
-        pyplot.style.use(GRAPH_MODE)
+        pyplot.style.use('fivethirtyeight')
 
         #initialize the figure/axes
         self.figure, self.axes = pyplot.subplots()

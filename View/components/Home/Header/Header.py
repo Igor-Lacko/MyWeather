@@ -1,11 +1,9 @@
 from . import *
 from PyQt6.QtGui import QPixmap, QPalette, QIcon
 from PyQt6.QtCore import Qt, pyqtSlot, pyqtSignal
-from MyWeather.Controller import HeaderController
 from .LeadText import HeaderLeadText
 from .Data import HeaderDataText
-from functools import partial
-from MyWeather.Init import LOCATION
+from MyWeather.Init import InitWeatherData
 
 
 
@@ -41,6 +39,10 @@ class Header(QWidget):
             icon_path (str): Path to the icon depending on the weather condition
         """
         super().__init__()
+
+        #----Keep these as instance variables since the header updates the graph----#
+        self.location = data.location
+        self.days = len(InitWeatherData.forecast.days)
 
         self.setLayout(header_layout := QHBoxLayout())
         header_layout.setContentsMargins(0,0,0,0)                                           #initialize the main horizontal layout   
@@ -204,16 +206,25 @@ class Header(QWidget):
 
 
     @pyqtSlot(str)
-    def FetchNewData(self, location : str):
+    def FetchNewData(self, location : str | None, days : int | None):
         """Emits the fetch_new_data signal which communicates with the worker thread to fetch data for a new location
 
         Args:
             location (str): The new location. If == "current" (case insensitive) calls the user latitude and longitude using the geocoder library
+            days (int): The number of days to get data for
         """
+
+        if location is not None:
+            self.location = location
+
+        if days is not None:
+            self.days = days
+
+
         self.fetch_new_data.emit({
             'api'           :       'bulk',
-            'location'      :       location,
-            'range'         :       3,
+            'location'      :       self.location,
+            'range'         :       self.days,
             'date'          :       None
             })
 

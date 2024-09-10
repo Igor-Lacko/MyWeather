@@ -52,7 +52,6 @@ class TwoButtonsOption(AbstractOption):
 
         for button in [self.reset_button, self.submit_button]:
             button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-            button.setFont(QFont(FONTS.weather_tab, pointSize=pointsize))
 
 
 
@@ -72,7 +71,7 @@ class ComboBoxOption(AbstractOption):
 
         self.combo_box.setFixedWidth(300)
         self.combo_box.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        self.combo_box.setFont(QFont(FONTS.other, pointSize=15))
+        self.combo_box.setFont(QFont(FONTS.weather_tab, pointSize=15))
 
         self._layout_.addWidget(self.combo_box)
 
@@ -95,7 +94,7 @@ class LineEditOption(AbstractOption):
         self.completer = completer
         self.line_edit.setCompleter(completer)
 
-        self.line_edit.setFont(QFont(FONTS.other, pointSize=15))
+        self.line_edit.setFont(QFont(FONTS.weather_tab, pointSize=15))
         self.line_edit.setPlaceholderText(placeholder)
 
         self.line_edit.setFixedWidth(300)

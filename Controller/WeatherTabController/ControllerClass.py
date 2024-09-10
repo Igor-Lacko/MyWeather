@@ -291,7 +291,7 @@ class WeatherController(QObject):
 
                 #----Change the title as the animations finish----#
                 self.animations.finished.connect(lambda: self.weather_tab.title.setText(
-                    GetTitle(self.data, self.api, one_day=True, date_str=kwargs['data'].date_str)))
+                    GetTitle(self.data, self.api, date_str=kwargs['data'].date_str)))
 
                 #----Show the graph a while after the animations finish----#
                 self.animations.finished.connect(lambda: QTimer.singleShot(100, lambda: ShowGraph(self)))

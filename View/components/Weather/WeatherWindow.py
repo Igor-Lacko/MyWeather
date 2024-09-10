@@ -73,10 +73,34 @@ class WeatherTab(QFrame):
         self.setLayout(self._layout_)
 
     def UpdateFonts(self, font : str):
-        for item in self.selections:
-            if type(item) == QLabel:
-                item.setFont(QFont(font, pointSize=40))
+        self.title.setFont(QFont(font, pointSize=40))
 
-            else:
+        if len(self.selections) != 0:
+            for item in self.selections:
                 item.title.setFont(QFont(font, pointSize=20))
                 item.description.setFont(QFont(font, pointSize=15))
+                item.button.setFont(QFont(font, pointSize=14))
+
+        elif self.menu is not None:
+            for item in self.menu.items:
+                item.description.setFont(QFont(font, pointSize=15))
+
+                #change the font of the item's value setter depending on it's type
+                if hasattr(item, "combo_box"):
+                    item.combo_box.setFont(QFont(font, pointSize=15))
+
+                elif hasattr(item, "line_edit"):
+                    item.line_edit.setFont(QFont(font, pointSize=15))
+
+                elif hasattr(item, "slider"):
+                    for text in [item.slider.current, item.slider.min, item.slider.max]:
+                        text.setFont(QFont(font, pointSize=15))
+
+        elif len(self.tabs) != 0:
+            for item in self.tabs:
+                item.text.setFont(QFont(font, pointSize=20))
+
+
+    def UpdateGraphFont(self, font : str):
+        if self.graph is not None:
+            self.graph.header.title.setFont(QFont(font, pointSize=15))

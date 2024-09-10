@@ -31,6 +31,16 @@ Items = [
     },
 
     {
+        "type"      :   "SettingsMenuItem",
+        "stretch"   :   20,
+        "text"      :   "Default number of days on the home screen forecast",
+        "unique"    :   True,
+        "objname"   :   "num_days",
+        "items"     :   ['1','2','3'],
+        "slot"      :   NumberDaysUpdate
+    },
+
+    {
         "type"      :   "SettingsSubmitItem",
         "stretch"   :   20,
         "text"      :   "Default location",

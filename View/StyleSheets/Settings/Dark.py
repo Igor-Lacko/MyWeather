@@ -2,16 +2,16 @@ SettingsMain = """QWidget{
     background-color: rgb(33,33,33)
 }"""
 
-SettingsItem = """QFrame#theme, QFrame#bottom{
+SettingsItem = """QFrame#theme, QFrame#bottom, QFrame#location{
     border: 3px solid silver;
     background-color: rgb(33,33,33);
 }
 
-QFrame#location{
+QFrame#num_days{
     border-top: none;
     border-left: 3px solid silver;
     border-right: 3px solid silver; 
-    border-bottom: 3px solid silver;
+    border-bottom: none;
 }
 
 QFrame{

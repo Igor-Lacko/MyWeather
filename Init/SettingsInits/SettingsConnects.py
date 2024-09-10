@@ -7,6 +7,7 @@ from MyWeather.Controller.SettingsController.Functions import UpdateSettingsFont
 
 
 
+
 def SetFont(widget : QWidget, font : str):
     """Helper function to be passed into the functools.partial method"""
     widget.setFont(QFont(font))
@@ -27,8 +28,11 @@ def ConnectSettingsMenus(main_window : MainWindow):
             match item.description.text():
 
                 case "Default location":
-                    item.submitted.connect(lambda location: main_window.home.header.FetchNewData(location))
-            
+                    item.submitted.connect(lambda location: main_window.home.header.FetchNewData(location, None))
+
+                case "Default number of days on the home screen forecast": #a bit long :((
+                    item.menu.currentTextChanged.connect(lambda days: main_window.home.header.FetchNewData(None, int(days)))
+
                 case "Sidebar":
                     item.menu.currentTextChanged.connect(lambda font: main_window.sidebar.UpdateFonts(font))
 
@@ -43,6 +47,7 @@ def ConnectSettingsMenus(main_window : MainWindow):
 
                 case "Graph header":
                     item.menu.currentTextChanged.connect(lambda font: main_window.home.window.graph.header.UpdateFonts(font))
+                    item.menu.currentTextChanged.connect(lambda font: main_window.weather.UpdateGraphFont(font))
                 
                 case "Other":
                     item.menu.currentTextChanged.connect(lambda font: UpdateSettingsFonts(main_window.settings, font))

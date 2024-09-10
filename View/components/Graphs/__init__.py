@@ -1,6 +1,6 @@
 """Module containing graph views"""
 from PyQt6.QtWidgets import *
-from MyWeather.Init import InitWeatherData, GRAPH_MODE, FONTS      
+from MyWeather.Init import InitWeatherData, FONTS      
 from MyWeather.View.utils.enumerations import Alignments
 from MyWeather.Constdata.Mode import MODE
 from MyWeather.Model.obj import Day
