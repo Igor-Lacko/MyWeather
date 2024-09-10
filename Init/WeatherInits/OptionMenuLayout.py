@@ -12,12 +12,10 @@ realtime_menu_layout = [
 
         "resetbutton"   :   {
             "name"      :   "resetbutton",
-            #add slot here later
         },
 
         "submitbutton"  :   {
             "name"      :   "submitbutton"
-            #add slot here later
         }
     },
 
@@ -68,12 +66,10 @@ forecast_menu_layout = [
 
         "resetbutton"   :   {
             "name"      :   "resetbutton",
-            #add slot here later
         },
 
         "submitbutton"  :   {
             "name"      :   "submitbutton"
-            #add slot here later
         }
     },
 
@@ -148,12 +144,10 @@ history_menu_layout = [
 
         "resetbutton"   :   {
             "name"      :   "resetbutton",
-            #add slot here later
         },
 
         "submitbutton"  :   {
             "name"      :   "submitbutton"
-            #add slot here later
         }
     },
 

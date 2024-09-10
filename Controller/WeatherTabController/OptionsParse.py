@@ -1,5 +1,6 @@
 """Includes a function that parses the option menu with the API type as an argument and returns a dictionary with options based on that"""
 from . import *
+from datetime import datetime
 
 
 def GetOptions(api : str, menu : OptionMenu) -> dict:
@@ -30,7 +31,8 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
             options = {
                 'api'           :   api,
                 'location'      :   None,
-                'range'         :   None   
+                'range'         :   None,
+                'date'          :   None
             }
 
             for item in menu.items:
@@ -40,8 +42,25 @@ def GetOptions(api : str, menu : OptionMenu) -> dict:
                 if item.key == 'range':
                     options['range'] = item.value
 
+                if item.key == 'date':
+                    options['date'] = item.value if item.value == 'None' else ParseDate(item.value)
+
             return options
 
         case _:                             #invalid argument
             raise ValueError("Invalid API argument")
+
+
+
+def ParseDate(date : str) -> str:
+    """Converts a date from Weekday, DD.MM.YYYY to YYYY-MM-DD
+
+    Args:
+        date (str): the old date format
+
+    Returns:
+        str: the converted date
+    """
+
+    return datetime.strptime(date, '%A, %d.%m.%Y').strftime('%Y-%m-%d')
 

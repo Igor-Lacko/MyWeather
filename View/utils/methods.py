@@ -81,7 +81,7 @@ def GetDaylist(day_range : int, future : bool) -> list[str]:
     dates = []
 
     for delta in range(day_range) if future else reversed(range(day_range * -1 + 1, 1)):
-        dates.append((datetime.now() + timedelta(delta)).strftime("%A, %-d.%-m.%Y"))
+        dates.append((datetime.now() + timedelta(delta)).strftime("%A, %d.%m.%Y"))
 
     return dates
 

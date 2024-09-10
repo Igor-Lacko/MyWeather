@@ -20,9 +20,7 @@ class WeatherFetcher(QObject):
 
         Args:
             location (str): The location the data will be describing. Mandatory for all APIs
-            api (str, optional): _description_. Defaults to 'bulk'.
-            days (int, optional): Number of days the data will show, mandatory for Bulk/Forecast/History. Defaults to 3.
-            date (_type_, optional): Date restriction, optional for Bulk/Forecast/History. Defaults to None.
+            opts (dict): Options dictionary
         """
         self.current_location = opts['location']
 
@@ -48,10 +46,18 @@ class WeatherFetcher(QObject):
                 data = API.Forecast(location, 1).days[0]
 
             case 'forecast':
-                data = API.Forecast(location, opts['range'], None)
+                if opts['date'] == 'None':
+                    data = API.Forecast(location, opts['range'], None)
+
+                else:
+                    data = API.Forecast(location, 1, opts['date'])
 
             case 'history':
-                data = API.HistoricWeather(location, opts['range'])        #TODO: Add restrictions
+                if opts['date'] == 'None':
+                    data = API.HistoricWeather(location, opts['range'])
+
+                else:
+                    data = API.HistoricWeather(location, 0, opts['date'])
 
         self.communicator.data = data
 
