@@ -1,13 +1,13 @@
 {
   "theme": "light",
-  "location": "Presov",
+  "location": "Current",
   "num_days": "1",
   "fonts": {
     "sidebar": "DejaVu Math TeX Gyre",
     "header_lead": "Z003 [urw]",
     "header_data": "Chilanka",
     "graph_header": "Z003 [UKWN]",
-    "weather_tab": "Yrsa Light",
+    "weather_tab": "URW Gothic [urw]",
     "other": "DejaVu Sans Mono"
   }
 }
