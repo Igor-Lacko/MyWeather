@@ -46,7 +46,7 @@ class Application(widgets.QApplication):
         self.communicator_object.bulk.connect(lambda data: self.graph_controller.UpdateGraph(data.forecast))
 
         #----------FAILURE CONNECT FOR WEATHER TAB----------#
-        #self.worker_object.failed_weather.connect(self.weather_controller.ResponseFailed)
+        self.communicator_object.failed_weather.connect(self.weather_controller.ResponseFail)
 
         #----------SUCCESS CONNECTS FOR WEATHER TAB----------#
         for signal in [self.communicator_object.realtime_graph, self.communicator_object.realtime_text, self.communicator_object.timeline]:

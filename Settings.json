@@ -1,7 +1,7 @@
 {
   "theme": "light",
   "location": "Current",
-  "num_days": "1",
+  "num_days": "2",
   "fonts": {
     "sidebar": "DejaVu Math TeX Gyre",
     "header_lead": "Z003 [urw]",

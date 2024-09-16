@@ -6,11 +6,13 @@ from MyWeather.Init.WeatherInits.OptionMenuInit import OptionMenuParser
 from MyWeather.Init.WeatherInits.DataViewInit import GetView, GetSingleGraph
 from MyWeather.Model.request import *
 from MyWeather.Model.obj import BulkData, Timeline, Realtime, Day
-from MyWeather.View.components.Graphs.Container import BaseGraphContainer
+from MyWeather.View.components.ErrorPopups.Popup import AbstractPopup
 from .Animations import *
 from .Utilities import *
 from .OptionsParse import GetOptions
 
+#error message shown on a unssuccessful API request
+ERROR_MESSAGE = "Error: Unsuccessful API request. Most likely you are not connected to the internet. Check your connection and try again."
 
 class WeatherController(QObject):
     """Inherits from QObject for access to signals/slots... etc"""
@@ -41,7 +43,9 @@ class WeatherController(QObject):
         self.data = data
         self.StageTransition((1,2))
 
-
+    def ResponseFail(self):
+        """Triggered on a unssuccesful request, show a QDialog signaling that the internet connection failed"""
+        (error_popup := AbstractPopup(self.weather_tab, ERROR_MESSAGE)).exec()
 
 
     def GetResponse(self):

@@ -30,6 +30,7 @@ with open("Settings.json", "r") as file:
 #----------DEFAULT SETTINGS----------#
 DEFAULT_MODE = ColorModes(settings["theme"])
 LOCATION = settings["location"]
+NUM_DAYS = settings["num_days"]
 FONTS = Fonts(**settings["fonts"])
 
 
@@ -51,4 +52,4 @@ else:
 
 
 #----------INITIAL WEATHER DATA----------#
-InitWeatherData = CompleteData(CITY, days=settings["num_days"])
+InitWeatherData = CompleteData(CITY, days=NUM_DAYS)

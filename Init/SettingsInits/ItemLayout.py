@@ -37,7 +37,8 @@ Items = [
         "unique"    :   True,
         "objname"   :   "num_days",
         "items"     :   ['1','2','3'],
-        "slot"      :   NumberDaysUpdate
+        "slot"      :   NumberDaysUpdate,
+        "current"   :   NUM_DAYS
     },
 
     {

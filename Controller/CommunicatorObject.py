@@ -44,9 +44,9 @@ class DataCommunicator(QObject):
 
     def AwaitResponse(self):
         """Called after fetch/update, implements a custom "timeout" with QTimer"""
-        for _ in range(5):
-            loop = QEventLoop()         #use a QEventLoop to block the for loop for a second
-            QTimer.singleShot(1000, loop.quit)
+        for _ in range(50):
+            loop = QEventLoop()         #use a QEventLoop to block the for loop for a milisecond
+            QTimer.singleShot(100, loop.quit)
             loop.exec()
 
             self.CheckSuccess()

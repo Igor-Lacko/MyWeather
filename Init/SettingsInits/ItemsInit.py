@@ -50,6 +50,10 @@ def ParseSettingsItems(settings : SettingsTab):
                 if item["unique"]:
                     menu_item.setObjectName(item["objname"])
 
+                    #set the current configured number of days as the menu's current text
+                    if item["objname"] == "num_days":
+                        menu_item.menu.setCurrentText(item["current"])
+
                 AddItemStretch(settings, menu_item, item["stretch"], index)
                 initialized.append(menu_item)
 

@@ -28,8 +28,8 @@ class GraphController(QObject):
         self.graph.graphs.setCurrentIndex(0)                                     #switch the day to the first of the data recieved
 
         #if the data is shorter than the current one, remove excessive graphs from the layout
-        if (current_len := len(self.graph.layouts)) < (new_len := len(data.days)):
-            for index in range(new_len - (new_len - current_len), new_len - current_len + 1):
+        if (current_len := len(self.graph.layouts)) > (new_len := len(data.days)):
+            for index in range(current_len - (current_len - new_len), current_len - new_len + 1):
                 #free the resources taken up by the excessive graphs, then remove them
                 for graph in self.graph.layouts[index].graphs:
                     pyplot.close(graph.figure)
@@ -39,9 +39,13 @@ class GraphController(QObject):
                 #remove the graph from the frame and delete the widget containing it
                 self.graph.graphs.removeWidget(self.graph.dummy_widgets[index])
                 self.graph.dummy_widgets[index].deleteLater()
-                self.graph.layouts.remove(self.graph.layouts[index])
-                self.graph.dummy_widgets.remove(self.graph.dummy_widgets[index])
 
+            #clear the lists containing the graphs and the widgets containing them
+            for graph in self.graph.layouts[current_len:]:
+                self.graph.layouts.remove(graph)
+
+            for container in self.graph.dummy_widgets[current_len:]:
+                self.graph.dummy_widgets.remove(container)
 
         for index, day in enumerate(data.days):
             #if the index exceeds the current length, add a new graph widget
